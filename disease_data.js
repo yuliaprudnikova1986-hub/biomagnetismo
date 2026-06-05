@@ -566,7 +566,13 @@ const DISEASE_DATA = {
       "Top 10 Psicoemocional",
       "Top 5 Desintoxicación"
     ],
-    "pbs": [],
+    "pbs": [
+      4,
+      5,
+      6,
+      7,
+      11
+    ],
     "notes": ""
   },
   "Alzheimer": {
@@ -592,7 +598,15 @@ const DISEASE_DATA = {
       "Top 10 Psicoemocional",
       "Top 5 Desintoxicación"
     ],
-    "pbs": [],
+    "pbs": [
+      1,
+      2,
+      4,
+      5,
+      6,
+      7,
+      11
+    ],
     "notes": ""
   },
   "Anemia": {
@@ -604,7 +618,14 @@ const DISEASE_DATA = {
       "Top 5 Desintoxicación",
       "Top 5 Postquirúrgico"
     ],
-    "pbs": [],
+    "pbs": [
+      2,
+      3,
+      4,
+      5,
+      10,
+      11
+    ],
     "notes": ""
   },
   "Anorexia": {
@@ -636,7 +657,14 @@ const DISEASE_DATA = {
       "Top 10 Psiquiátrico",
       "Top 5 Desintoxicación"
     ],
-    "pbs": [],
+    "pbs": [
+      2,
+      3,
+      6,
+      7,
+      11,
+      117
+    ],
     "notes": ""
   },
   "Arritmia": {
@@ -696,7 +724,16 @@ const DISEASE_DATA = {
       "Top 5 Desparasitación",
       "Top 5 Desintoxicación"
     ],
-    "pbs": [],
+    "pbs": [
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      11,
+      117
+    ],
     "notes": ""
   },
   "Bocio": {
@@ -715,7 +752,13 @@ const DISEASE_DATA = {
       "Top 10 Disnea",
       "Top 5 Desintoxicación"
     ],
-    "pbs": [],
+    "pbs": [
+      2,
+      4,
+      5,
+      6,
+      11
+    ],
     "notes": ""
   },
   "Bulimia": {
@@ -725,7 +768,10 @@ const DISEASE_DATA = {
       "Top 10 Psicoemocional",
       "Top 10 Psiquiátrico"
     ],
-    "pbs": [],
+    "pbs": [
+      2,
+      11
+    ],
     "notes": ""
   },
   "Cáncer de Colon": {
@@ -959,7 +1005,12 @@ const DISEASE_DATA = {
       "Top 10 Psicoemocional",
       "Top 5 Desintoxicación"
     ],
-    "pbs": [],
+    "pbs": [
+      3,
+      6,
+      9,
+      11
+    ],
     "notes": ""
   },
   "Conjuntivitis": {
@@ -967,7 +1018,12 @@ const DISEASE_DATA = {
       "Top 10 Oftalmológico",
       "Top 5 Conjuntivitis"
     ],
-    "pbs": [],
+    "pbs": [
+      1,
+      6,
+      10,
+      11
+    ],
     "notes": ""
   },
   "Déficit de Crecimiento": {
@@ -996,7 +1052,14 @@ const DISEASE_DATA = {
       "Top 10 Psiquiátrico",
       "Top 5 Desintoxicación"
     ],
-    "pbs": [],
+    "pbs": [
+      2,
+      3,
+      6,
+      7,
+      11,
+      117
+    ],
     "notes": ""
   },
   "Depresión": {
@@ -1070,7 +1133,11 @@ const DISEASE_DATA = {
       "Top 10 Ginecológico",
       "Top 10 Endocrinológico"
     ],
-    "pbs": [],
+    "pbs": [
+      4,
+      7,
+      11
+    ],
     "notes": ""
   },
   "Dispepsia": {
@@ -1079,7 +1146,12 @@ const DISEASE_DATA = {
       "Top 10 Hepatobiliar",
       "Top 10 Gastritis"
     ],
-    "pbs": [],
+    "pbs": [
+      1,
+      3,
+      5,
+      11
+    ],
     "notes": ""
   },
   "Diverticulitis": {
@@ -1088,7 +1160,12 @@ const DISEASE_DATA = {
       "Top 10 Regularización intestinal",
       "Top 10 Nutricional"
     ],
-    "pbs": [],
+    "pbs": [
+      1,
+      3,
+      5,
+      11
+    ],
     "notes": ""
   },
   "Edema Pulmonar": {
@@ -1096,14 +1173,24 @@ const DISEASE_DATA = {
       "Top 10 Respiratorio",
       "Top 10 Disnea"
     ],
-    "pbs": [],
+    "pbs": [
+      3,
+      6,
+      9,
+      11
+    ],
     "notes": ""
   },
   "Endocarditis": {
     "tops": [
       "Top 10 Cardiológico"
     ],
-    "pbs": [],
+    "pbs": [
+      1,
+      3,
+      6,
+      11
+    ],
     "notes": ""
   },
   "Endometriosis": {
@@ -1122,7 +1209,12 @@ const DISEASE_DATA = {
       "Top 10 Disfuncional",
       "Top 10 Regularización Intestinal"
     ],
-    "pbs": [],
+    "pbs": [
+      1,
+      3,
+      6,
+      11
+    ],
     "notes": ""
   },
   "Enfermedad de Crohn": {
@@ -1133,7 +1225,13 @@ const DISEASE_DATA = {
       "Top 10 Nutricional",
       "Top 5 Desintoxicación"
     ],
-    "pbs": [],
+    "pbs": [
+      1,
+      3,
+      5,
+      8,
+      11
+    ],
     "notes": ""
   },
   "Enfermedad de Huntington": {
@@ -1141,7 +1239,12 @@ const DISEASE_DATA = {
       "Top 10 Neurológico",
       "Top 5 Desintoxicación"
     ],
-    "pbs": [],
+    "pbs": [
+      1,
+      3,
+      6,
+      11
+    ],
     "notes": ""
   },
   "Epilepsia": {
@@ -1175,7 +1278,12 @@ const DISEASE_DATA = {
       "Top 10 Osteomuscular",
       "Top 10 Inmunológico (Enf. Autoinmunes)"
     ],
-    "pbs": [],
+    "pbs": [
+      1,
+      5,
+      6,
+      11
+    ],
     "notes": ""
   },
   "Fibromialgia": {
@@ -1308,7 +1416,12 @@ const DISEASE_DATA = {
       "PBs relacionados a Hepatitis",
       "PBs relacionados a Hígado"
     ],
-    "pbs": [],
+    "pbs": [
+      2,
+      3,
+      5,
+      11
+    ],
     "notes": ""
   },
   "Leucemia": {
@@ -1329,7 +1442,11 @@ const DISEASE_DATA = {
       "Top 10 Inmunológico (Enf. Autoinmunes)",
       "PBs relacionados a Proteus Mirabilis"
     ],
-    "pbs": [],
+    "pbs": [
+      6,
+      10,
+      11
+    ],
     "notes": ""
   },
   "Meningitis": {
@@ -1378,7 +1495,12 @@ const DISEASE_DATA = {
       "Top 10 Osteomuscular",
       "Top 10 Endocrinológico"
     ],
-    "pbs": [],
+    "pbs": [
+      4,
+      5,
+      8,
+      11
+    ],
     "notes": ""
   },
   "Parkinson": {
@@ -1395,7 +1517,13 @@ const DISEASE_DATA = {
       "Top 10 Urológico",
       "Top 5 IVU"
     ],
-    "pbs": [],
+    "pbs": [
+      1,
+      2,
+      6,
+      10,
+      11
+    ],
     "notes": ""
   },
   "Psoriasis": {
@@ -1433,7 +1561,14 @@ const DISEASE_DATA = {
       "Top 10 Psicoemocional",
       "Top 5 Desparasitación"
     ],
-    "pbs": [],
+    "pbs": [
+      1,
+      3,
+      5,
+      6,
+      9,
+      11
+    ],
     "notes": ""
   },
   "Toxoplasmosis": {

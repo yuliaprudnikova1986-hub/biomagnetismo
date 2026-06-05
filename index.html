@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Par Biomagnético — Guía de Referencia</title>
+<title data-i18n="title">Par Biomagnético — Guía de Referencia</title>
 <script src="disease_data.js"></script>
 <style>
 :root{--azul:#1a3a5c;--azul2:#2563eb;--verde:#059669;--morado:#7c3aed;--naranja:#d97706;--rojo:#dc2626;--gris:#f1f5f9;--texto:#1e293b;}
@@ -14,8 +14,10 @@ header{background:linear-gradient(135deg,#0f2744 0%,#1a3a5c 50%,#1e4d7b 100%);co
 .header-inner{max-width:1200px;margin:0 auto;padding:32px 24px 24px;}
 .header-inner h1{font-size:2.2rem;font-weight:800;letter-spacing:-0.5px;}
 .header-inner p{font-size:1.05rem;opacity:.85;margin-top:6px;max-width:700px;}
-.header-inner .badges{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;}
+.header-inner .badges{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;align-items:center;}
 .badge{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:20px;padding:4px 14px;font-size:.82rem;}
+.lang-btn{margin-left:auto;padding:8px 14px;border-radius:999px;border:2px solid rgba(255,255,255,.35);background:rgba(255,255,255,.15);color:#fff;font-weight:700;cursor:pointer;transition:all .2s;font-size:.85rem;}
+.lang-btn:hover{background:rgba(255,255,255,.3);}
 /* NAV TABS */
 nav{background:#fff;border-bottom:2px solid #e2e8f0;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.07);}
 .nav-inner{max-width:1200px;margin:0 auto;display:flex;overflow-x:auto;gap:2px;padding:0 12px;}
@@ -54,6 +56,10 @@ tr:hover td{background:#f8fafc;}
 .tag-p{background:#fce7f3;color:#9d174d;}
 .tag-e{background:#ede9fe;color:#5b21b6;}
 .tag-d{background:#f0fdf4;color:#14532d;}
+.dual-label{line-height:1.25;}
+.dual-label .trans{display:block;color:#475569;font-size:.82rem;margin-top:2px;}
+.dual-label-sm{line-height:1.2;}
+.dual-label-sm .trans{display:block;color:#64748b;font-size:.75rem;margin-top:1px;}
 /* SECTION TITLES */
 .sec-title{font-size:1.5rem;font-weight:800;color:var(--azul);margin:24px 0 6px;}
 .sec-sub{color:#64748b;margin-bottom:20px;font-size:.95rem;}
@@ -177,27 +183,28 @@ td.td-img{width:60px;padding:6px 8px;}
 
 <header>
 <div class="header-inner">
-  <h1>🧲 Par Biomagnético</h1>
-  <p>Guía completa de referencia — Niveles 1 y 2 · Dr. Isaac Goiz Durán · David Goiz Martínez</p>
+  <h1 data-i18n="headerTitle">🧲 Par Biomagnético</h1>
+  <p data-i18n="headerSubtitle">Guía completa de referencia — Niveles 1 y 2 · Dr. Isaac Goiz Durán · David Goiz Martínez</p>
   <div class="badges">
-    <span class="badge">210 Pares Nivel 1</span>
-    <span class="badge">115 Pares Nivel 2</span>
-    <span class="badge">28 Pares Emocionales</span>
-    <span class="badge">Protocolos de Rastreo</span>
-    <span class="badge">Índice de Enfermedades</span>
+    <span class="badge" data-i18n="badgeNivel1">210 Pares Nivel 1</span>
+    <span class="badge" data-i18n="badgeNivel2">115 Pares Nivel 2</span>
+    <span class="badge" data-i18n="badgeEmocionales">28 Pares Emocionales</span>
+    <span class="badge" data-i18n="badgeRastreo">Protocolos de Rastreo</span>
+    <span class="badge" data-i18n="badgeEnfermedades">Índice de Enfermedades</span>
+    <button id="lang-toggle" class="lang-btn" onclick="toggleLanguage()" data-i18n="langButton">ES / RU</button>
   </div>
 </div>
 </header>
 
 <nav>
 <div class="nav-inner">
-  <button class="tab active" onclick="showTab('intro')">Introducción</button>
-  <button class="tab" onclick="showTab('nivel1')">Nivel 1 (210 PBs)</button>
-  <button class="tab" onclick="showTab('nivel2')">Nivel 2 (115 PBs)</button>
-  <button class="tab" onclick="showTab('rastreo')">Protocolo de Rastreo</button>
-  <button class="tab" onclick="showTab('emociones')">Pares Emocionales</button>
-  <button class="tab" onclick="showTab('enfermedades')">Índice de Enfermedades</button>
-  <button class="tab" onclick="showTab('buscar')">🔍 Buscar</button>
+  <button class="tab active" onclick="showTab('intro')" data-i18n="navIntro">Introducción</button>
+  <button class="tab" onclick="showTab('nivel1')" data-i18n="navNivel1">Nivel 1 (210 PBs)</button>
+  <button class="tab" onclick="showTab('nivel2')" data-i18n="navNivel2">Nivel 2 (115 PBs)</button>
+  <button class="tab" onclick="showTab('rastreo')" data-i18n="navRastreo">Protocolo de Rastreo</button>
+  <button class="tab" onclick="showTab('emociones')" data-i18n="navEmociones">Pares Emocionales</button>
+  <button class="tab" onclick="showTab('enfermedades')" data-i18n="navEnfermedades">Índice de Enfermedades</button>
+  <button class="tab" onclick="showTab('buscar')" data-i18n="navBuscar">🔍 Buscar</button>
 </div>
 </nav>
 
@@ -205,12 +212,12 @@ td.td-img{width:60px;padding:6px 8px;}
 
 <!-- ======== INTRO ======== -->
 <div id="intro" class="section active">
-  <div class="sec-title">¿Qué es el Par Biomagnético?</div>
-  <div class="sec-sub">Técnica terapéutica desarrollada por el Dr. Isaac Goiz Durán — más de 28 años de desarrollo</div>
+  <div class="sec-title" data-i18n="introTitle">¿Qué es el Par Biomagnético?</div>
+  <div class="sec-sub" data-i18n="introSubtitle">Técnica terapéutica desarrollada por el Dr. Isaac Goiz Durán — más de 28 años de desarrollo</div>
 
   <div class="info-box">
-    <h3>Definición</h3>
-    <p style="font-size:.95rem;line-height:1.7;color:#334155;">
+    <h3 data-i18n="definicionTitle">Definición</h3>
+    <p data-i18n-html="true" style="font-size:.95rem;line-height:1.7;color:#334155;">
       El <strong>Par Biomagnético (PB)</strong> es el conjunto de cargas bioeléctricas disfuncionales que se relacionan a una patología, constituido por dos cargas principales de polaridad opuesta, que se forman a expensas de la alteración bioeléctrica y de pH de los tejidos u órganos que las soportan dentro de un organismo vivo.
       <br><br>
       La técnica consiste en el posicionamiento de <strong>pares de imanes</strong> en zonas específicas del cuerpo que se encuentran en <em>"Resonancia Biomagnética"</em>, por períodos cortos de tiempo (10–30 min), para restablecer el equilibrio bioeléctrico.
@@ -219,83 +226,83 @@ td.td-img{width:60px;padding:6px 8px;}
 
   <div class="cards">
     <div class="card">
-      <h3>🔬 Técnica</h3>
-      <p>Conjunto de procedimientos, metodologías y protocolos de rastreo con propósitos específicos a corto, mediano y largo plazo.</p>
+      <h3 data-i18n="cardTecnica">🔬 Técnica</h3>
+      <p data-i18n="cardTecnicaText">Conjunto de procedimientos, metodologías y protocolos de rastreo con propósitos específicos a corto, mediano y largo plazo.</p>
     </div>
     <div class="card verde">
-      <h3>🌿 Terapéutica</h3>
-      <p>Su objetivo principal es mantener o restablecer la salud, definida como bienestar Biopsicoecosocial.</p>
+      <h3 data-i18n="cardTerapeutica">🌿 Terapéutica</h3>
+      <p data-i18n="cardTerapeuticaText">Su objetivo principal es mantener o restablecer la salud, definida como bienestar Biopsicoecosocial.</p>
     </div>
     <div class="card morado">
-      <h3>🔗 Integrativa</h3>
-      <p>Puede realizarse antes, durante y después de una enfermedad, sin afectar el tratamiento médico de base.</p>
+      <h3 data-i18n="cardIntegrativa">🔗 Integrativa</h3>
+      <p data-i18n="cardIntegrativaText">Puede realizarse antes, durante y después de una enfermedad, sin afectar el tratamiento médico de base.</p>
     </div>
     <div class="card naranja">
-      <h3>⚡ Vibracional</h3>
-      <p>No se introduce ni extrae ningún sólido, líquido o gas en el organismo. No se manipula excesivamente ninguna parte del cuerpo.</p>
+      <h3 data-i18n="cardVibracional">⚡ Vibracional</h3>
+      <p data-i18n="cardVibracionalText">No se introduce ni extrae ningún sólido, líquido o gas en el organismo. No se manipula excesivamente ninguna parte del cuerpo.</p>
     </div>
     <div class="card rojo">
-      <h3>⚖️ Estabilizadora</h3>
-      <p>Provee al organismo un estado equilibrado de bioelectricidad mediante el uso correcto de campos magnéticos.</p>
+      <h3 data-i18n="cardEstabilizadora">⚖️ Estabilizadora</h3>
+      <p data-i18n="cardEstabilizadoraText">Provee al organismo un estado equilibrado de bioelectricidad mediante el uso correcto de campos magnéticos.</p>
     </div>
     <div class="card" style="border-left-color:#0891b2;">
-      <h3>🧭 Facilitadora</h3>
-      <p>No es curativa por definición legal; es un complemento que facilita el restablecimiento de las condiciones de salud.</p>
+      <h3 data-i18n="cardFacilitadora">🧭 Facilitadora</h3>
+      <p data-i18n="cardFacilitadoraText">No es curativa por definición legal; es un complemento que facilita el restablecimiento de las condiciones de salud.</p>
     </div>
   </div>
 
-  <div class="sec-title" style="margin-top:32px;">Beneficios de la Técnica</div>
+  <div class="sec-title" style="margin-top:32px;" data-i18n="beneficiosTitle">Beneficios de la Técnica</div>
   <div class="info-box">
     <ul>
-      <li>Promueve el estado de Homeostasis en el organismo</li>
-      <li>Promueve un estado equilibrado de pH en el organismo</li>
-      <li>Promueve la adecuada activación de la respuesta inmunitaria</li>
-      <li>Promueve el restablecimiento en la función normal de glándulas y órganos</li>
-      <li>Promueve la desintoxicación del organismo</li>
-      <li>Promueve la reparación de tejidos dañados (fracturas, esguinces, neuropatía, etc.)</li>
-      <li>Disminuye los efectos adversos de tratamientos médicos convencionales</li>
-      <li>Disminuye los riesgos quirúrgicos (inflamación, infección, hemorragia)</li>
-      <li>Disminuye los tiempos de hospitalización, convalecencia y rehabilitación</li>
+      <li data-i18n="beneficio1">Promueve el estado de Homeostasis en el organismo</li>
+      <li data-i18n="beneficio2">Promueve un estado equilibrado de pH en el organismo</li>
+      <li data-i18n="beneficio3">Promueve la adecuada activación de la respuesta inmunitaria</li>
+      <li data-i18n="beneficio4">Promueve el restablecimiento en la función normal de glándulas y órganos</li>
+      <li data-i18n="beneficio5">Promueve la desintoxicación del organismo</li>
+      <li data-i18n="beneficio6">Promueve la reparación de tejidos dañados (fracturas, esguinces, neuropatía, etc.)</li>
+      <li data-i18n="beneficio7">Disminuye los efectos adversos de tratamientos médicos convencionales</li>
+      <li data-i18n="beneficio8">Disminuye los riesgos quirúrgicos (inflamación, infección, hemorragia)</li>
+      <li data-i18n="beneficio9">Disminuye los tiempos de hospitalización, convalecencia y rehabilitación</li>
     </ul>
   </div>
 
-  <div class="sec-title" style="margin-top:32px;">Tipos de Pares Biomagnéticos</div>
+  <div class="sec-title" style="margin-top:32px;" data-i18n="tiposTitle">Tipos de Pares Biomagnéticos</div>
   <div class="cards">
     <div class="card">
-      <h3><span class="tag tag-v">VIRUS</span> Pares Regulares</h3>
-      <p>Relacionados a microorganismos patógenos específicos. Ejemplo: Axila–Axila = Rabia Virus</p>
+      <h3><span class="tag tag-v" data-i18n="tagVirus">VIRUS</span> <span data-i18n="parRegular">Pares Regulares</span></h3>
+      <p data-i18n="parVirusText">Relacionados a microorganismos patógenos específicos. Ejemplo: Axila–Axila = Rabia Virus</p>
     </div>
     <div class="card verde">
-      <h3><span class="tag tag-b">BACTERIAS</span> Pares Regulares</h3>
-      <p>Asociados a infecciones bacterianas. Ejemplo: Mandíbula–Mandíbula = Neisseria Gonorrhoeae</p>
+      <h3><span class="tag tag-b" data-i18n="tagBacterias">BACTERIAS</span> <span data-i18n="parRegular">Pares Regulares</span></h3>
+      <p data-i18n="parBacteriaText">Asociados a infecciones bacterianas. Ejemplo: Mandíbula–Mandíbula = Neisseria Gonorrhoeae</p>
     </div>
     <div class="card naranja">
-      <h3><span class="tag tag-h">HONGOS</span> Pares Regulares</h3>
-      <p>Relacionados a infecciones fúngicas. Ejemplo: Diafragma–Diafragma = Candida Albicans</p>
+      <h3><span class="tag tag-h" data-i18n="tagHongos">HONGOS</span> <span data-i18n="parRegular">Pares Regulares</span></h3>
+      <p data-i18n="parHongoText">Relacionados a infecciones fúngicas. Ejemplo: Diafragma–Diafragma = Candida Albicans</p>
     </div>
     <div class="card rojo">
-      <h3><span class="tag tag-p">PARÁSITOS</span> Pares Regulares</h3>
-      <p>Relacionados a infestaciones parasitarias. Ejemplo: Oído–Oído = Toxoplasma Gondii</p>
+      <h3><span class="tag tag-p" data-i18n="tagParasitos">PARÁSITOS</span> <span data-i18n="parRegular">Pares Regulares</span></h3>
+      <p data-i18n="parParasitoText">Relacionados a infestaciones parasitarias. Ejemplo: Oído–Oído = Toxoplasma Gondii</p>
     </div>
     <div class="card morado">
-      <h3><span class="tag tag-e">ESPECIALES</span> Pares Especiales</h3>
-      <p>Disfuncionales, Psicoemocionales, Reservorios y Complejos. No relacionados directamente a microorganismos.</p>
+      <h3><span class="tag tag-e" data-i18n="tagEspeciales">ESPECIALES</span> <span data-i18n="parEspecial">Pares Especiales</span></h3>
+      <p data-i18n="parEspecialText">Disfuncionales, Psicoemocionales, Reservorios y Complejos. No relacionados directamente a microorganismos.</p>
     </div>
     <div class="card" style="border-left-color:#0891b2;">
-      <h3>🏺 Reservorios</h3>
-      <p>Pueden albergar temporalmente microorganismos de PBs regulares. Al impactarse, permiten que aparezcan en su PB correspondiente.</p>
+      <h3 data-i18n="cardReservorios">🏺 Reservorios</h3>
+      <p data-i18n="cardReservoriosText">Pueden albergar temporalmente microorganismos de PBs regulares. Al impactarse, permiten que aparezcan en su PB correspondiente.</p>
     </div>
   </div>
 
-  <div class="sec-title" style="margin-top:32px;">Autores</div>
+  <div class="sec-title" style="margin-top:32px;" data-i18n="autoresTitle">Autores</div>
   <div class="cards">
     <div class="card" style="border-left-color:#7c3aed;">
       <h3>Dr. Isaac Goiz Durán</h3>
-      <p>Científico mexicano. <strong>Descubridor del Par Biomagnético</strong> hace más de 28 años. Validó los PBs descritos en las guías en miles de pacientes.</p>
+      <p data-i18n="autorIsaac">Científico mexicano. <strong>Descubridor del Par Biomagnético</strong> hace más de 28 años. Validó los PBs descritos en las guías en miles de pacientes.</p>
     </div>
     <div class="card" style="border-left-color:#059669;">
       <h3>David Goiz Martínez</h3>
-      <p>Director del <strong>Biomagnetism Research Institute (BRI)</strong>. Autor de la Guía de PBs 2017 con 210 PBs de Nivel 1 y 115 PBs de Nivel 2.</p>
+      <p data-i18n="autorDavid">Director del <strong>Biomagnetism Research Institute (BRI)</strong>. Autor de la Guía de PBs 2017 con 210 PBs de Nivel 1 y 115 PBs de Nivel 2.</p>
     </div>
   </div>
 </div>
@@ -306,18 +313,18 @@ td.td-img{width:60px;padding:6px 8px;}
   <div class="sec-sub">210 pares descritos por el Dr. Isaac Goiz Durán · Fuente: Guía BRI 2017</div>
 
   <div class="filter-row">
-    <button class="filter-btn active" onclick="filterN1('todos',this)">Todos (210)</button>
-    <button class="filter-btn f-v" onclick="filterN1('virus',this)">🔵 Virus (55)</button>
-    <button class="filter-btn f-b" onclick="filterN1('bacteria',this)">🟢 Bacterias (58)</button>
-    <button class="filter-btn f-h" onclick="filterN1('hongo',this)">🟡 Hongos (12)</button>
-    <button class="filter-btn f-p" onclick="filterN1('parasito',this)">🔴 Parásitos (19)</button>
-    <button class="filter-btn f-e" onclick="filterN1('especial',this)">🟣 Especiales (66)</button>
+    <button class="filter-btn active" onclick="filterN1('todos',this)" data-i18n="filterTodos210">Todos (210)</button>
+    <button class="filter-btn f-v" onclick="filterN1('virus',this)" data-i18n="filterVirus55">🔵 Virus (55)</button>
+    <button class="filter-btn f-b" onclick="filterN1('bacteria',this)" data-i18n="filterBacterias58">🟢 Bacterias (58)</button>
+    <button class="filter-btn f-h" onclick="filterN1('hongo',this)" data-i18n="filterHongos12">🟡 Hongos (12)</button>
+    <button class="filter-btn f-p" onclick="filterN1('parasito',this)" data-i18n="filterParasitos19">🔴 Parásitos (19)</button>
+    <button class="filter-btn f-e" onclick="filterN1('especial',this)" data-i18n="filterEspeciales66">🟣 Especiales (66)</button>
   </div>
 
   <div class="table-wrap">
     <table id="tabla-n1">
       <thead>
-        <tr><th></th><th>#</th><th>Punto Rastreo (–)</th><th>Punto Impacto (+)</th><th>Relación / Patología</th><th>Tipo</th></tr>
+        <tr><th></th><th data-i18n="tableHash">#</th><th data-i18n="tableRastreo">Punto Rastreo (–)</th><th data-i18n="tableImpacto">Punto Impacto (+)</th><th data-i18n="tableRelacion">Relación / Patología</th><th data-i18n="tableTipo">Tipo</th></tr>
       </thead>
       <tbody id="tbody-n1"></tbody>
     </table>
@@ -326,22 +333,22 @@ td.td-img{width:60px;padding:6px 8px;}
 
 <!-- ======== NIVEL 2 ======== -->
 <div id="nivel2" class="section">
-  <div class="sec-title">Pares Biomagnéticos — Nivel 2 (Bioenergética)</div>
-  <div class="sec-sub">115 pares adicionales (PBs 211–325) · Fuente: Guía BRI 2017 Nivel 2</div>
+  <div class="sec-title" data-i18n="nivel2Title">Pares Biomagnéticos — Nivel 2 (Bioenergética)</div>
+  <div class="sec-sub" data-i18n="nivel2Subtitle">115 pares adicionales (PBs 211–325) · Fuente: Guía BRI 2017 Nivel 2</div>
 
   <div class="filter-row">
-    <button class="filter-btn active" onclick="filterN2('todos',this)">Todos (115)</button>
-    <button class="filter-btn f-v" onclick="filterN2('virus',this)">🔵 Virus</button>
-    <button class="filter-btn f-b" onclick="filterN2('bacteria',this)">🟢 Bacterias</button>
-    <button class="filter-btn f-h" onclick="filterN2('hongo',this)">🟡 Hongos</button>
-    <button class="filter-btn f-p" onclick="filterN2('parasito',this)">🔴 Parásitos</button>
-    <button class="filter-btn f-e" onclick="filterN2('especial',this)">🟣 Especiales</button>
+    <button class="filter-btn active" onclick="filterN2('todos',this)" data-i18n="filterTodos115">Todos (115)</button>
+    <button class="filter-btn f-v" onclick="filterN2('virus',this)" data-i18n="filterVirus">🔵 Virus</button>
+    <button class="filter-btn f-b" onclick="filterN2('bacteria',this)" data-i18n="filterBacterias">🟢 Bacterias</button>
+    <button class="filter-btn f-h" onclick="filterN2('hongo',this)" data-i18n="filterHongos">🟡 Hongos</button>
+    <button class="filter-btn f-p" onclick="filterN2('parasito',this)" data-i18n="filterParasitos">🔴 Parásitos</button>
+    <button class="filter-btn f-e" onclick="filterN2('especial',this)" data-i18n="filterEspeciales">🟣 Especiales</button>
   </div>
 
   <div class="table-wrap">
     <table id="tabla-n2">
       <thead>
-        <tr><th></th><th>#</th><th>Punto Rastreo (–)</th><th>Punto Impacto (+)</th><th>Relación / Patología</th><th>Tipo</th></tr>
+        <tr><th></th><th data-i18n="tableHash">#</th><th data-i18n="tableRastreo">Punto Rastreo (–)</th><th data-i18n="tableImpacto">Punto Impacto (+)</th><th data-i18n="tableRelacion">Relación / Patología</th><th data-i18n="tableTipo">Tipo</th></tr>
       </thead>
       <tbody id="tbody-n2"></tbody>
     </table>
@@ -350,38 +357,38 @@ td.td-img{width:60px;padding:6px 8px;}
 
 <!-- ======== RASTREO ======== -->
 <div id="rastreo" class="section">
-  <div class="sec-title">Protocolo de Rastreo Completo Bioenergética</div>
-  <div class="sec-sub">Guía de Rastreo Segundo Nivel · Dr. Isaac Goiz Martínez</div>
+  <div class="sec-title" data-i18n="rastreoTitle">Protocolo de Rastreo Completo Bioenergética</div>
+  <div class="sec-sub" data-i18n="rastreoSubtitle">Guía de Rastreo Segundo Nivel · Dr. Isaac Goiz Martínez</div>
 
   <div class="info-box" style="margin-bottom:24px;">
-    <h3>Inicio del Rastreo</h3>
-    <p>El rastreo completo Bioenergética comienza con el reconocimiento del campo y la autorización del paciente.</p>
+    <h3 data-i18n="rastreoInicioTitle">Inicio del Rastreo</h3>
+    <p data-i18n="rastreoInicioText">El rastreo completo Bioenergética comienza con el reconocimiento del campo y la autorización del paciente.</p>
     <ol style="padding-left:18px;margin-top:8px;">
-      <li style="margin:6px 0;">Comparar los pies; si hay acortamiento se coloca <strong>Par Goiz</strong>.</li>
-      <li style="margin:6px 0;">Solicitar autorización para la terapia, mencionando al paciente por su nombre.</li>
-      <li style="margin:6px 0;">Preguntar explícitamente si podemos iniciar el rastreo.</li>
+      <li style="margin:6px 0;" data-i18n-html="true">Comparar los pies; si hay acortamiento se coloca <strong>Par Goiz</strong>.</li>
+      <li style="margin:6px 0;" data-i18n="rastreoStep2">Solicitar autorización para la terapia, mencionando al paciente por su nombre.</li>
+      <li style="margin:6px 0;" data-i18n="rastreoStep3">Preguntar explícitamente si podemos iniciar el rastreo.</li>
     </ol>
   </div>
 
   <div class="info-box" style="margin-bottom:24px;">
-    <h3>Fases del Rastreo Completo</h3>
-    <p>La Guía de Segundo Nivel señala seis etapas centrales para el rastreo bioenergético completo.</p>
+    <h3 data-i18n="rastreoFasesTitle">Fases del Rastreo Completo</h3>
+    <p data-i18n="rastreoFasesText">La Guía de Segundo Nivel señala seis etapas centrales para el rastreo bioenergético completo.</p>
     <ul style="padding-left:18px;margin-top:8px;">
-      <li style="margin:6px 0;"><strong>Espacios Potenciales:</strong> Piel, Peritoneo, Pleura, Periostio, Pericardio, Meninges, Cavidades Articulares.</li>
-      <li style="margin:6px 0;"><strong>Zona Pineal:</strong> Pre-Pineal, Pineal y Pos-Pineal. Aquí se identifica si existe disfunción pineal, Cryptococcus, Guillain Barré o si el estudio se eleva a rastreo completo.</li>
-      <li style="margin:6px 0;"><strong>Cabeza y Cuello:</strong> Parietal, Hipófisis, Polo, Antecuerno, Quiasma, Polígono de Willis, Sien, Ojo, Cerebelo, Piso Orbital, Oído, Preauricular, Mastoides, Pómulo, Lengua, Mandíbula, Ángulo, Parótida.</li>
-      <li style="margin:6px 0;"><strong>Tórax:</strong> Pleura, Pulmón, Coronarias, Pericardio, Mediastino, Esternón, Cardias, Timo, Plexo cervical, Hombro, Brazo.</li>
-      <li style="margin:6px 0;"><strong>Abdomen:</strong> Hígado, Vesícula, Bazo, Estómago, Páncreas, Duodeno, Riñones, Colon, Intestinos.</li>
-      <li style="margin:6px 0;"><strong>Pelvis y Miembros:</strong> Vejiga, Útero, Ovarios, Próstata, Sacro, Cadera, Miembros inferiores, Columna.</li>
+      <li style="margin:6px 0;" data-i18n-html="true"><strong>Espacios Potenciales:</strong> Piel, Peritoneo, Pleura, Periostio, Pericardio, Meninges, Cavidades Articulares.</li>
+      <li style="margin:6px 0;" data-i18n-html="true"><strong>Zona Pineal:</strong> Pre-Pineal, Pineal y Pos-Pineal. Aquí se identifica si existe disfunción pineal, Cryptococcus, Guillain Barré o si el estudio se eleva a rastreo completo.</li>
+      <li style="margin:6px 0;" data-i18n-html="true"><strong>Cabeza y Cuello:</strong> Parietal, Hipófisis, Polo, Antecuerno, Quiasma, Polígono de Willis, Sien, Ojo, Cerebelo, Piso Orbital, Oído, Preauricular, Mastoides, Pómulo, Lengua, Mandíbula, Ángulo, Parótida.</li>
+      <li style="margin:6px 0;" data-i18n-html="true"><strong>Tórax:</strong> Pleura, Pulmón, Coronarias, Pericardio, Mediastino, Esternón, Cardias, Timo, Plexo cervical, Hombro, Brazo.</li>
+      <li style="margin:6px 0;" data-i18n-html="true"><strong>Abdomen:</strong> Hígado, Vesícula, Bazo, Estómago, Páncreas, Duodeno, Riñones, Colon, Intestinos.</li>
+      <li style="margin:6px 0;" data-i18n-html="true"><strong>Pelvis y Miembros:</strong> Vejiga, Útero, Ovarios, Próstata, Sacro, Cadera, Miembros inferiores, Columna.</li>
     </ul>
   </div>
 
-  <div class="sec-title" style="font-size:1.2rem;">Puntos de Resonancia Clave</div>
+  <div class="sec-title" style="font-size:1.2rem;" data-i18n="rastreoResonanciaTitle">Puntos de Resonancia Clave</div>
   <div class="info-box" style="margin-bottom:24px;">
-    <p>Estos puntos se mencionan en la guía como referencias primarias para un rastreo completo en Bioenergética.</p>
+    <p data-i18n="rastreoResonanciaText">Estos puntos se mencionan en la guía como referencias primarias para un rastreo completo en Bioenergética.</p>
     <table style="width:100%;border-collapse:collapse;">
       <thead>
-        <tr><th style="text-align:left;padding:10px;border-bottom:1px solid #e2e8f0;">Punto</th><th style="text-align:left;padding:10px;border-bottom:1px solid #e2e8f0;">Resonancia / Patología</th></tr>
+        <tr><th style="text-align:left;padding:10px;border-bottom:1px solid #e2e8f0;" data-i18n="colPunto">Punto</th><th style="text-align:left;padding:10px;border-bottom:1px solid #e2e8f0;" data-i18n="colResonancia">Resonancia / Patología</th></tr>
       </thead>
       <tbody>
         <tr><td style="padding:10px;border-bottom:1px solid #f1f5f9;">Nervio Vago – Riñón</td><td style="padding:10px;border-bottom:1px solid #f1f5f9;">Benavides</td></tr>
@@ -393,75 +400,75 @@ td.td-img{width:60px;padding:6px 8px;}
     </table>
   </div>
 
-  <div class="sec-title" style="font-size:1.2rem;margin-top:28px;">Puntos de Inicio Recomendados</div>
+  <div class="sec-title" style="font-size:1.2rem;margin-top:28px;" data-i18n="rastreoInicioRecomendadoTitle">Puntos de Inicio Recomendados</div>
   <div class="cards" style="margin-top:12px;">
     <div class="card">
-      <h3>Pre-Pineal</h3>
-      <p>Asociado a vejiga y Cryptococcus neoformans. Sirve como punto inicial para detectar la disfunción pineal.</p>
+      <h3 data-i18n="puntoPrePineal">Pre-Pineal</h3>
+      <p data-i18n="puntoPrePinealText">Asociado a vejiga y Cryptococcus neoformans. Sirve como punto inicial para detectar la disfunción pineal.</p>
     </div>
     <div class="card verde">
-      <h3>Pineal</h3>
-      <p>Centro de control pineal. Busca disfunción pineal y resonancias con el bulbo raquídeo.</p>
+      <h3 data-i18n="puntoPineal">Pineal</h3>
+      <p data-i18n="puntoPinealText">Centro de control pineal. Busca disfunción pineal y resonancias con el bulbo raquídeo.</p>
     </div>
     <div class="card morado">
-      <h3>Pos-Pineal</h3>
-      <p>Indica que el rastreo asciende a un nivel completo. Se utiliza para validar la continuidad del protocolo Bioenergética.</p>
+      <h3 data-i18n="puntoPosPineal">Pos-Pineal</h3>
+      <p data-i18n="puntoPosPinealText">Indica que el rastreo asciende a un nivel completo. Se utiliza para validar la continuidad del protocolo Bioenergética.</p>
     </div>
     <div class="card naranja">
-      <h3>Parietal y Hipófisis</h3>
-      <p>Claves en los desequilibrios neurológicos y hormonales de segundo nivel.</p>
+      <h3 data-i18n="puntoParietal">Parietal y Hipófisis</h3>
+      <p data-i18n="puntoParietalText">Claves en los desequilibrios neurológicos y hormonales de segundo nivel.</p>
     </div>
     <div class="card rojo">
-      <h3>Cardias y Esternón</h3>
-      <p>Puntos de referencia para trastornos digestivos, cardiacos y emocionales.</p>
+      <h3 data-i18n="puntoCardias">Cardias y Esternón</h3>
+      <p data-i18n="puntoCardiasText">Puntos de referencia para trastornos digestivos, cardiacos y emocionales.</p>
     </div>
     <div class="card" style="border-left-color:#0891b2;">
-      <h3>Colon Transverso y Sacro</h3>
-      <p>Importantes para el rastreo de disfunciones intestinales y ginecológicas.</p>
+      <h3 data-i18n="puntoColonSacro">Colon Transverso y Sacro</h3>
+      <p data-i18n="puntoColonSacroText">Importantes para el rastreo de disfunciones intestinales y ginecológicas.</p>
     </div>
   </div>
 
-  <div class="sec-title" style="font-size:1.2rem;margin-top:28px;">Pares Hormonales</div>
+  <div class="sec-title" style="font-size:1.2rem;margin-top:28px;" data-i18n="paresHormonalesTitle">Pares Hormonales</div>
   <div class="table-wrap">
     <table>
-      <thead><tr><th>Glándula</th><th>Condición</th></tr></thead>
+      <thead><tr><th data-i18n="colGlandula">Glándula</th><th data-i18n="colCondicion">Condición</th></tr></thead>
       <tbody>
-        <tr><td>Timo – Suprarrenal</td><td>Disfunción inmunohormonal</td></tr>
-        <tr><td>Hipófisis – Hipófisis</td><td>Disfunción hipofisiaria</td></tr>
-        <tr><td>Tiroides – Tiroides</td><td>Disfunción tiroidea</td></tr>
-        <tr><td>Testículos u Ovarios</td><td>Disfunción gonadal</td></tr>
-        <tr><td>Suprarrenales – Suprarrenales</td><td>Disfunción suprarrenal</td></tr>
-        <tr><td>Hipotálamo – Hipotálamo</td><td>Disfunción hipotalámica</td></tr>
+        <tr><td>Timo – Suprarrenal</td><td data-i18n="hormonal1">Disfunción inmunohormonal</td></tr>
+        <tr><td>Hipófisis – Hipófisis</td><td data-i18n="hormonal2">Disfunción hipofisiaria</td></tr>
+        <tr><td>Tiroides – Tiroides</td><td data-i18n="hormonal3">Disfunción tiroidea</td></tr>
+        <tr><td>Testículos u Ovarios</td><td data-i18n="hormonal4">Disfunción gonadal</td></tr>
+        <tr><td>Suprarrenales – Suprarrenales</td><td data-i18n="hormonal5">Disfunción suprarrenal</td></tr>
+        <tr><td>Hipotálamo – Hipotálamo</td><td data-i18n="hormonal6">Disfunción hipotalámica</td></tr>
       </tbody>
     </table>
   </div>
 
-  <div class="sec-title" style="font-size:1.2rem;margin-top:28px;">Pares Carenciales</div>
+  <div class="sec-title" style="font-size:1.2rem;margin-top:28px;" data-i18n="paresCarencialesTitle">Pares Carenciales</div>
   <div class="table-wrap">
     <table>
-      <thead><tr><th>Tipo</th><th>Indicación</th></tr></thead>
+      <thead><tr><th data-i18n="colTipo">Tipo</th><th data-i18n="colIndicacion">Indicación</th></tr></thead>
       <tbody>
-        <tr><td>Vitaminas</td><td rowspan="7">Preguntar el elemento del cual carece el paciente y revisar carencias sistémicas</td></tr>
-        <tr><td>Minerales</td></tr>
-        <tr><td>Aminoácidos</td></tr>
-        <tr><td>Proteínas</td></tr>
-        <tr><td>Carbohidratos</td></tr>
-        <tr><td>Iones o Electrolitos</td></tr>
-        <tr><td>Deshidratación</td></tr>
+        <tr><td data-i18n="carencialVitaminas">Vitaminas</td><td rowspan="7" data-i18n="carencialInfo">Preguntar el elemento del cual carece el paciente y revisar carencias sistémicas</td></tr>
+        <tr><td data-i18n="carencialMinerales">Minerales</td></tr>
+        <tr><td data-i18n="carencialAminoacidos">Aminoácidos</td></tr>
+        <tr><td data-i18n="carencialProteinas">Proteínas</td></tr>
+        <tr><td data-i18n="carencialCarbohidratos">Carbohidratos</td></tr>
+        <tr><td data-i18n="carencialIones">Iones o Electrolitos</td></tr>
+        <tr><td data-i18n="carencialDeshidratacion">Deshidratación</td></tr>
       </tbody>
     </table>
   </div>
 
-  <div class="sec-title" style="font-size:1.2rem;margin-top:28px;">Protocolos Inmunológicos (Chakras)</div>
+  <div class="sec-title" style="font-size:1.2rem;margin-top:28px;" data-i18n="protocolosInmunologicosTitle">Protocolos Inmunológicos (Chakras)</div>
   <div class="table-wrap">
     <table>
-      <thead><tr><th>Chakra</th><th>Par</th></tr></thead>
+      <thead><tr><th data-i18n="colChakra">Chakra</th><th data-i18n="colPar">Par</th></tr></thead>
       <tbody>
-        <tr><td>Chakra 7</td><td>Pineal – Pineal</td></tr>
-        <tr><td></td><td>Timo – Timo</td></tr>
-        <tr><td></td><td>Bazo – Bazo</td></tr>
-        <tr><td></td><td>Bazo – Hígado</td></tr>
-        <tr><td></td><td>Apéndice – Timo</td></tr>
+        <tr><td>Chakra 7</td><td data-i18n="chakraPineal">Pineal – Pineal</td></tr>
+        <tr><td></td><td data-i18n="chakraTimo">Timo – Timo</td></tr>
+        <tr><td></td><td data-i18n="chakraBazo">Bazo – Bazo</td></tr>
+        <tr><td></td><td data-i18n="chakraBazoHigado">Bazo – Hígado</td></tr>
+        <tr><td></td><td data-i18n="chakraApendice">Apéndice – Timo</td></tr>
       </tbody>
     </table>
   </div>
@@ -469,20 +476,20 @@ td.td-img{width:60px;padding:6px 8px;}
 
 <!-- ======== EMOCIONES ======== -->
 <div id="emociones" class="section">
-  <div class="sec-title">Pares Biomagnéticos Emocionales</div>
-  <div class="sec-sub">Relacionados a estados emocionales y psicoemocionales · Nivel 1 y 2</div>
+  <div class="sec-title" data-i18n="emocionesTitle">Pares Biomagnéticos Emocionales</div>
+  <div class="sec-sub" data-i18n="emocionesSubtitle">Relacionados a estados emocionales y psicoemocionales · Nivel 1 y 2</div>
 
   <div class="emotion-grid" id="emotion-grid"></div>
 </div>
 
 <!-- ======== ENFERMEDADES ======== -->
 <div id="enfermedades" class="section">
-  <div class="sec-title">Índice de Enfermedades y Protocolos</div>
-  <div class="sec-sub">Condiciones con protocolos de rastreo específicos (Nivel 2 · BRI 2017)</div>
+  <div class="sec-title" data-i18n="enfermedadesTitle">Índice de Enfermedades y Protocolos</div>
+  <div class="sec-sub" data-i18n="enfermedadesSubtitle">Condiciones con protocolos de rastreo específicos (Nivel 2 · BRI 2017)</div>
 
   <div class="search-bar">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-    <input type="text" id="enf-search" placeholder="Buscar enfermedad..." oninput="filterEnf()">
+    <input type="text" id="enf-search" placeholder="Buscar enfermedad..." data-i18n-placeholder="placeholderEnfSearch" oninput="filterEnf()">
   </div>
 
   <div class="disease-grid" id="disease-grid"></div>
@@ -495,12 +502,12 @@ td.td-img{width:60px;padding:6px 8px;}
 
 <!-- ======== BUSCAR ======== -->
 <div id="buscar" class="section">
-  <div class="sec-title">Búsqueda Global</div>
-  <div class="sec-sub">Busca por órgano, patología, microorganismo o número de par</div>
+  <div class="sec-title" data-i18n="buscarTitle">Búsqueda Global</div>
+  <div class="sec-sub" data-i18n="buscarSubtitle">Busca por órgano, patología, microorganismo o número de par</div>
 
   <div class="search-bar">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-    <input type="text" id="global-search" placeholder="Ej: hígado, herpes, VIH, 42..." oninput="globalSearch()" autofocus>
+    <input type="text" id="global-search" placeholder="Ej: hígado, herpes, VIH, 42..." data-i18n-placeholder="placeholderGlobalSearch" oninput="globalSearch()" autofocus>
   </div>
 
   <div id="search-results"></div>
@@ -917,7 +924,7 @@ const ENFERMEDADES = [
 // ============================================================
 function tagHTML(t){
   const m={virus:'tag-v',bacteria:'tag-b',hongo:'tag-h',parasito:'tag-p',especial:'tag-e'};
-  const l={virus:'Virus',bacteria:'Bacteria',hongo:'Hongo',parasito:'Parásito',especial:'Especial'};
+  const l={virus:translate('virusLabel'),bacteria:translate('bacteriaLabel'),hongo:translate('hongoLabel'),parasito:translate('parasitoLabel'),especial:translate('especialLabel')};
   return `<span class="tag ${m[t]||'tag-e'}">${l[t]||t}</span>`;
 }
 
@@ -928,19 +935,19 @@ function openPB(n){
   const d=all.find(x=>x.n===n);
   if(!d)return;
   const modal=document.getElementById('pb-modal');
-  document.getElementById('modal-title').textContent=`PB ${d.n} · ${d.r} – ${d.i}`;
+  document.getElementById('modal-title').innerHTML=`PB ${d.n} · ${formatDualLabelSm(d.r, translatePoint(d.r))} – ${formatDualLabelSm(d.i, translatePoint(d.i))}`;
   document.getElementById('modal-img').src=pbImgPath(d.n);
-  document.getElementById('modal-neg').textContent=`– ${d.r} (polo negativo)`;
-  document.getElementById('modal-pos').textContent=`+ ${d.i} (polo positivo)`;
-  const typeLabel={virus:'Virus',bacteria:'Bacteria',hongo:'Hongo',parasito:'Parásito',especial:'Especial'};
+  document.getElementById('modal-neg').textContent=`– ${d.r} (${translate('poloNegativo')})`;
+  document.getElementById('modal-pos').textContent=`+ ${d.i} (${translate('poloPositivo')})`;
+  const typeLabel={virus:translate('virusLabel'),bacteria:translate('bacteriaLabel'),hongo:translate('hongoLabel'),parasito:translate('parasitoLabel'),especial:translate('especialLabel')};
   document.getElementById('modal-info').innerHTML=`
-    <h3>Relación patológica</h3>
-    <p>${d.p} ${tagHTML(d.t)}</p>
-    ${d.s?`<h3>Sintomatología asociada</h3><p>${d.s}</p>`:''}
-    <h3>Nivel</h3>
-    <p>${d.n<=210?'Nivel 1 — Biomagnetismo (Guía BRI 2017)':'Nivel 2 — Bioenergética (Guía BRI 2017)'}</p>
-    <h3>Posicionamiento</h3>
-    <p>Imán <strong>negativo (–)</strong> en <em>${d.r}</em>.<br>Imán <strong>positivo (+)</strong> en <em>${d.i}</em>.</p>
+    <h3>${translate('modalRelation')}</h3>
+    <p>${formatDualLabel(d.p, translatePathology(d.p))} ${tagHTML(d.t)}</p>
+    ${d.s?`<h3>${translate('modalSymptoms')}</h3><p>${formatDualLabel(d.s, translatePathology(d.s))}</p>`:''}
+    <h3>${translate('modalLevel')}</h3>
+    <p>${d.n<=210?translate('modalLevel1'):translate('modalLevel2')}</p>
+    <h3>${translate('modalPositioning')}</h3>
+    <p>${translate('modalPositioningText1')} <strong>–</strong> ${translate('on')} <em>${formatDualLabel(d.r, translatePoint(d.r))}</em>.<br>${translate('modalPositioningText2')} <strong>+</strong> ${translate('on')} <em>${formatDualLabel(d.i, translatePoint(d.i))}</em>.</p>
   `;
   modal.classList.add('open');
   document.body.style.overflow='hidden';
@@ -959,9 +966,9 @@ function renderTable(data, tbodyId){
     <tr data-tipo="${d.t}" style="cursor:pointer" onclick="openPB(${d.n})">
       <td class="td-img"><img class="pb-thumb" src="${pbImgPath(d.n)}" alt="PB ${d.n}" loading="lazy" onerror="this.style.display='none'"></td>
       <td><span class="pb-num">${d.n}</span></td>
-      <td><strong>${d.r}</strong></td>
-      <td>${d.i}</td>
-      <td>${d.p}${d.s?`<br><small style="color:#64748b">${d.s}</small>`:''}</td>
+      <td><strong>${formatDualLabel(d.r, translatePoint(d.r))}</strong></td>
+      <td>${formatDualLabel(d.i, translatePoint(d.i))}</td>
+      <td>${formatDualLabel(d.p, translatePathology(d.p))}${d.s?`<br><small style="color:#64748b">${formatDualLabel(d.s, translatePathology(d.s))}</small>`:''}</td>
       <td>${tagHTML(d.t)}</td>
     </tr>`).join('');
 }
@@ -990,8 +997,8 @@ function renderEmotions(){
     <div class="emotion-card">
       <div class="emotion-icon">${e.e}</div>
       <div>
-        <h4>${e.nom} <small style="color:#94a3b8;font-weight:400">N${e.nivel}</small></h4>
-        <p>– ${e.r}<br>+ ${e.i}</p>
+        <h4>${formatDualLabel(e.nom, translatePathology(e.nom))} <small style="color:#94a3b8;font-weight:400">N${e.nivel}</small></h4>
+        <p>– ${formatDualLabel(e.r, translatePoint(e.r))}<br>+ ${formatDualLabel(e.i, translatePoint(e.i))}</p>
       </div>
     </div>`).join('');
 }
@@ -999,7 +1006,7 @@ function renderEmotions(){
 function renderDiseases(){
   const g = document.getElementById('disease-grid');
   g.innerHTML = ENFERMEDADES.map(e=>`
-    <div class="disease-item" onclick="showEnfDetail('${e}')">${e}</div>`).join('');
+    <div class="disease-item" onclick="showEnfDetail('${e}')">${formatDualLabel(e, translatePathology(e))}</div>`).join('');
 }
 
 function filterEnf(){
@@ -1015,7 +1022,7 @@ function pbMiniCard(n){
   if(!pb)return'';
   return`<div class="pb-mini-card" onclick="openPB(${n})" title="PB ${n}: ${pb.r} – ${pb.i}">
     <img src="${pbImgPath(n)}" onerror="this.style.display='none'" loading="lazy">
-    <div><div class="pb-mini-num">PB ${n} ${tagHTML(pb.t)}</div><div class="pb-mini-name">${pb.r} – ${pb.i}</div><div style="font-size:.72rem;color:#64748b;margin-top:2px">${pb.p.split('(')[0].trim()}</div></div>
+    <div><div class="pb-mini-num">PB ${n} ${tagHTML(pb.t)}</div><div class="pb-mini-name">${formatDualLabel(pb.r, translatePoint(pb.r))} – ${formatDualLabel(pb.i, translatePoint(pb.i))}</div><div style="font-size:.72rem;color:#64748b;margin-top:2px">${formatDualLabel(pb.p.split('(')[0].trim(), translatePathology(pb.p.split('(')[0].trim()))}</div></div>
   </div>`;
 }
 
@@ -1026,7 +1033,7 @@ function renderTop10Block(catName, idx){
     <button class="top10-toggle" onclick="toggleTop(this)">
       <span>${catName}</span><span>▼</span>
     </button>
-    <div class="top10-content"><p style="font-size:.8rem;color:#64748b;padding:6px 4px;">Ver guía BRI 2017 para lista completa.</p></div>
+    <div class="top10-content"><p style="font-size:.8rem;color:#64748b;padding:6px 4px;">${translate('seeGuideText')}</p></div>
   </div>`;
   return`<div class="top10-section">
     <button class="top10-toggle" onclick="toggleTop(this)">
@@ -1046,7 +1053,7 @@ function toggleTop(btn){
 
 function showEnfDetail(name){
   const detail = document.getElementById('enf-detail');
-  document.getElementById('enf-title').textContent = name;
+  document.getElementById('enf-title').innerHTML = formatDualLabelSm(name, translatePathology(name));
 
   // Look up in DISEASE_DATA first
   const proto = (typeof DISEASE_DATA!=='undefined') ? DISEASE_DATA[name] : null;
@@ -1068,22 +1075,22 @@ function showEnfDetail(name){
 
     html = `<div class="enf-detail-box">
       <div class="enf-detail-header">
-        <h3>${name}</h3>
-        <p>Protocolo de Par Biomagnético · Fuente: Guía BRI 2017 (LINDE 3 + Kronos)</p>
+        <h3>${formatDualLabelSm(name, translatePathology(name))}</h3>
+        <p>${translate('enfDetailSource')}</p>
       </div>
       <div class="enf-body">
         <div class="enf-col">
-          <h4>Pares Específicos del Protocolo</h4>
+          <h4>${translate('enfSpecificPairs')}</h4>
           ${specificPBs.length
             ? `<div class="pb-card-grid">${specificPBs.join('')}</div>`
-            : '<p style="font-size:.83rem;color:#64748b;">Aplicar Protocolo Básico + categorías listadas.</p>'
+            : `<p style="font-size:.83rem;color:#64748b;">${translate('enfFallbackProtocol')}</p>`
           }
-          ${extraPBs.length ? `<h4 style="margin-top:14px;">PBs relacionados por patología</h4><div class="pb-card-grid">${extraPBs.join('')}</div>` : ''}
+          ${extraPBs.length ? `<h4 style="margin-top:14px;">${translate('enfRelatedByPathology')}</h4><div class="pb-card-grid">${extraPBs.join('')}</div>` : ''}
           ${proto.notes ? `<div class="enf-note">ℹ️ ${proto.notes}</div>` : ''}
         </div>
         <div class="enf-col">
-          <h4>Protocolos de Rastreo</h4>
-          ${renderTop10Block('Protocolo Básico', 0)}
+          <h4>${translate('enfTrackingProtocols')}</h4>
+          ${renderTop10Block(translate('basicProtocol'), 0)}
           ${(proto.tops||[]).map((t,i)=>renderTop10Block(t,i+1)).join('')}
         </div>
       </div>
@@ -1091,15 +1098,15 @@ function showEnfDetail(name){
   } else if(related.length>0){
     html = `<div class="enf-detail-box">
       <div class="enf-detail-header">
-        <h3>${name}</h3>
-        <p>PBs relacionados por búsqueda de patología</p>
+        <h3>${formatDualLabelSm(name, translatePathology(name))}</h3>
+        <p>${translate('enfRelatedBySearch')}</p>
       </div>
       <div class="enf-col" style="padding:18px 20px;">
         <div class="pb-card-grid">${related.map(pb=>pbMiniCard(pb.n)).filter(Boolean).join('')}</div>
       </div>
     </div>`;
   } else {
-    html = `<div class="enf-detail-box"><div class="enf-col" style="padding:18px 20px;"><p style="color:#64748b;">Ver protocolos específicos en la guía BRI 2017 Nivel 2.</p></div></div>`;
+    html = `<div class="enf-detail-box"><div class="enf-col" style="padding:18px 20px;"><p style="color:#64748b;">${translate('enfNoProtocolGuide')}</p></div></div>`;
   }
 
   document.getElementById('enf-content').innerHTML = html;
@@ -1108,6 +1115,687 @@ function showEnfDetail(name){
 }
 
 function norm(s){return s.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();}
+
+const TRANSLATIONS = {
+  es: {
+    title:'Par Biomagnético — Guía de Referencia',
+    headerTitle:'🧲 Par Biomagnético',
+    headerSubtitle:'Guía completa de referencia — Niveles 1 y 2 · Dr. Isaac Goiz Durán · David Goiz Martínez',
+    badgeNivel1:'210 Pares Nivel 1',
+    badgeNivel2:'115 Pares Nivel 2',
+    badgeEmocionales:'28 Pares Emocionales',
+    badgeRastreo:'Protocolos de Rastreo',
+    badgeEnfermedades:'Índice de Enfermedades',
+    langButton:'ES / RU',
+    navIntro:'Introducción',
+    navNivel1:'Nivel 1 (210 PBs)',
+    navNivel2:'Nivel 2 (115 PBs)',
+    navRastreo:'Protocolo de Rastreo',
+    navEmociones:'Pares Emocionales',
+    navEnfermedades:'Índice de Enfermedades',
+    navBuscar:'🔍 Buscar',
+    introTitle:'¿Qué es el Par Biomagnético?',
+    introSubtitle:'Técnica terapéutica desarrollada por el Dr. Isaac Goiz Durán — más de 28 años de desarrollo',
+    definicionTitle:'Definición',
+    cardTecnica:'🔬 Técnica',
+    cardTecnicaText:'Conjunto de procedimientos, metodologías y protocolos de rastreo con propósitos específicos a corto, mediano y largo plazo.',
+    cardTerapeutica:'🌿 Terapéutica',
+    cardTerapeuticaText:'Su objetivo principal es mantener o restablecer la salud, definida como bienestar Biopsicoecosocial.',
+    cardIntegrativa:'🔗 Integrativa',
+    cardIntegrativaText:'Puede realizarse antes, durante y después de una enfermedad, sin afectar el tratamiento médico de base.',
+    cardVibracional:'⚡ Vibracional',
+    cardVibracionalText:'No se introduce ni extrae ningún sólido, líquido o gas en el organismo. No se manipula excesivamente ninguna parte del cuerpo.',
+    cardEstabilizadora:'⚖️ Estabilizadora',
+    cardEstabilizadoraText:'Provee al organismo un estado equilibrado de bioelectricidad mediante el uso correcto de campos magnéticos.',
+    cardFacilitadora:'🧭 Facilitadora',
+    cardFacilitadoraText:'No es curativa por definición legal; es un complemento que facilita el restablecimiento de las condiciones de salud.',
+    beneficiosTitle:'Beneficios de la Técnica',
+    beneficio1:'Promueve el estado de Homeostasis en el organismo',
+    beneficio2:'Promueve un estado equilibrado de pH en el organismo',
+    beneficio3:'Promueve la adecuada activación de la respuesta inmunitaria',
+    beneficio4:'Promueve el restablecimiento en la función normal de glándulas y órganos',
+    beneficio5:'Promueve la desintoxicación del organismo',
+    beneficio6:'Promueve la reparación de tejidos dañados (fracturas, esguinces, neuropatía, etc.)',
+    beneficio7:'Disminuye los efectos adversos de tratamientos médicos convencionales',
+    beneficio8:'Disminuye los riesgos quirúrgicos (inflamación, infección, hemorragia)',
+    beneficio9:'Disminuye los tiempos de hospitalización, convalecencia y rehabilitación',
+    tiposTitle:'Tipos de Pares Biomagnéticos',
+    tagVirus:'VIRUS',
+    tagBacterias:'BACTERIAS',
+    tagHongos:'HONGOS',
+    tagParasitos:'PARÁSITOS',
+    tagEspeciales:'ESPECIALES',
+    parRegular:'Pares Regulares',
+    parVirusText:'Relacionados a microorganismos patógenos específicos. Ejemplo: Axila–Axila = Rabia Virus',
+    parBacteriaText:'Asociados a infecciones bacterianas. Ejemplo: Mandíbula–Mandíbula = Neisseria Gonorrhoeae',
+    parHongoText:'Relacionados a infecciones fúngicas. Ejemplo: Diafragma–Diafragma = Candida Albicans',
+    parParasitoText:'Relacionados a infestaciones parasitarias. Ejemplo: Oído–Oído = Toxoplasma Gondii',
+    parEspecialText:'Disfuncionales, Psicoemocionales, Reservorios y Complejos. No relacionados directamente a microorganismos.',
+    cardReservorios:'🏺 Reservorios',
+    cardReservoriosText:'Pueden albergar temporalmente microorganismos de PBs regulares. Al impactarse, permiten que aparezcan en su PB correspondiente.',
+    autoresTitle:'Autores',
+    autorIsaac:'Científico mexicano. <strong>Descubridor del Par Biomagnético</strong> hace más de 28 años. Validó los PBs descritos en las guías en miles de pacientes.',
+    autorDavid:'Director del <strong>Biomagnetism Research Institute (BRI)</strong>. Autor de la Guía de PBs 2017 con 210 PBs de Nivel 1 y 115 PBs de Nivel 2.',
+    nivel2Title:'Pares Biomagnéticos — Nivel 2 (Bioenergética)',
+    nivel2Subtitle:'115 pares adicionales (PBs 211–325) · Fuente: Guía BRI 2017 Nivel 2',
+    filterTodos210:'Todos (210)',
+    filterVirus55:'🔵 Virus (55)',
+    filterBacterias58:'🟢 Bacterias (58)',
+    filterHongos12:'🟡 Hongos (12)',
+    filterParasitos19:'🔴 Parásitos (19)',
+    filterEspeciales66:'🟣 Especiales (66)',
+    filterTodos115:'Todos (115)',
+    filterVirus:'🔵 Virus',
+    filterBacterias:'🟢 Bacterias',
+    filterHongos:'🟡 Hongos',
+    filterParasitos:'🔴 Parásitos',
+    filterEspeciales:'🟣 Especiales',
+    tableHash:'#',
+    tableRastreo:'Punto Rastreo (–)',
+    tableImpacto:'Punto Impacto (+)',
+    tableRelacion:'Relación / Patología',
+    tableRelacionShort:'Relación',
+    tableTipo:'Tipo',
+    rastreoTitle:'Protocolo de Rastreo Completo Bioenergética',
+    rastreoSubtitle:'Guía de Rastreo Segundo Nivel · Dr. Isaac Goiz Martínez',
+    rastreoInicioTitle:'Inicio del Rastreo',
+    rastreoInicioText:'El rastreo completo Bioenergética comienza con el reconocimiento del campo y la autorización del paciente.',
+    rastreoStep2:'Solicitar autorización para la terapia, mencionando al paciente por su nombre.',
+    rastreoStep3:'Preguntar explícitamente si podemos iniciar el rastreo.',
+    rastreoFasesTitle:'Fases del Rastreo Completo',
+    rastreoFasesText:'La Guía de Segundo Nivel señala seis etapas centrales para el rastreo bioenergético completo.',
+    rastreoResonanciaTitle:'Puntos de Resonancia Clave',
+    rastreoResonanciaText:'Estos puntos se mencionan en la guía como referencias primarias para un rastreo completo en Bioenergética.',
+    colPunto:'Punto',
+    colResonancia:'Resonancia / Patología',
+    rastreoInicioRecomendadoTitle:'Puntos de Inicio Recomendados',
+    puntoPrePineal:'Pre-Pineal',
+    puntoPrePinealText:'Asociado a vejiga y Cryptococcus neoformans. Sirve como punto inicial para detectar la disfunción pineal.',
+    puntoPineal:'Pineal',
+    puntoPinealText:'Centro de control pineal. Busca disfunción pineal y resonancias con el bulbo raquídeo.',
+    puntoPosPineal:'Pos-Pineal',
+    puntoPosPinealText:'Indica que el rastreo asciende a un nivel completo. Se utiliza para validar la continuidad del protocolo Bioenergética.',
+    puntoParietal:'Parietal y Hipófisis',
+    puntoParietalText:'Claves en los desequilibrios neurológicos y hormonales de segundo nivel.',
+    puntoCardias:'Cardias y Esternón',
+    puntoCardiasText:'Puntos de referencia para trastornos digestivos, cardiacos y emocionales.',
+    puntoColonSacro:'Colon Transverso y Sacro',
+    puntoColonSacroText:'Importantes para el rastreo de disfunciones intestinales y ginecológicas.',
+    paresHormonalesTitle:'Pares Hormonales',
+    colGlandula:'Glándula',
+    colCondicion:'Condición',
+    hormonal1:'Disfunción inmunohormonal',
+    hormonal2:'Disfunción hipofisiaria',
+    hormonal3:'Disfunción tiroidea',
+    hormonal4:'Disfunción gonadal',
+    hormonal5:'Disfunción suprarrenal',
+    hormonal6:'Disfunción hipotalámica',
+    paresCarencialesTitle:'Pares Carenciales',
+    colTipo:'Tipo',
+    colIndicacion:'Indicación',
+    carencialVitaminas:'Vitaminas',
+    carencialMinerales:'Minerales',
+    carencialAminoacidos:'Aminoácidos',
+    carencialProteinas:'Proteínas',
+    carencialCarbohidratos:'Carbohidratos',
+    carencialIones:'Iones o Electrolitos',
+    carencialDeshidratacion:'Deshidratación',
+    carencialInfo:'Preguntar el elemento del cual carece el paciente y revisar carencias sistémicas',
+    protocolosInmunologicosTitle:'Protocolos Inmunológicos (Chakras)',
+    colChakra:'Chakra',
+    colPar:'Par',
+    chakraPineal:'Pineal – Pineal',
+    chakraTimo:'Timo – Timo',
+    chakraBazo:'Bazo – Bazo',
+    chakraBazoHigado:'Bazo – Hígado',
+    chakraApendice:'Apéndice – Timo',
+    emocionesTitle:'Pares Biomagnéticos Emocionales',
+    emocionesSubtitle:'Relacionados a estados emocionales y psicoemocionales · Nivel 1 y 2',
+    enfermedadesTitle:'Índice de Enfermedades y Protocolos',
+    enfermedadesSubtitle:'Condiciones con protocolos de rastreo específicos (Nivel 2 · BRI 2017)',
+    placeholderEnfSearch:'Buscar enfermedad...',
+    buscarTitle:'Búsqueda Global',
+    buscarSubtitle:'Busca por órgano, patología, microorganismo o número de par',
+    placeholderGlobalSearch:'Ej: hígado, herpes, VIH, 42...',
+    searchNoResults:'No se encontraron resultados.',
+    searchResultsCount:'resultado(s) — haz clic en cualquier fila para ver el diagrama',
+    modalRelation:'Relación patológica',
+    modalSymptoms:'Sintomatología asociada',
+    modalLevel:'Nivel',
+    modalLevel1:'Nivel 1 — Biomagnetismo (Guía BRI 2017)',
+    modalLevel2:'Nivel 2 — Bioenergética (Guía BRI 2017)',
+    modalPositioning:'Posicionamiento',
+    modalPositioningText1:'Imán',
+    modalPositioningText2:'Imán',
+    on:'en',
+    poloNegativo:'polo negativo',
+    poloPositivo:'polo positivo',
+    enfDetailSource:'Protocolo de Par Biomagnético · Fuente: Guía BRI 2017 (LINDE 3 + Kronos)',
+    enfSpecificPairs:'Pares Específicos del Protocolo',
+    enfFallbackProtocol:'Aplicar Protocolo Básico + categorías listadas.',
+    enfRelatedByPathology:'PBs relacionados por patología',
+    enfTrackingProtocols:'Protocolos de Rastreo',
+    basicProtocol:'Protocolo Básico',
+    enfRelatedBySearch:'PBs relacionados por búsqueda de patología',
+    enfNoProtocolGuide:'Ver protocolos específicos en la guía BRI 2017 Nivel 2.',
+    seeGuideText:'Ver guía BRI 2017 para lista completa.'
+  },
+  ru: {
+    title:'Биомагнитная пара — Справочное руководство',
+    headerTitle:'🧲 Биомагнитная пара',
+    headerSubtitle:'Полное справочное руководство — Уровни 1 и 2 · Др. Исаак Гойз Дуран · Дэвид Гойз Мартинес',
+    badgeNivel1:'210 пар Уровень 1',
+    badgeNivel2:'115 пар Уровень 2',
+    badgeEmocionales:'28 эмоциональных пар',
+    badgeRastreo:'Протоколы сканирования',
+    badgeEnfermedades:'Индекс заболеваний',
+    langButton:'RU / ES',
+    navIntro:'Введение',
+    navNivel1:'Уровень 1 (210 PB)',
+    navNivel2:'Уровень 2 (115 PB)',
+    navRastreo:'Протокол сканирования',
+    navEmociones:'Эмоциональные пары',
+    navEnfermedades:'Индекс заболеваний',
+    navBuscar:'🔍 Поиск',
+    introTitle:'Что такое биомагнитная пара?',
+    introSubtitle:'Терапевтическая методика, разработанная др. Исааком Гойз Дураном — более 28 лет развития',
+    definicionTitle:'Определение',
+    cardTecnica:'🔬 Техника',
+    cardTecnicaText:'Набор процедур, методик и протоколов сканирования для краткосрочной, среднесрочной и долгосрочной работы.',
+    cardTerapeutica:'🌿 Терапевтическая',
+    cardTerapeuticaText:'Ее основная цель — поддерживать или восстанавливать здоровье, определяемое как биопсихоэкосоциальное благополучие.',
+    cardIntegrativa:'🔗 Интегративная',
+    cardIntegrativaText:'Может выполняться до, во время и после болезни, не влияя на основное медицинское лечение.',
+    cardVibracional:'⚡ Вибрационная',
+    cardVibracionalText:'В организм не вводится и не извлекается никаких твердых, жидких или газообразных веществ. Нет чрезмерного воздействия на части тела.',
+    cardEstabilizadora:'⚖️ Стабилизирующая',
+    cardEstabilizadoraText:'Обеспечивает организму сбалансированное биоэлектрическое состояние посредством правильного использования магнитных полей.',
+    cardFacilitadora:'🧭 Сопровождающая',
+    cardFacilitadoraText:'Не является лечебной по юридическому определению; это дополнение, которое облегчает восстановление условий здоровья.',
+    beneficiosTitle:'Преимущества техники',
+    beneficio1:'Содействует состоянию гомеостаза в организме',
+    beneficio2:'Поддерживает сбалансированный pH организма',
+    beneficio3:'Способствует адекватной активации иммунного ответа',
+    beneficio4:'Способствует восстановлению нормального функционирования желез и органов',
+    beneficio5:'Способствует детоксикации организма',
+    beneficio6:'Способствует восстановлению поврежденных тканей (переломы, растяжения, невропатия и др.)',
+    beneficio7:'Уменьшает побочные эффекты традиционного медицинского лечения',
+    beneficio8:'Снижает хирургические риски (воспаление, инфекция, кровотечение)',
+    beneficio9:'Уменьшает время госпитализации, выздоровления и реабилитации',
+    tiposTitle:'Типы биомагнитных пар',
+    tagVirus:'ВИРУСЫ',
+    tagBacterias:'БАКТЕРИИ',
+    tagHongos:'ГРИБЫ',
+    tagParasitos:'ПАРАЗИТЫ',
+    tagEspeciales:'СПЕЦИАЛЬНЫЕ',
+    parRegular:'Обычные пары',
+    parVirusText:'Связаны с конкретными патогенными микроорганизмами. Пример: Подмышка–Подмышка = Вирус бешенства',
+    parBacteriaText:'Связаны с бактериальными инфекциями. Пример: Челюсть–Челюсть = Neisseria Gonorrhoeae',
+    parHongoText:'Связаны с грибковыми инфекциями. Пример: Диафрагма–Диафрагма = Candida Albicans',
+    parParasitoText:'Связаны с паразитарными инвазиями. Пример: Ухо–Ухо = Toxoplasma Gondii',
+    parEspecialText:'Дисфункциональные, психоэмоциональные, резервуары и комплексы. Не связаны напрямую с микроорганизмами.',
+    cardReservorios:'🏺 Резервуары',
+    cardReservoriosText:'Могут временно хранить микроорганизмы из обычных PB. При воздействии они проявляются в соответствующем PB.',
+    autoresTitle:'Авторы',
+    autorIsaac:'Мексиканский ученый. <strong>Открыватель биомагнитной пары</strong> более 28 лет назад. Валидация PB, описанных в руководствах, на тысячах пациентов.',
+    autorDavid:'Директор Biomagnetism Research Institute (BRI). Автор руководства PB 2017 с 210 PB уровня 1 и 115 PB уровня 2.',
+    nivel2Title:'Биомагнитные пары — Уровень 2 (Биоэнергетика)',
+    nivel2Subtitle:'115 дополнительных пар (PBs 211–325) · Источник: Руководство BRI 2017 Уровень 2',
+    filterTodos210:'Все (210)',
+    filterVirus55:'🔵 Вирусы (55)',
+    filterBacterias58:'🟢 Бактерии (58)',
+    filterHongos12:'🟡 Грибы (12)',
+    filterParasitos19:'🔴 Паразиты (19)',
+    filterEspeciales66:'🟣 Специальные (66)',
+    filterTodos115:'Все (115)',
+    filterVirus:'🔵 Вирусы',
+    filterBacterias:'🟢 Бактерии',
+    filterHongos:'🟡 Грибы',
+    filterParasitos:'🔴 Паразиты',
+    filterEspeciales:'🟣 Специальные',
+    tableHash:'#',
+    tableRastreo:'Точка сканирования (–)',
+    tableImpacto:'Точка воздействия (+)',
+    tableRelacion:'Связь / Патология',
+    tableRelacionShort:'Связь',
+    tableTipo:'Тип',
+    rastreoTitle:'Полный протокол сканирования Bioenergética',
+    rastreoSubtitle:'Руководство второго уровня сканирования · Др. Исаак Гойз Мартинес',
+    rastreoInicioTitle:'Начало сканирования',
+    rastreoInicioText:'Полное сканирование Bioenergética начинается с распознавания поля и разрешения пациента.',
+    rastreoStep2:'Запросите разрешение на терапию, называя пациента по имени.',
+    rastreoStep3:'Спросите прямо, можем ли мы начать сканирование.',
+    rastreoFasesTitle:'Этапы полного сканирования',
+    rastreoFasesText:'Руководство второго уровня выделяет шесть основных этапов для полного биоэнергетического сканирования.',
+    rastreoResonanciaTitle:'Ключевые точки резонанса',
+    rastreoResonanciaText:'Эти точки указываются в руководстве как первичные ориентиры для полного сканирования Bioenergética.',
+    colPunto:'Точка',
+    colResonancia:'Резонанс / Патология',
+    rastreoInicioRecomendadoTitle:'Рекомендуемые начальные точки',
+    puntoPrePineal:'Пре-Пинеальная',
+    puntoPrePinealText:'Связано с мочевым пузырем и Cryptococcus neoformans. Служит начальной точкой для обнаружения дисфункции пинеальной железы.',
+    puntoPineal:'Пинеальная',
+    puntoPinealText:'Центр управления пинеальной железой. Проверяет дисфункцию пинеальной железы и резонансы с продолговатым мозгом.',
+    puntoPosPineal:'Пост-Пинеальная',
+    puntoPosPinealText:'Указывает на то, что сканирование переходит на полный уровень. Используется для подтверждения непрерывности протокола Bioenergética.',
+    puntoParietal:'Париетальная и Гипофиз',
+    puntoParietalText:'Ключевые точки при неврологических и гормональных нарушениях второго уровня.',
+    puntoCardias:'Кардиас и Грудина',
+    puntoCardiasText:'Ориентиры для нарушений пищеварения, сердца и эмоций.',
+    puntoColonSacro:'Поперечный обод и Крестец',
+    puntoColonSacroText:'Важны для сканирования кишечных и гинекологических дисфункций.',
+    paresHormonalesTitle:'Гормональные пары',
+    colGlandula:'Железа',
+    colCondicion:'Состояние',
+    hormonal1:'Иммуногормональная дисфункция',
+    hormonal2:'Гипофизарная дисфункция',
+    hormonal3:'Тиреоидная дисфункция',
+    hormonal4:'Гонадальная дисфункция',
+    hormonal5:'Надпочечная дисфункция',
+    hormonal6:'Гипоталамическая дисфункция',
+    paresCarencialesTitle:'Пары дефицита',
+    colTipo:'Тип',
+    colIndicacion:'Показание',
+    carencialVitaminas:'Витамины',
+    carencialMinerales:'Минералы',
+    carencialAminoacidos:'Аминокислоты',
+    carencialProteinas:'Белки',
+    carencialCarbohidratos:'Углеводы',
+    carencialIones:'Ионы или электролиты',
+    carencialDeshidratacion:'Обезвоживание',
+    carencialInfo:'Спросите, какого элемента не хватает пациенту, и проверьте системные дефициты',
+    protocolosInmunologicosTitle:'Иммунологические протоколы (чакры)',
+    colChakra:'Чакра',
+    colPar:'Пара',
+    chakraPineal:'Пинеальная – Пинеальная',
+    chakraTimo:'Тимус – Тимус',
+    chakraBazo:'Селезенка – Селезенка',
+    chakraBazoHigado:'Селезенка – Печень',
+    chakraApendice:'Аппендикс – Тимус',
+    emocionesTitle:'Эмоциональные биомагнитные пары',
+    emocionesSubtitle:'Связано с эмоциональными и психоэмоциональными состояниями · Уровень 1 и 2',
+    enfermedadesTitle:'Индекс заболеваний и протоколы',
+    enfermedadesSubtitle:'Состояния с конкретными протоколами сканирования (Уровень 2 · BRI 2017)',
+    placeholderEnfSearch:'Искать болезнь...',
+    buscarTitle:'Глобальный поиск',
+    buscarSubtitle:'Ищите по органу, патологии, микроорганизму или номеру пары',
+    placeholderGlobalSearch:'Напр.: печень, герпес, ВИЧ, 42...',
+    searchNoResults:'Результаты не найдены.',
+    searchResultsCount:'результат(ов) — кликните по любой строке, чтобы увидеть диаграмму',
+    modalRelation:'Патологическое соответствие',
+    modalSymptoms:'Связанные симптомы',
+    modalLevel:'Уровень',
+    modalLevel1:'Уровень 1 — Биомагнетизм (Руководство BRI 2017)',
+    modalLevel2:'Уровень 2 — Биоэнергетика (Руководство BRI 2017)',
+    modalPositioning:'Расположение',
+    modalPositioningText1:'Магнит',
+    modalPositioningText2:'Магнит',
+    on:'в',
+    poloNegativo:'отрицательный полюс',
+    poloPositivo:'положительный полюс',
+    enfDetailSource:'Протокол биомагнитной пары · Источник: Руководство BRI 2017 (LINDE 3 + Kronos)',
+    enfSpecificPairs:'Специфические пары протокола',
+    enfFallbackProtocol:'Применяйте базовый протокол + категории из списка.',
+    enfRelatedByPathology:'PB, связанные с патологией',
+    enfTrackingProtocols:'Протоколы сканирования',
+    basicProtocol:'Базовый протокол',
+    enfRelatedBySearch:'PB, связанные поиском по патологии',
+    enfNoProtocolGuide:'См. специальные протоколы в руководстве BRI 2017 Уровень 2.',
+    seeGuideText:'См. руководство BRI 2017 для полного списка.'
+  }
+};
+
+const TRANSLATED_TERMS = {
+  ru: {
+    points: {
+      "Aductor":"Аддуктор",
+      "Agujero":"Отверстие",
+      "Amígdala Cerebral":"Мозговая миндалина",
+      "Amígdala Palatina":"Небная миндалина",
+      "Anexo":"Придаток",
+      "Ano":"Анус",
+      "Antecuerno":"Передний рог",
+      "Apéndice":"Аппендикс",
+      "Aquiles":"Ахиллово сухожилие",
+      "Arco Cigomático":"Скуловая дуга",
+      "Articulación":"Сустав",
+      "Atlas":"Атлант",
+      "Axila":"Подмышка",
+      "Bazo":"Селезенка",
+      "Borde Calloso":"Мозолистое тело",
+      "Botón Aórtico":"Аортальный узел",
+      "Braquial":"Плечевой",
+      "Bulbo Raquídeo":"Продолговатый мозг",
+      "Bursa":"Синовиальная сумка",
+      "Cabeza de Páncreas":"Голова поджелудочной железы",
+      "Cadera":"Бедро",
+      "Calcáneo":"Пяточная кость",
+      "Canto":"Угол",
+      "Cardias":"Кардиальный отдел",
+      "Carina":"Карина",
+      "Carótida":"Сонная артерия",
+      "Cava":"Полая вена",
+      "Ceja":"Бровь",
+      "Cerebelo":"Мозжечок",
+      "Cervical":"Шейный",
+      "Ciego":"Слепая кишка",
+      "Cisura Media":"Средняя борозда",
+      "Cisura de Silvio":"Сильвиева борозда",
+      "Ciático":"Седалищный",
+      "Clítoris":"Клитор",
+      "Codo":"Локоть",
+      "Cola de Páncreas":"Хвост поджелудочной железы",
+      "Colon Ascendente":"Восходящая ободочная кишка",
+      "Colon Descendente":"Нисходящая ободочная кишка",
+      "Colon Sigmoides":"Сигмовидная кишка",
+      "Colon Transverso":"Поперечная ободочная кишка",
+      "Comisura":"Комиссура",
+      "Condral":"Хрящевой",
+      "Conducto Deferente":"Семявыносящий проток",
+      "Conducto Espermático":"Семенной канал",
+      "Conducto de la Vesícula":"Проток желчного пузыря",
+      "Conducto del Páncreas":"Проток поджелудочной железы",
+      "Contraciego":"Противослепая",
+      "Corazón":"Сердце",
+      "Coronarias":"Коронарные артерии",
+      "Costal":"Реберный",
+      "Costal Anterior":"Переднее ребро",
+      "Costodiafragmático":"Реберно-диафрагмальный",
+      "Costohepático":"Реберно-печеночный",
+      "Coxis":"Копчик",
+      "Craneal":"Черепной",
+      "Cresta Ilíaca":"Подвздошный гребень",
+      "Cresta Isquiática":"Седалищный гребень",
+      "Cuadrado Lumbar":"Квадратная мышца поясницы",
+      "Cuello":"Шея",
+      "Cuerpo Calloso":"Мозолистое тело",
+      "Cuádriceps":"Четырехглавая мышца бедра",
+      "Cáliz Renal":"Почечная чашка",
+      "Cápsula Renal":"Почечная капсула",
+      "Cúbito":"Локтевая кость",
+      "Deltoides":"Дельтовидная мышца",
+      "Diafragma":"Диафрагма",
+      "Dorsal":"Грудной отдел",
+      "Dorsal 2":"Второй грудной позвонок",
+      "Dorsal 3":"Третий грудной позвонок",
+      "Dorsal 7":"Седьмой грудной позвонок",
+      "Dorso":"Спина",
+      "Dorso de la Mano":"Тыльная сторона кисти",
+      "Duodeno":"Двенадцатиперстная кишка",
+      "ECM":"Грудино-ключично-сосцевидная мышца",
+      "Empeine":"Подъем стопы",
+      "Epiplón":"Сальник",
+      "Escotadura Ciática":"Седалищная вырезка",
+      "Escápula":"Лопатка",
+      "Esfínter Uretral":"Уретральный сфинктер",
+      "Esternón":"Грудина",
+      "Estómago":"Желудок",
+      "Esófago":"Пищевод",
+      "Flanco":"Бок",
+      "Glándula Salival":"Слюнная железа",
+      "Glúteo":"Ягодичная мышца",
+      "Hiato Esofágico":"Пищеводное отверстие",
+      "Hipocampo":"Гиппокамп",
+      "Hipotálamo":"Гипоталамус",
+      "Hipófisis":"Гипофиз",
+      "Hombro":"Плечо",
+      "Hígado":"Печень",
+      "Húmero":"Плечевая кость",
+      "Ilíaco":"Подвздошный",
+      "Interciliar":"Межбровный",
+      "Interilíaco":"Межподвздошный",
+      "Isquión":"Седалищная кость",
+      "Lacrimal":"Слезный",
+      "Laringe":"Гортань",
+      "Latissimus Dorsi":"Широчайшая мышца спины",
+      "Lengua":"Язык",
+      "Lig. Ext. Rodilla":"Наружная связка колена",
+      "Lig. Int. Rodilla":"Внутренняя связка колена",
+      "Ligamento Hepático":"Печеночная связка",
+      "Ligamento Pancreático":"Поджелудочная связка",
+      "Lumbar":"Поясничный",
+      "Lunar":"Лунный",
+      "Malar":"Скуловой",
+      "Maléolo Interno":"Внутренняя лодыжка",
+      "Mama":"Молочная железа",
+      "Mandíbula":"Нижняя челюсть",
+      "Manubrio del Esternón":"Рукоятка грудины",
+      "Mastoides":"Сосцевидный отросток",
+      "Maxilar Superior":"Верхняя челюсть",
+      "Mediastino":"Средостение",
+      "Mesenterio":"Брыжейка",
+      "Mordida":"Прикус",
+      "Muñeca":"Запястье",
+      "Muñón":"Обрубок",
+      "Mácula":"Макула",
+      "Nariz":"Нос",
+      "Nervio Inguinal":"Паховый нерв",
+      "Nervio Vago":"Блуждающий нерв",
+      "Nudo Braquial":"Брахиальный узел",
+      "Nutricia":"Питательная",
+      "Occipital":"Затылочный",
+      "Ojo":"Глаз",
+      "Ombligo":"Пупок",
+      "Páncreas":"Поджелудочная железа",
+      "Paravertebral":"Паравертебральный",
+      "Peripancreático":"Околопанкреатический",
+      "Perirrenal":"Околопочечный",
+      "Peroné":"Малоберцовая кость",
+      "Pectoral":"Грудная мышца",
+      "Píloro":"Привратник",
+      "Pineal":"Шишковидная железа",
+      "Pospineal":"Пост-пинеальная",
+      "Pre-Pineal":"Пре-пинеальная",
+      "Preauricular":"Предушный",
+      "Próstata":"Предстательная железа",
+      "Pulmón":"Легкое",
+      "Pulmón Derecho":"Правое легкое",
+      "Pulmón Izquierdo":"Левое легкое",
+      "Plexo Lumbar":"Поясничное сплетение",
+      "Retroaxilar":"Заднеподмышечный",
+      "Retrohepático":"Ретропеченочный",
+      "Retroplantar":"Подошвенный задний",
+      "Riñón":"Почка",
+      "Rótula":"Коленная чашечка",
+      "Suelo Pélvico":"Тазовое дно",
+      "Talón":"Пятка",
+      "Temporal":"Височная кость",
+      "Testículo":"Яичко",
+      "Tiroides":"Щитовидная железа",
+      "Útero":"Матка"
+    },
+    pathologies: {
+      "Acné":"Акне",
+      "Adenoma hipofisiario":"Аденома гипофиза",
+      "Aftas bucales":"Язвочки во рту",
+      "Alcoholismo":"Алкоголизм",
+      "Alergia":"Аллергия",
+      "Alopecia":"Алопеция",
+      "Alzheimer":"Альцгеймер",
+      "Amenorrea":"Аменорея",
+      "Anemia":"Анемия",
+      "Anorexia":"Анорексия",
+      "Ansiedad":"Тревожность",
+      "Antibioticoterapia prolongada":"Длительная антибиотикотерапия",
+      "Arritmia":"Аритмия",
+      "Artritis Reumatoide":"Ревматоидный артрит",
+      "Artrosis":"Артроз",
+      "Ascitis":"Асцит",
+      "Asma":"Астма",
+      "Ataxia":"Атаксия",
+      "Ateroesclerosis":"Атеросклероз",
+      "Autismo":"Аутизм",
+      "Balanitis":"Балантит",
+      "Bartolinitis":"Бартолинит",
+      "Bocio":"Зоб",
+      "Botulismo":"Ботулизм",
+      "Bronquitis":"Бронхит",
+      "Bruxismo":"Бруксизм",
+      "Bulimia":"Булимия",
+      "Cáncer de Colon":"Рак толстой кишки",
+      "Cáncer de Estómago":"Рак желудка",
+      "Cáncer de Hígado":"Рак печени",
+      "Cáncer de Mama":"Рак молочной железы",
+      "Cáncer de Ovario":"Рак яичников",
+      "Cáncer de Páncreas":"Рак поджелудочной железы",
+      "Cáncer de Piel":"Рак кожи",
+      "Cáncer de Próstata":"Рак предстательной железы",
+      "Cáncer de Pulmón":"Рак легкого",
+      "Cáncer de Riñón":"Рак почки",
+      "Cáncer de Testículo":"Рак яичка",
+      "Cáncer de Tiroides":"Рак щитовидной железы",
+      "Cáncer de Vejiga":"Рак мочевого пузыря",
+      "Cáncer Óseo":"Рак кости",
+      "Candidiasis Vaginal":"Вагинальный кандидоз",
+      "Ciática":"Ишиас",
+      "Cistitis":"Цистит",
+      "Cólico Nefrítico":"Почечная колика",
+      "Colitis Ulcerativa":"Язвенный колит",
+      "Conjuntivitis":"Конъюнктивит",
+      "Déficit de Crecimiento":"Дефицит роста",
+      "Degeneración Macular":"Макулярная дегенерация",
+      "Demencia":"Деменция",
+      "Depresión":"Депрессия",
+      "Dermatitis Atópica":"Атопический дерматит",
+      "Diabetes Mellitus":"Сахарный диабет",
+      "Disfunción Eréctil":"Эректильная дисфункция",
+      "Dislexia":"Дислексия",
+      "Dismenorrea":"Дисменорея",
+      "Dispepsia":"Диспепсия",
+      "Diverticulitis":"Дивертикулит",
+      "Edema Pulmonar":"Отек легких",
+      "Endocarditis":"Эндокардит",
+      "Endometriosis":"Эндометриоз",
+      "Enfermedad Celiaca":"Целиакия",
+      "Enfermedad de Crohn":"Болезнь Крона",
+      "Enfermedad de Huntington":"Болезнь Хантингтона",
+      "Epilepsia":"Эпилепсия",
+      "Esclerosis Múltiple":"Рассеянный склероз",
+      "Espondilitis":"Спондилит",
+      "Fibromialgia":"Фибромиалгия",
+      "Gastritis":"Гастрит",
+      "Hepatitis A":"Гепатит А",
+      "Hepatitis B":"Гепатит B",
+      "Hepatitis C":"Гепатит C",
+      "Herpes Zóster":"Опоясывающий герпес",
+      "Hipertensión Arterial":"Артериальная гипертензия",
+      "Hipotiroidismo":"Гипотиреоз",
+      "Hipertiroidismo":"Гипертиреоз",
+      "Infertilidad":"Бесплодие",
+      "Insuficiencia Renal":"Почечная недостаточность",
+      "Leucemia":"Лейкемия",
+      "Lupus Eritematoso":"Красная волчанка",
+      "Meningitis":"Менингит",
+      "Migraña":"Мигрень",
+      "Obesidad":"Ожирение",
+      "Osteoporosis":"Остеопороз",
+      "Parkinson":"Болезнь Паркинсона",
+      "Prostatitis":"Простатит",
+      "Psoriasis":"Псориаз",
+      "Rinitis Alérgica":"Аллергический ринит",
+      "Síndrome de Colon Irritable":"Синдром раздраженного кишечника",
+      "Toxoplasmosis":"Токсоплазмоз",
+      "VIH/SIDA":"ВИЧ/СПИД",
+      "Várices":"Варикоз",
+      "Miedo":"Страх",
+      "Soberbia":"Гордость",
+      "Culpa":"Вина",
+      "Agresividad":"Агрессивность",
+      "Materialismo":"Материализм",
+      "Impaciencia":"Нетерпение",
+      "Soledad":"Одиночество",
+      "Intolerancia":"Нетерпимость",
+      "Avaricia":"Жадность",
+      "Envidia":"Зависть",
+      "Resentimiento":"Обида",
+      "Malignidad":"Злость",
+      "Pereza":"Лень",
+      "Crueldad":"Жестокость",
+      "Inspiración":"Вдохновение",
+      "Exhibicionismo":"Выставление себя напоказ",
+      "Duda":"Сомнение",
+      "Gula":"Обжорство",
+      "Lujuria":"Похоть",
+      "Odio":"Ненависть",
+      "Celos":"Ревность",
+      "Carácter":"Характер",
+      "Integridad Moral":"Моральная целостность",
+      "Altivez":"Высокомерие"
+    }
+  }
+};
+
+function translatePoint(name){
+  if(currentLang !== 'ru' || !name) return '';
+  const match = name.match(/^(.*?)(\s*\((D|I)\))$/);
+  const base = match ? match[1] : name;
+  const side = match ? (match[2].includes('(D)') ? ' (Правый)' : ' (Левый)') : '';
+  const translation = TRANSLATED_TERMS.ru.points[base];
+  return translation ? translation + side : '';
+}
+
+function translatePathology(name){
+  if(currentLang !== 'ru' || !name) return '';
+  if(TRANSLATED_TERMS.ru.pathologies[name]) return TRANSLATED_TERMS.ru.pathologies[name];
+  const match = name.match(/^(.*?)(\s*\(.*\))$/);
+  if(match){
+    const base = match[1];
+    const suffix = match[2];
+    const baseTrans = TRANSLATED_TERMS.ru.pathologies[base];
+    if(baseTrans) return baseTrans + suffix;
+  }
+  return '';
+}
+
+function formatDualLabel(value, translated){
+  if(currentLang !== 'ru' || !translated || translated === value) return value;
+  return `<div class="dual-label"><div>${value}</div><div class="trans">${translated}</div></div>`;
+}
+
+function formatDualLabelSm(value, translated){
+  if(currentLang !== 'ru' || !translated || translated === value) return value;
+  return `<div class="dual-label-sm"><div>${value}</div><div class="trans">${translated}</div></div>`;
+}
+
+let currentLang = localStorage.getItem('lang') || 'es';
+
+function translate(key){
+  return (TRANSLATIONS[currentLang] && TRANSLATIONS[currentLang][key]) || key;
+}
+
+function applyTranslations(){
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key = el.dataset.i18n;
+    const value = translate(key);
+    if(value!==undefined){
+      if(el.dataset.i18nHtml==='true') el.innerHTML = value;
+      else el.textContent = value;
+    }
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{
+    const key = el.dataset.i18nPlaceholder;
+    if(key) el.placeholder = translate(key);
+  });
+  const btn = document.getElementById('lang-toggle');
+  if(btn) btn.textContent = translate('langButton');
+  document.documentElement.lang = currentLang;
+}
+
+function setLanguage(lang){
+  currentLang = lang;
+  localStorage.setItem('lang', lang);
+  applyTranslations();
+  renderTable(N1,'tbody-n1');
+  renderTable(N2,'tbody-n2');
+  renderEmotions();
+  renderDiseases();
+  filterEnf();
+  globalSearch();
+}
+
+function toggleLanguage(){
+  setLanguage(currentLang === 'es' ? 'ru' : 'es');
+}
 
 function globalSearch(){
   const q = norm(document.getElementById('global-search').value.trim());
@@ -1122,13 +1810,13 @@ function globalSearch(){
     (pb.s&&norm(pb.s).includes(q))
   );
   if(found.length===0){
-    res.innerHTML='<p style="color:#64748b;padding:16px;">No se encontraron resultados.</p>';
+    res.innerHTML=`<p style="color:#64748b;padding:16px;">${translate('searchNoResults')}</p>`;
     return;
   }
   res.innerHTML=`
-    <p style="color:#64748b;margin-bottom:12px;">${found.length} resultado(s) — haz clic en cualquier fila para ver el diagrama</p>
+    <p style="color:#64748b;margin-bottom:12px;">${found.length} ${translate('searchResultsCount')}</p>
     <div class="table-wrap"><table>
-    <thead><tr><th></th><th>#</th><th>Rastreo (–)</th><th>Impacto (+)</th><th>Relación</th><th>Tipo</th></tr></thead>
+    <thead><tr><th></th><th>${translate('tableHash')}</th><th>${translate('tableRastreo')}</th><th>${translate('tableImpacto')}</th><th>${translate('tableRelacionShort')}</th><th>${translate('tableTipo')}</th></tr></thead>
     <tbody>${found.map(d=>`<tr style="cursor:pointer" onclick="openPB(${d.n})">
       <td class="td-img"><img class="pb-thumb" src="${pbImgPath(d.n)}" alt="PB ${d.n}" loading="lazy" onerror="this.style.display='none'"></td>
       <td><span class="pb-num">${d.n}</span></td>
@@ -1148,10 +1836,7 @@ function showTab(id){
 }
 
 // INIT
-renderTable(N1,'tbody-n1');
-renderTable(N2,'tbody-n2');
-renderEmotions();
-renderDiseases();
+setLanguage(currentLang);
 </script>
 </body>
 </html>

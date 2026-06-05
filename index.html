@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Par Biomagnético — Guía de Referencia</title>
+<script src="disease_data.js"></script>
+<style>
+:root{--azul:#1a3a5c;--azul2:#2563eb;--verde:#059669;--morado:#7c3aed;--naranja:#d97706;--rojo:#dc2626;--gris:#f1f5f9;--texto:#1e293b;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#f8fafc;color:var(--texto);font-size:15px;}
+/* HEADER */
+header{background:linear-gradient(135deg,#0f2744 0%,#1a3a5c 50%,#1e4d7b 100%);color:#fff;padding:0;}
+.header-inner{max-width:1200px;margin:0 auto;padding:32px 24px 24px;}
+.header-inner h1{font-size:2.2rem;font-weight:800;letter-spacing:-0.5px;}
+.header-inner p{font-size:1.05rem;opacity:.85;margin-top:6px;max-width:700px;}
+.header-inner .badges{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;}
+.badge{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:20px;padding:4px 14px;font-size:.82rem;}
+/* NAV TABS */
+nav{background:#fff;border-bottom:2px solid #e2e8f0;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.07);}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;overflow-x:auto;gap:2px;padding:0 12px;}
+.tab{padding:14px 18px;cursor:pointer;font-weight:600;font-size:.88rem;color:#64748b;border-bottom:3px solid transparent;white-space:nowrap;transition:all .2s;background:none;border-top:none;border-left:none;border-right:none;}
+.tab:hover{color:var(--azul2);}
+.tab.active{color:var(--azul2);border-bottom-color:var(--azul2);}
+/* MAIN */
+main{max-width:1200px;margin:0 auto;padding:24px 16px;}
+.section{display:none;}
+.section.active{display:block;}
+/* CARDS */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:20px 0;}
+.card{background:#fff;border-radius:12px;padding:20px;box-shadow:0 1px 4px rgba(0,0,0,.08);border-left:4px solid var(--azul2);}
+.card.verde{border-left-color:var(--verde);}
+.card.morado{border-left-color:var(--morado);}
+.card.naranja{border-left-color:var(--naranja);}
+.card.rojo{border-left-color:var(--rojo);}
+.card h3{font-size:1rem;margin-bottom:6px;}
+.card p{font-size:.88rem;color:#475569;line-height:1.5;}
+/* SEARCH */
+.search-bar{background:#fff;border-radius:10px;padding:12px 16px;display:flex;gap:10px;align-items:center;box-shadow:0 1px 4px rgba(0,0,0,.08);margin-bottom:20px;}
+.search-bar input{flex:1;border:none;outline:none;font-size:1rem;color:var(--texto);}
+.search-bar svg{color:#94a3b8;flex-shrink:0;}
+/* TABLE */
+.table-wrap{background:#fff;border-radius:12px;box-shadow:0 1px 4px rgba(0,0,0,.08);overflow:hidden;margin:16px 0;}
+table{width:100%;border-collapse:collapse;font-size:.88rem;}
+th{background:var(--azul);color:#fff;padding:10px 14px;text-align:left;font-size:.82rem;font-weight:600;white-space:nowrap;}
+td{padding:9px 14px;border-bottom:1px solid #f1f5f9;vertical-align:top;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:#f8fafc;}
+.pb-num{font-weight:700;color:var(--azul2);min-width:36px;display:inline-block;}
+.tag{display:inline-block;padding:2px 8px;border-radius:12px;font-size:.74rem;font-weight:600;margin:1px;}
+.tag-v{background:#dbeafe;color:#1e40af;}
+.tag-b{background:#dcfce7;color:#166534;}
+.tag-h{background:#fef3c7;color:#92400e;}
+.tag-p{background:#fce7f3;color:#9d174d;}
+.tag-e{background:#ede9fe;color:#5b21b6;}
+.tag-d{background:#f0fdf4;color:#14532d;}
+/* SECTION TITLES */
+.sec-title{font-size:1.5rem;font-weight:800;color:var(--azul);margin:24px 0 6px;}
+.sec-sub{color:#64748b;margin-bottom:20px;font-size:.95rem;}
+/* PROTOCOL STEPS */
+.steps{counter-reset:step;}
+.step{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid #f1f5f9;}
+.step:last-child{border-bottom:none;}
+.step-num{background:var(--azul2);color:#fff;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;flex-shrink:0;}
+.step-body h4{font-size:.95rem;margin-bottom:3px;}
+.step-body p{font-size:.87rem;color:#475569;}
+/* EMOTION GRID */
+.emotion-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin:16px 0;}
+.emotion-card{background:#fff;border-radius:10px;padding:14px 16px;box-shadow:0 1px 3px rgba(0,0,0,.07);display:flex;align-items:flex-start;gap:12px;}
+.emotion-icon{font-size:1.5rem;flex-shrink:0;}
+.emotion-card h4{font-size:.9rem;font-weight:700;margin-bottom:2px;}
+.emotion-card p{font-size:.82rem;color:#64748b;}
+/* DISEASE LIST */
+.disease-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin:16px 0;}
+.disease-item{background:#fff;border-radius:8px;padding:10px 14px;box-shadow:0 1px 3px rgba(0,0,0,.06);font-size:.88rem;cursor:pointer;border:1px solid #e2e8f0;transition:border-color .2s;}
+.disease-item:hover{border-color:var(--azul2);color:var(--azul2);}
+/* INFO BOX */
+.info-box{background:linear-gradient(135deg,#eff6ff,#f0fdf4);border:1px solid #bfdbfe;border-radius:12px;padding:20px 24px;margin:16px 0;}
+.info-box h3{color:var(--azul);margin-bottom:8px;}
+.info-box ul{padding-left:18px;}
+.info-box li{margin:4px 0;font-size:.92rem;color:#334155;}
+/* BODY SVG */
+.body-diagram{text-align:center;padding:20px;background:#fff;border-radius:12px;box-shadow:0 1px 4px rgba(0,0,0,.08);}
+/* HIDDEN */
+.hidden{display:none !important;}
+/* FILTER BTNS */
+.filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+.filter-btn{padding:6px 16px;border-radius:20px;border:2px solid #e2e8f0;background:#fff;cursor:pointer;font-size:.84rem;font-weight:600;transition:all .2s;}
+.filter-btn.active,.filter-btn:hover{border-color:var(--azul2);background:var(--azul2);color:#fff;}
+.filter-btn.f-v.active{background:#1e40af;border-color:#1e40af;}
+.filter-btn.f-b.active{background:#166534;border-color:#166534;}
+.filter-btn.f-h.active{background:#92400e;border-color:#92400e;}
+.filter-btn.f-p.active{background:#9d174d;border-color:#9d174d;}
+.filter-btn.f-e.active{background:#5b21b6;border-color:#5b21b6;}
+/* IMG THUMB */
+.pb-thumb{width:52px;height:52px;object-fit:cover;border-radius:6px;cursor:pointer;border:2px solid #e2e8f0;transition:border-color .2s,transform .2s;display:block;}
+.pb-thumb:hover{border-color:var(--azul2);transform:scale(1.08);}
+td.td-img{width:60px;padding:6px 8px;}
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:1000;display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;pointer-events:none;transition:opacity .25s;}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal-box{background:#fff;border-radius:16px;max-width:780px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 24px 60px rgba(0,0,0,.3);transform:translateY(20px);transition:transform .25s;}
+.modal-overlay.open .modal-box{transform:translateY(0);}
+.modal-head{background:var(--azul);color:#fff;padding:18px 24px;border-radius:16px 16px 0 0;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.modal-head h2{font-size:1.1rem;font-weight:700;}
+.modal-close{background:rgba(255,255,255,.15);border:none;color:#fff;width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.modal-close:hover{background:rgba(255,255,255,.3);}
+.modal-body{display:grid;grid-template-columns:1fr 1fr;gap:0;}
+.modal-img-col{padding:20px;background:#f8fafc;border-right:1px solid #e2e8f0;display:flex;flex-direction:column;align-items:center;gap:10px;}
+.modal-img-col img{width:100%;max-width:320px;border-radius:10px;border:1px solid #e2e8f0;}
+.modal-img-caption{font-size:.78rem;color:#64748b;text-align:center;}
+.modal-info-col{padding:20px;}
+.modal-info-col h3{font-size:.85rem;font-weight:700;color:var(--azul);margin:12px 0 4px;}
+.modal-info-col h3:first-child{margin-top:0;}
+.modal-info-col p{font-size:.88rem;color:#334155;line-height:1.55;}
+.modal-pole{display:flex;gap:8px;align-items:center;padding:8px 12px;border-radius:8px;margin:4px 0;}
+.modal-pole-neg{background:#dbeafe;}
+.modal-pole-pos{background:#fee2e2;}
+.pole-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0;}
+.pole-neg{background:#1d4ed8;}
+.pole-pos{background:#dc2626;}
+.modal-pole span{font-size:.88rem;font-weight:600;}
+@media(max-width:600px){
+  .modal-body{grid-template-columns:1fr;}
+  .modal-img-col{border-right:none;border-bottom:1px solid #e2e8f0;}
+  .header-inner h1{font-size:1.5rem;}
+  .tab{padding:12px 12px;font-size:.8rem;}
+}
+/* DISEASE PROTOCOL */
+.enf-detail-box{background:#fff;border-radius:14px;box-shadow:0 2px 12px rgba(0,0,0,.08);margin-top:20px;overflow:hidden;}
+.enf-detail-header{background:linear-gradient(135deg,var(--azul),#2563eb);color:#fff;padding:18px 22px;}
+.enf-detail-header h3{font-size:1.2rem;font-weight:800;}
+.enf-detail-header p{font-size:.85rem;opacity:.85;margin-top:4px;}
+.enf-body{display:grid;grid-template-columns:1fr 1fr;gap:0;}
+@media(max-width:720px){.enf-body{grid-template-columns:1fr;}}
+.enf-col{padding:18px 20px;}
+.enf-col+.enf-col{border-left:1px solid #f1f5f9;}
+.enf-col h4{font-size:.8rem;font-weight:700;color:var(--azul);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;}
+.top10-chip{display:inline-block;background:#eff6ff;color:#1e40af;border-radius:20px;padding:3px 11px;font-size:.78rem;font-weight:600;margin:2px;cursor:pointer;}
+.top10-chip:hover{background:#dbeafe;}
+.pb-card-grid{display:flex;flex-wrap:wrap;gap:8px;}
+.pb-mini-card{cursor:pointer;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:6px 8px;display:flex;gap:7px;align-items:center;flex:1 1 180px;transition:border-color .2s,box-shadow .2s;}
+.pb-mini-card:hover{border-color:var(--azul2);box-shadow:0 2px 8px rgba(37,99,235,.15);}
+.pb-mini-card img{width:48px;height:48px;object-fit:cover;border-radius:5px;flex-shrink:0;}
+.pb-mini-num{font-size:.72rem;font-weight:700;color:var(--azul2);}
+.pb-mini-name{font-size:.75rem;color:#334155;line-height:1.3;}
+.top10-section{margin-bottom:8px;}
+.top10-toggle{background:#f1f5f9;border:none;border-radius:8px;padding:9px 13px;width:100%;text-align:left;cursor:pointer;font-size:.82rem;font-weight:600;color:var(--azul);display:flex;justify-content:space-between;align-items:center;}
+.top10-toggle:hover{background:#dbeafe;}
+.top10-content{display:none;padding:6px 0 2px;}
+.top10-content.open{display:block;}
+.top10-pb-row{display:flex;flex-wrap:wrap;gap:5px;padding:4px 4px 8px;}
+.enf-note{background:#fef9c3;border:1px solid #fde68a;border-radius:8px;padding:10px 14px;font-size:.83rem;color:#78350f;margin:10px 0;}
+</style>
+</head>
+<body>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="pb-modal" onclick="closeModal(event)">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h2 id="modal-title">Par Biomagnético</h2>
+      <button class="modal-close" onclick="closeModalBtn()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-img-col">
+        <img id="modal-img" src="" alt="Diagrama de posicionamiento">
+        <div class="modal-img-caption">
+          <div class="modal-pole modal-pole-neg"><div class="pole-dot pole-neg"></div><span id="modal-neg">— Polo negativo (rastreo)</span></div>
+          <div class="modal-pole modal-pole-pos"><div class="pole-dot pole-pos"></div><span id="modal-pos">+ Polo positivo (impacto)</span></div>
+        </div>
+      </div>
+      <div class="modal-info-col" id="modal-info"></div>
+    </div>
+  </div>
+</div>
+
+<header>
+<div class="header-inner">
+  <h1>🧲 Par Biomagnético</h1>
+  <p>Guía completa de referencia — Niveles 1 y 2 · Dr. Isaac Goiz Durán · David Goiz Martínez</p>
+  <div class="badges">
+    <span class="badge">210 Pares Nivel 1</span>
+    <span class="badge">115 Pares Nivel 2</span>
+    <span class="badge">28 Pares Emocionales</span>
+    <span class="badge">Protocolos de Rastreo</span>
+    <span class="badge">Índice de Enfermedades</span>
+  </div>
+</div>
+</header>
+
+<nav>
+<div class="nav-inner">
+  <button class="tab active" onclick="showTab('intro')">Introducción</button>
+  <button class="tab" onclick="showTab('nivel1')">Nivel 1 (210 PBs)</button>
+  <button class="tab" onclick="showTab('nivel2')">Nivel 2 (115 PBs)</button>
+  <button class="tab" onclick="showTab('rastreo')">Protocolo de Rastreo</button>
+  <button class="tab" onclick="showTab('emociones')">Pares Emocionales</button>
+  <button class="tab" onclick="showTab('enfermedades')">Índice de Enfermedades</button>
+  <button class="tab" onclick="showTab('buscar')">🔍 Buscar</button>
+</div>
+</nav>
+
+<main>
+
+<!-- ======== INTRO ======== -->
+<div id="intro" class="section active">
+  <div class="sec-title">¿Qué es el Par Biomagnético?</div>
+  <div class="sec-sub">Técnica terapéutica desarrollada por el Dr. Isaac Goiz Durán — más de 28 años de desarrollo</div>
+
+  <div class="info-box">
+    <h3>Definición</h3>
+    <p style="font-size:.95rem;line-height:1.7;color:#334155;">
+      El <strong>Par Biomagnético (PB)</strong> es el conjunto de cargas bioeléctricas disfuncionales que se relacionan a una patología, constituido por dos cargas principales de polaridad opuesta, que se forman a expensas de la alteración bioeléctrica y de pH de los tejidos u órganos que las soportan dentro de un organismo vivo.
+      <br><br>
+      La técnica consiste en el posicionamiento de <strong>pares de imanes</strong> en zonas específicas del cuerpo que se encuentran en <em>"Resonancia Biomagnética"</em>, por períodos cortos de tiempo (10–30 min), para restablecer el equilibrio bioeléctrico.
+    </p>
+  </div>
+
+  <div class="cards">
+    <div class="card">
+      <h3>🔬 Técnica</h3>
+      <p>Conjunto de procedimientos, metodologías y protocolos de rastreo con propósitos específicos a corto, mediano y largo plazo.</p>
+    </div>
+    <div class="card verde">
+      <h3>🌿 Terapéutica</h3>
+      <p>Su objetivo principal es mantener o restablecer la salud, definida como bienestar Biopsicoecosocial.</p>
+    </div>
+    <div class="card morado">
+      <h3>🔗 Integrativa</h3>
+      <p>Puede realizarse antes, durante y después de una enfermedad, sin afectar el tratamiento médico de base.</p>
+    </div>
+    <div class="card naranja">
+      <h3>⚡ Vibracional</h3>
+      <p>No se introduce ni extrae ningún sólido, líquido o gas en el organismo. No se manipula excesivamente ninguna parte del cuerpo.</p>
+    </div>
+    <div class="card rojo">
+      <h3>⚖️ Estabilizadora</h3>
+      <p>Provee al organismo un estado equilibrado de bioelectricidad mediante el uso correcto de campos magnéticos.</p>
+    </div>
+    <div class="card" style="border-left-color:#0891b2;">
+      <h3>🧭 Facilitadora</h3>
+      <p>No es curativa por definición legal; es un complemento que facilita el restablecimiento de las condiciones de salud.</p>
+    </div>
+  </div>
+
+  <div class="sec-title" style="margin-top:32px;">Beneficios de la Técnica</div>
+  <div class="info-box">
+    <ul>
+      <li>Promueve el estado de Homeostasis en el organismo</li>
+      <li>Promueve un estado equilibrado de pH en el organismo</li>
+      <li>Promueve la adecuada activación de la respuesta inmunitaria</li>
+      <li>Promueve el restablecimiento en la función normal de glándulas y órganos</li>
+      <li>Promueve la desintoxicación del organismo</li>
+      <li>Promueve la reparación de tejidos dañados (fracturas, esguinces, neuropatía, etc.)</li>
+      <li>Disminuye los efectos adversos de tratamientos médicos convencionales</li>
+      <li>Disminuye los riesgos quirúrgicos (inflamación, infección, hemorragia)</li>
+      <li>Disminuye los tiempos de hospitalización, convalecencia y rehabilitación</li>
+    </ul>
+  </div>
+
+  <div class="sec-title" style="margin-top:32px;">Tipos de Pares Biomagnéticos</div>
+  <div class="cards">
+    <div class="card">
+      <h3><span class="tag tag-v">VIRUS</span> Pares Regulares</h3>
+      <p>Relacionados a microorganismos patógenos específicos. Ejemplo: Axila–Axila = Rabia Virus</p>
+    </div>
+    <div class="card verde">
+      <h3><span class="tag tag-b">BACTERIAS</span> Pares Regulares</h3>
+      <p>Asociados a infecciones bacterianas. Ejemplo: Mandíbula–Mandíbula = Neisseria Gonorrhoeae</p>
+    </div>
+    <div class="card naranja">
+      <h3><span class="tag tag-h">HONGOS</span> Pares Regulares</h3>
+      <p>Relacionados a infecciones fúngicas. Ejemplo: Diafragma–Diafragma = Candida Albicans</p>
+    </div>
+    <div class="card rojo">
+      <h3><span class="tag tag-p">PARÁSITOS</span> Pares Regulares</h3>
+      <p>Relacionados a infestaciones parasitarias. Ejemplo: Oído–Oído = Toxoplasma Gondii</p>
+    </div>
+    <div class="card morado">
+      <h3><span class="tag tag-e">ESPECIALES</span> Pares Especiales</h3>
+      <p>Disfuncionales, Psicoemocionales, Reservorios y Complejos. No relacionados directamente a microorganismos.</p>
+    </div>
+    <div class="card" style="border-left-color:#0891b2;">
+      <h3>🏺 Reservorios</h3>
+      <p>Pueden albergar temporalmente microorganismos de PBs regulares. Al impactarse, permiten que aparezcan en su PB correspondiente.</p>
+    </div>
+  </div>
+
+  <div class="sec-title" style="margin-top:32px;">Autores</div>
+  <div class="cards">
+    <div class="card" style="border-left-color:#7c3aed;">
+      <h3>Dr. Isaac Goiz Durán</h3>
+      <p>Científico mexicano. <strong>Descubridor del Par Biomagnético</strong> hace más de 28 años. Validó los PBs descritos en las guías en miles de pacientes.</p>
+    </div>
+    <div class="card" style="border-left-color:#059669;">
+      <h3>David Goiz Martínez</h3>
+      <p>Director del <strong>Biomagnetism Research Institute (BRI)</strong>. Autor de la Guía de PBs 2017 con 210 PBs de Nivel 1 y 115 PBs de Nivel 2.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ======== NIVEL 1 ======== -->
+<div id="nivel1" class="section">
+  <div class="sec-title">Pares Biomagnéticos — Nivel 1 (Biomagnetismo)</div>
+  <div class="sec-sub">210 pares descritos por el Dr. Isaac Goiz Durán · Fuente: Guía BRI 2017</div>
+
+  <div class="filter-row">
+    <button class="filter-btn active" onclick="filterN1('todos',this)">Todos (210)</button>
+    <button class="filter-btn f-v" onclick="filterN1('virus',this)">🔵 Virus (55)</button>
+    <button class="filter-btn f-b" onclick="filterN1('bacteria',this)">🟢 Bacterias (58)</button>
+    <button class="filter-btn f-h" onclick="filterN1('hongo',this)">🟡 Hongos (12)</button>
+    <button class="filter-btn f-p" onclick="filterN1('parasito',this)">🔴 Parásitos (19)</button>
+    <button class="filter-btn f-e" onclick="filterN1('especial',this)">🟣 Especiales (66)</button>
+  </div>
+
+  <div class="table-wrap">
+    <table id="tabla-n1">
+      <thead>
+        <tr><th></th><th>#</th><th>Punto Rastreo (–)</th><th>Punto Impacto (+)</th><th>Relación / Patología</th><th>Tipo</th></tr>
+      </thead>
+      <tbody id="tbody-n1"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ======== NIVEL 2 ======== -->
+<div id="nivel2" class="section">
+  <div class="sec-title">Pares Biomagnéticos — Nivel 2 (Bioenergética)</div>
+  <div class="sec-sub">115 pares adicionales (PBs 211–325) · Fuente: Guía BRI 2017 Nivel 2</div>
+
+  <div class="filter-row">
+    <button class="filter-btn active" onclick="filterN2('todos',this)">Todos (115)</button>
+    <button class="filter-btn f-v" onclick="filterN2('virus',this)">🔵 Virus</button>
+    <button class="filter-btn f-b" onclick="filterN2('bacteria',this)">🟢 Bacterias</button>
+    <button class="filter-btn f-h" onclick="filterN2('hongo',this)">🟡 Hongos</button>
+    <button class="filter-btn f-p" onclick="filterN2('parasito',this)">🔴 Parásitos</button>
+    <button class="filter-btn f-e" onclick="filterN2('especial',this)">🟣 Especiales</button>
+  </div>
+
+  <div class="table-wrap">
+    <table id="tabla-n2">
+      <thead>
+        <tr><th></th><th>#</th><th>Punto Rastreo (–)</th><th>Punto Impacto (+)</th><th>Relación / Patología</th><th>Tipo</th></tr>
+      </thead>
+      <tbody id="tbody-n2"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ======== RASTREO ======== -->
+<div id="rastreo" class="section">
+  <div class="sec-title">Protocolo de Rastreo Completo Bioenergética</div>
+  <div class="sec-sub">Guía de rastreo Segundo Nivel · Dr. Isaac Goiz Martínez</div>
+
+  <div class="info-box" style="margin-bottom:24px;">
+    <h3>Inicio del Rastreo</h3>
+    <ol style="padding-left:18px;margin-top:8px;">
+      <li style="margin:6px 0;">Se comparan los pies; si hay acortamiento se coloca <strong>Par Goiz</strong></li>
+      <li style="margin:6px 0;">Se solicita autorización para realizar terapia, nombrando al paciente por su nombre</li>
+      <li style="margin:6px 0;">Se pregunta si podemos iniciar el rastreo</li>
+    </ol>
+  </div>
+
+  <div class="sec-title" style="font-size:1.2rem;">Orden de Rastreo</div>
+
+  <div class="cards" style="margin-top:12px;">
+    <div class="card">
+      <h3>1. Espacios Potenciales</h3>
+      <p>Piel · Peritoneo · Pleura · Periostio · Pericardio · Meninges · Cavidades Articulares</p>
+    </div>
+    <div class="card verde">
+      <h3>2. Zona Pineal</h3>
+      <p>Pre-Pineal · Pos-Pineal · Pineal<br>Asociados: Cryptococcus, Guillain Barré, Disfunción Pineal</p>
+    </div>
+    <div class="card morado">
+      <h3>3. Cabeza y Cuello</h3>
+      <p>Parietal · Hipófisis · Polo · Antecuerno · Quiasma · Polígono de Willis · Sien · Ojo · Cerebelo...</p>
+    </div>
+    <div class="card naranja">
+      <h3>4. Tórax</h3>
+      <p>Pleura · Pulmón · Coronarias · Pericardio · Mediastino · Esternón · Cardias · Timo...</p>
+    </div>
+    <div class="card rojo">
+      <h3>5. Abdomen</h3>
+      <p>Hígado · Vesícula · Bazo · Estómago · Páncreas · Duodeno · Riñones · Intestinos...</p>
+    </div>
+    <div class="card" style="border-left-color:#0891b2;">
+      <h3>6. Pelvis y Miembros</h3>
+      <p>Vejiga · Útero · Ovarios · Próstata · Sacro · Cadera · Miembros inferiores · Columna...</p>
+    </div>
+  </div>
+
+  <div class="sec-title" style="font-size:1.2rem;margin-top:28px;">Condiciones Especiales a Evaluar</div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin:14px 0;">
+    <div class="info-box" style="margin:0;">
+      <h3>Pretumorales y Tumorales</h3>
+      <ul>
+        <li>Infiltrado · Exudado · Quiste · Absceso</li>
+        <li>Displasia · Neoplasia · Neoplasia Explosiva</li>
+        <li>Neoplasia Maligna · Metástasis · Necrosis</li>
+      </ul>
+    </div>
+    <div class="info-box" style="margin:0;">
+      <h3>Sitios de Génesis Tumoral</h3>
+      <ul>
+        <li>Intracraneal · Intraraquídeo</li>
+        <li>Mediastinal · Diafragma D/I</li>
+        <li>Nervio Inguinal D/I</li>
+      </ul>
+    </div>
+    <div class="info-box" style="margin:0;">
+      <h3>Accidentes Vasculares</h3>
+      <ul>
+        <li>Embolia · Hemorragia · Edema</li>
+        <li>Espasmo · Trombosis · Hematoma</li>
+        <li>Aneurisma · EVC</li>
+      </ul>
+    </div>
+    <div class="info-box" style="margin:0;">
+      <h3>Toxinas</h3>
+      <ul>
+        <li>Intoxicación → Preguntar por toxinas</li>
+        <li>Envenenamiento → Preguntar por venenos</li>
+        <li>Saturación · Intolerancia alimentaria</li>
+      </ul>
+    </div>
+    <div class="info-box" style="margin:0;">
+      <h3>Problemas Complejos</h3>
+      <ul>
+        <li>Psicológico · Sofrológico · Emocional</li>
+        <li>Hormonal · Carencial · Espiritual</li>
+        <li>Maligno · Inmunológico</li>
+      </ul>
+    </div>
+    <div class="info-box" style="margin:0;">
+      <h3>Problemas Psicológicos</h3>
+      <ul>
+        <li>Esquizofrenia · Paranoia · Psicosis</li>
+        <li>Fobias · Adicciones · Autismo</li>
+        <li>TDAH · Ludopatías → Derivar a psicología</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sec-title" style="font-size:1.2rem;margin-top:28px;">Pares Hormonales</div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Glándula</th><th>Condición</th></tr></thead>
+      <tbody>
+        <tr><td>Timo – Suprarrenal</td><td>Disfunción hormonal básica</td></tr>
+        <tr><td>Hipófisis – Hipófisis</td><td>Disfunción hipofisiaria</td></tr>
+        <tr><td>Tiroides – Tiroides</td><td>Disfunción tiroidea</td></tr>
+        <tr><td>Testículos u Ovarios</td><td>Disfunción gonadal</td></tr>
+        <tr><td>Suprarrenales – Suprarrenales</td><td>Disfunción suprarrenal</td></tr>
+        <tr><td>Hipotálamo – Hipotálamo</td><td>Disfunción hipotalámica</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sec-title" style="font-size:1.2rem;margin-top:28px;">Pares Carenciales</div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Tipo</th><th>Indicación</th></tr></thead>
+      <tbody>
+        <tr><td>Vitaminas</td><td rowspan="7">Preguntar el elemento del cual carece el paciente</td></tr>
+        <tr><td>Minerales</td></tr>
+        <tr><td>Aminoácidos</td></tr>
+        <tr><td>Proteínas</td></tr>
+        <tr><td>Carbohidratos</td></tr>
+        <tr><td>Iones o Electrolitos</td></tr>
+        <tr><td>Deshidratación</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sec-title" style="font-size:1.2rem;margin-top:28px;">Protocolos Inmunológicos (Chakras)</div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Chakra</th><th>Par</th></tr></thead>
+      <tbody>
+        <tr><td>Chakra 7</td><td>Pineal – Pineal</td></tr>
+        <tr><td></td><td>Timo – Timo</td></tr>
+        <tr><td></td><td>Bazo – Bazo</td></tr>
+        <tr><td></td><td>Bazo – Hígado</td></tr>
+        <tr><td></td><td>Apéndice – Timo</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ======== EMOCIONES ======== -->
+<div id="emociones" class="section">
+  <div class="sec-title">Pares Biomagnéticos Emocionales</div>
+  <div class="sec-sub">Relacionados a estados emocionales y psicoemocionales · Nivel 1 y 2</div>
+
+  <div class="emotion-grid" id="emotion-grid"></div>
+</div>
+
+<!-- ======== ENFERMEDADES ======== -->
+<div id="enfermedades" class="section">
+  <div class="sec-title">Índice de Enfermedades y Protocolos</div>
+  <div class="sec-sub">Condiciones con protocolos de rastreo específicos (Nivel 2 · BRI 2017)</div>
+
+  <div class="search-bar">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" id="enf-search" placeholder="Buscar enfermedad..." oninput="filterEnf()">
+  </div>
+
+  <div class="disease-grid" id="disease-grid"></div>
+
+  <div id="enf-detail" class="info-box hidden" style="margin-top:20px;">
+    <h3 id="enf-title"></h3>
+    <div id="enf-content"></div>
+  </div>
+</div>
+
+<!-- ======== BUSCAR ======== -->
+<div id="buscar" class="section">
+  <div class="sec-title">Búsqueda Global</div>
+  <div class="sec-sub">Busca por órgano, patología, microorganismo o número de par</div>
+
+  <div class="search-bar">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" id="global-search" placeholder="Ej: hígado, herpes, VIH, 42..." oninput="globalSearch()" autofocus>
+  </div>
+
+  <div id="search-results"></div>
+</div>
+
+</main>
+
+<script>
+// ============================================================
+// DATA: NIVEL 1
+// ============================================================
+const N1 = [
+// VIRUS
+{n:1,r:"Timo",i:"Recto",p:"VIH (1) / E. Coli (1)",t:"virus",s:"Disminución inmunidad, gonalgia rodilla, IVU, IRA en niños"},
+{n:2,r:"Aductor (D)",i:"Aductor (I)",p:"VIH (2) / E. Coli (2)",t:"virus",s:"Infecciones genitourinarias, inmunidad pélvica"},
+{n:3,r:"Trocánter Menor (D)",i:"Trocánter Menor (I)",p:"VIH (3) / E. Coli (3)",t:"virus",s:"Infecciones genitourinarias"},
+{n:4,r:"Nervio Inguinal (D)",i:"Nervio Inguinal (I)",p:"HTLV (1)",t:"virus",s:"Infección vaginal, lesiones dermatológicas pélvicas"},
+{n:5,r:"Suprapúbico (D)",i:"Suprapúbico (I)",p:"HTLV (2)",t:"virus",s:"Infecciones genitourinarias"},
+{n:6,r:"Axila (D)",i:"Axila (I)",p:"Rabia Virus",t:"virus",s:"Cefalea, mareo, irritabilidad, EM, melanoma, retinitis pigmentaria"},
+{n:7,r:"Ciático (D)",i:"Ciático (I)",p:"Polio Virus",t:"virus",s:"Parálisis muscular, dolor posterior miembros pélvicos, EM"},
+{n:8,r:"Hipófisis",i:"Vejiga",p:"Dengue Virus (1)",t:"virus",s:"Síntomas tropicales, fiebre, artralgias"},
+{n:9,r:"Bulbo Raquídeo",i:"Vejiga",p:"Dengue Hemorrágico",t:"virus",s:"Síntomas tropicales graves"},
+{n:10,r:"Piso Orbital (D)",i:"Piso Orbital (I)",p:"Orf Virus",t:"virus",s:"Cefalea, mareo, conjuntivitis"},
+{n:11,r:"Polígono de Willis (D)",i:"Polígono de Willis (I)",p:"Reo Virus",t:"virus",s:"Cefalea, amnesia temporal, pérdida de memoria, alteraciones sueño"},
+{n:12,r:"Bulbo Raquídeo",i:"Cerebelo",p:"Newcastle Virus",t:"virus",s:"Cefalea, vómito en proyectil, irritabilidad, somnolencia"},
+{n:13,r:"Temporal (I)",i:"Temporal (I)",p:"Polioma Virus",t:"virus",s:"Cefalea, amnesia, disartria, tumores cerebrales"},
+{n:14,r:"Timo",i:"Parietal (D/I)",p:"Rubéola Virus",t:"virus",s:"Exantema maculopapular, adenopatías, síntomas neurológicos"},
+{n:15,r:"Uretero (D)",i:"Uretero (I)",p:"Varicela Virus",t:"virus",s:"Exantema vesicular, infertilidad femenina"},
+{n:16,r:"Estómago",i:"Suprarrenales",p:"Sarampión Virus",t:"virus",s:"Exantema, síntomas respiratorios, manchas de Koplik"},
+{n:17,r:"Apéndice",i:"Lengua",p:"Viruela Virus",t:"virus",s:"Lesiones cutáneas, fiebre alta"},
+{n:18,r:"Nervio Inguinal",i:"Hígado",p:"Roséola Virus",t:"virus",s:"Fiebre alta súbita, exantema rosado"},
+{n:19,r:"Apéndice",i:"Vena Femoral",p:"Vaccinia Virus",t:"virus",s:"Relacionado a vacunación antivariólica"},
+{n:20,r:"Ligamento Hepático",i:"Riñón",p:"Adenovirus (1)",t:"virus",s:"IRA, gastroenteritis, conjuntivitis"},
+{n:21,r:"Colon Ascendente",i:"Colon Descendente",p:"Herpes Virus 1",t:"virus",s:"Herpes labial, gingivoestomatitis, queratitis"},
+{n:22,r:"Amígdala Palatina",i:"Amígdala Palatina",p:"Herpes Virus 2",t:"virus",s:"Herpes genital, ITS"},
+{n:23,r:"Cúbito (D)",i:"Cúbito (I)",p:"Herpes Virus 3 (Varicela-Zóster)",t:"virus",s:"Herpes zóster, neuralgia postherpética"},
+{n:24,r:"Comisura (D)",i:"Comisura (I)",p:"Herpes Virus 4 (Epstein Barr 2)",t:"virus",s:"Mononucleosis, boqueras"},
+{n:25,r:"Cáliz Renal",i:"Uretero",p:"Herpes Virus 5",t:"virus",s:"Citomegalovirus, infección en inmunocompromiso"},
+{n:26,r:"Ojo (D)",i:"Ojo (I)",p:"Citomegalovirus",t:"virus",s:"Retinitis, neumonitis, hepatitis viral"},
+{n:27,r:"Occipital (D)",i:"Occipital (I)",p:"Epstein Barr Virus",t:"virus",s:"Mononucleosis, fatiga crónica, linfoma"},
+{n:28,r:"Vesícula",i:"Riñón",p:"Rinovirus",t:"virus",s:"Resfriado común, IRA"},
+{n:29,r:"Tráquea",i:"Tráquea",p:"Influenza Virus",t:"virus",s:"Gripe, fiebre, mialgias, IRA"},
+{n:30,r:"Carina",i:"Carina",p:"Aftosa Virus (1)",t:"virus",s:"Aftas bucales, fiebre aftosa"},
+{n:31,r:"Manubrio del Esternón",i:"Manubrio del Esternón",p:"Coxsackie Virus",t:"virus",s:"Herpangina, enfermedad mano-pie-boca"},
+{n:32,r:"Uretra",i:"Uretra",p:"Coronavirus",t:"virus",s:"IRA, COVID-19 y similares"},
+{n:33,r:"Anexo (D)",i:"Anexo (I)",p:"Paramyxovirus",t:"virus",s:"Parotiditis, sarampión"},
+{n:34,r:"Colon Descendente",i:"Hígado",p:"Hepatitis A",t:"virus",s:"Ictericia, hepatitis aguda, transmisión oral-fecal"},
+{n:35,r:"Pleura",i:"Hígado",p:"Hepatitis B",t:"virus",s:"Hepatitis crónica, cirrosis, CHC"},
+{n:36,r:"Hígado",i:"Hígado",p:"Hepatitis C",t:"virus",s:"Hepatitis crónica silente, cirrosis"},
+{n:37,r:"Duodeno",i:"Hígado",p:"Hepatitis D (Delta)",t:"virus",s:"Coinfección con VHB"},
+{n:38,r:"Colon Ascendente",i:"Hígado",p:"Hepatitis E",t:"virus",s:"Hepatitis aguda, transmisión hídrica"},
+{n:39,r:"Colon Transverso",i:"Hígado",p:"Hepatitis G",t:"virus",s:"Hepatitis leve, frecuente en donadores de sangre"},
+{n:40,r:"Malar (D)",i:"Malar (I)",p:"Enterovirus",t:"virus",s:"Meningitis viral, gastroenteritis, Diabetes Mellitus"},
+{n:41,r:"Coxis",i:"Coxis",p:"Rotavirus",t:"virus",s:"Diarrea aguda infantil"},
+{n:42,r:"Próstata",i:"Recto",p:"Papiloma Virus (1)",t:"virus",s:"VPH, verrugas genitales, cáncer cervicouterino"},
+{n:43,r:"Ano",i:"Ano",p:"Papiloma Virus (2)",t:"virus",s:"Condilomas anales"},
+{n:44,r:"Trompa de Falopio (D)",i:"Trompa de Falopio (I)",p:"Parvovirus Humano",t:"virus",s:"Eritema infeccioso, anemia aplásica"},
+{n:45,r:"Ligamento Pancreático",i:"Bazo",p:"AH1N1 / Nilo Virus",t:"virus",s:"Gripe aviar, Virus del Nilo Occidental"},
+{n:46,r:"Colon Sigmoides",i:"Recto",p:"R-40 Virus (SV-40)",t:"virus",s:"Oncogénico, mesotelioma"},
+{n:47,r:"Saco de Douglas",i:"Vena Femoral",p:"Norwalk Virus",t:"virus",s:"Gastroenteritis viral aguda"},
+{n:48,r:"Pineal",i:"Bulbo Raquídeo",p:"Síndrome de Guillain Barré",t:"virus",s:"Parálisis ascendente, polineuropatía desmielinizante"},
+{n:49,r:"Parietal (D)",i:"Parietal (I)",p:"Encefalitis Viral",t:"virus",s:"Fiebre, alteración consciencia, convulsiones"},
+{n:50,r:"Tiroides",i:"Bulbo Raquídeo",p:"Meningitis Viral",t:"virus",s:"Cefalea intensa, rigidez nuca, fotofobia"},
+{n:51,r:"Pleura (D)",i:"Pleura (I)",p:"Pleuritis Viral",t:"virus",s:"Dolor pleurítico, disnea, frote pleural"},
+{n:52,r:"Pudendo (D)",i:"Pudendo (I)",p:"Parotiditis / Paperas",t:"virus",s:"Inflamación parótidas, orquitis, pancreatitis"},
+{n:53,r:"Seno Frontal (D)",i:"Seno Frontal (I)",p:"Sinusitis Frontal Viral",t:"virus",s:"Presión frontal, rinorrea, cefalea"},
+{n:54,r:"Seno Paranasal (D)",i:"Seno Paranasal (I)",p:"Sinusitis Paranasal Viral",t:"virus",s:"Presión facial, congestión nasal"},
+{n:55,r:"Punta de Páncreas",i:"Bazo",p:"Verruga Común",t:"virus",s:"Verrugas vulgares cutáneas"},
+// BACTERIAS
+{n:56,r:"Supraespinoso (D)",i:"Supraespinoso (I)",p:"Mycobacterium Tuberculosis (1)",t:"bacteria",s:"TB pulmonar, tos crónica, hemoptisis, sudoración nocturna"},
+{n:57,r:"Párpado (D)",i:"Párpado (I)",p:"Moraxella Catarrhalis",t:"bacteria",s:"Conjuntivitis, blefaritis, sinusitis"},
+{n:58,r:"Lacrimal (D)",i:"Lacrimal (I)",p:"Haemophilus Influenzae",t:"bacteria",s:"Conjuntivitis, meningitis bacteriana, epiglotitis"},
+{n:59,r:"Laringe",i:"Laringe",p:"Bordetella Pertussis (1)",t:"bacteria",s:"Tos ferina, tos quintosa, cianosis"},
+{n:60,r:"Contraciego",i:"Contraciego",p:"Bordetella Pertussis (2)",t:"bacteria",s:"Tos ferina, infección intestinal"},
+{n:61,r:"Subclavia (D)",i:"Subclavia (I)",p:"Corynebacterium Diphtheriae",t:"bacteria",s:"Difteria, pseudomembrana faríngea, miocarditis"},
+{n:62,r:"Colon Ascendente",i:"Riñón",p:"Klebsiella Pneumoniae (1)",t:"bacteria",s:"Neumonía, IVU, sepsis intrahospitalaria"},
+{n:63,r:"Pleura (D)",i:"Pleura (I)",p:"Pseudomona Aeruginosa (1)",t:"bacteria",s:"Infección en inmunocomprometidos, fibrosis quística"},
+{n:64,r:"Recto",i:"Recto",p:"Pseudomona Aeruginosa (2)",t:"bacteria",s:"Infección nosocomial, úlceras"},
+{n:65,r:"Dorsal 2 (D)",i:"Dorsal 2 (I)",p:"Legionella Pneumophila",t:"bacteria",s:"Enfermedad del Legionario, neumonía atípica"},
+{n:66,r:"Craneal",i:"Craneal",p:"Bacillus Anthracis",t:"bacteria",s:"Ántrax, infección cutánea/pulmonar/intestinal"},
+{n:67,r:"Temporoccipital (D)",i:"Temporoccipital (I)",p:"Mycoplasma Pneumoniae",t:"bacteria",s:"Neumonía atípica, síntomas neurológicos"},
+{n:68,r:"Poplíteo (D)",i:"Poplíteo (I)",p:"Streptococcus Pneumoniae",t:"bacteria",s:"Neumonía, meningitis, otitis media"},
+{n:69,r:"Coronarias",i:"Pulmón",p:"Streptococcus Pyogenes (A)",t:"bacteria",s:"Amigdalitis, escarlatina, fiebre reumática"},
+{n:70,r:"Braquial (D)",i:"Braquial (I)",p:"Streptococcus Pyogenes (A2)",t:"bacteria",s:"Celulitis, impétigo, erisipela"},
+{n:71,r:"Lig. Ext. Rodilla",i:"Cuadrado Lumbar",p:"Streptococcus Agalactiae",t:"bacteria",s:"Infección neonatal, IVU en embarazo"},
+{n:72,r:"Cardias",i:"Suprarrenales",p:"Estreptococo Beta Hemolítico",t:"bacteria",s:"Faringoamigdalitis, fiebre reumática"},
+{n:73,r:"Rama Isquiática (D)",i:"Rama Isquiática (I)",p:"Streptococcus C",t:"bacteria",s:"Infecciones de tejidos blandos"},
+{n:74,r:"Vejiga (D)",i:"Vejiga (I)",p:"Streptococcus G",t:"bacteria",s:"IVU, sepsis"},
+{n:75,r:"Pericardio",i:"Pericardio",p:"Staphylococcus Aureus Coag+",t:"bacteria",s:"Pericarditis, endocarditis, sepsis"},
+{n:76,r:"Cabeza de Páncreas",i:"Suprarrenales",p:"Staphylococcus Aureus Coag–",t:"bacteria",s:"Infecciones oportunistas, nosocomial"},
+{n:77,r:"Epiplón",i:"Epiplón",p:"Staphylococcus Albus",t:"bacteria",s:"Infecciones de piel y tejidos blandos"},
+{n:78,r:"Ángulo (D)",i:"Ángulo (I)",p:"Bacteroides Fragilis",t:"bacteria",s:"Infecciones anaerobias, abscesos abdominales"},
+{n:79,r:"Hiato Esofágico",i:"Esófago",p:"Enterobacter Pneumoniae (1)",t:"bacteria",s:"Neumonía, IVU, sepsis"},
+{n:80,r:"Húmero (D)",i:"Húmero (I)",p:"Enterobacter Pneumoniae (2)",t:"bacteria",s:"Osteomielitis, artritis séptica"},
+{n:81,r:"Colon Descendente (D)",i:"Colon Descendente (I)",p:"Enterobacter Cloacae",t:"bacteria",s:"Diarrea, IVU, infección nosocomial"},
+{n:82,r:"Colon Descendente",i:"Riñón",p:"Pasteurella",t:"bacteria",s:"Infección por mordedura de animal"},
+{n:83,r:"Colon Transverso",i:"Vejiga",p:"Vibrio Cholerae",t:"bacteria",s:"Cólera, diarrea acuosa profusa"},
+{n:84,r:"Bazo",i:"Hígado",p:"Brucella Abortus (1)",t:"bacteria",s:"Brucelosis, fiebre ondulante, hepatoesplenomegalia"},
+{n:85,r:"Diafragma",i:"Riñón",p:"Brucella Abortus (2)",t:"bacteria",s:"Brucelosis renal"},
+{n:86,r:"Trocánter Mayor (D)",i:"Trocánter Mayor (I)",p:"Salmonella Typhi",t:"bacteria",s:"Fiebre tifoidea, manchas de Rose, esplenomegalia"},
+{n:87,r:"Aquiles (D)",i:"Aquiles (I)",p:"Shigella",t:"bacteria",s:"Disentería bacilar, diarrea con moco y sangre"},
+{n:88,r:"Hiato Esofágico",i:"Testículo",p:"Helicobacter Pylori",t:"bacteria",s:"Gastritis, úlcera péptica, cáncer gástrico"},
+{n:89,r:"Cervical",i:"Supraespinoso",p:"Balantidium Coli",t:"bacteria",s:"Disentería por Balantidium"},
+{n:90,r:"Plexo Cervical (D)",i:"Plexo Cervical (I)",p:"Enterococcus Faecalis (1)",t:"bacteria",s:"IVU, endocarditis, infección abdominal"},
+{n:91,r:"Índice (D)",i:"Índice (I)",p:"Escherichia Coli",t:"bacteria",s:"Diarrea, IVU, meningitis neonatal, STEC"},
+{n:92,r:"Suprarrenales",i:"Recto",p:"Leptospira",t:"bacteria",s:"Leptospirosis, síndrome de Weil, ictericia hemorrágica"},
+{n:93,r:"Perihepático",i:"Perihepático",p:"Morganella / Tifo",t:"bacteria",s:"Fiebre tifoidea, infecciones oportunistas"},
+{n:94,r:"Cola de Páncreas",i:"Hígado",p:"Clostridium Botulinum",t:"bacteria",s:"Botulismo, parálisis flácida descendente"},
+{n:95,r:"Suprahepático",i:"Suprahepático",p:"Clostridium Malignum",t:"bacteria",s:"Mionecrosis, gangrena gaseosa"},
+{n:96,r:"Estómago",i:"Píloro",p:"Clostridium Perfringens",t:"bacteria",s:"Gangrena gaseosa, gastroenteritis"},
+{n:97,r:"Riñón (D)",i:"Riñón (I)",p:"Clostridium Tetani",t:"bacteria",s:"Tétanos, trismo, rigidez muscular"},
+{n:98,r:"Flanco (D)",i:"Flanco (I)",p:"Yersinia Enterocolítica",t:"bacteria",s:"Enterocolitis, adenitis mesentérica"},
+{n:99,r:"Testículo (D)",i:"Testículo (I)",p:"Yersinia Pestis (1)",t:"bacteria",s:"Peste bubónica, fiebre, linfadenitis"},
+{n:100,r:"Vagina",i:"Vagina",p:"Yersinia Pestis (2)",t:"bacteria",s:"Peste, infecciones genitales"},
+{n:101,r:"Bazo",i:"Bazo",p:"Yersinia Pestis (3)",t:"bacteria",s:"Peste neumónica, septicemia"},
+{n:102,r:"Mediastino",i:"Mediastino",p:"Proteus Mirabilis (1)",t:"bacteria",s:"IVU, cálculos renales, infección nosocomial"},
+{n:103,r:"Costal (D)",i:"Costal (I)",p:"Proteus Mirabilis (2)",t:"bacteria",s:"Infección respiratoria"},
+{n:104,r:"Sacro",i:"Sacro",p:"Proteus Mirabilis (3)",t:"bacteria",s:"IVU, infección pélvica"},
+{n:105,r:"Cápsula Renal",i:"Cápsula Renal",p:"Proteus Mirabilis (4)",t:"bacteria",s:"Infección renal, cálculos"},
+{n:106,r:"Mandíbula (D)",i:"Mandíbula (I)",p:"Neisseria Gonorrhoeae (1)",t:"bacteria",s:"Gonorrea, uretritis, cervicitis, artritis"},
+{n:107,r:"Lumbar 4 (D)",i:"Lumbar 4 (I)",p:"Neisseria Gonorrhoeae (2)",t:"bacteria",s:"Gonorrea, infección diseminada"},
+{n:108,r:"Deltoides (D)",i:"Deltoides (I)",p:"Treponema Pallidum (1)",t:"bacteria",s:"Sífilis primaria, secundaria, terciaria"},
+{n:109,r:"Cuadrado Lumbar (D)",i:"Cuadrado Lumbar (I)",p:"Treponema Pallidum (2)",t:"bacteria",s:"Sífilis, neurosífilis"},
+{n:110,r:"Conducto del Páncreas",i:"Riñón",p:"Spirochaetes (1)",t:"bacteria",s:"Leptospirosis, Borrelia"},
+{n:111,r:"Conducto de la Vesícula",i:"Riñón",p:"Spirochaetes (2)",t:"bacteria",s:"Espiroquetosis"},
+{n:112,r:"Clítoris",i:"Sacro",p:"Spirochaetes (3)",t:"bacteria",s:"Infección espiroquetal genital"},
+{n:113,r:"Dorso",i:"Lumbar",p:"Neisseria Meningitidis",t:"bacteria",s:"Meningitis bacteriana, meningococcemia"},
+{n:114,r:"Escápula (D)",i:"Escápula (I)",p:"Mycobacterium Leprae (1)",t:"bacteria",s:"Lepra, manchas hipocrómicas, neuropatía periférica"},
+{n:115,r:"Temporal (D)",i:"Temporal (D)",p:"Rickettsia Prowazecki",t:"bacteria",s:"Tifus exantemático, fiebre manchada"},
+{n:116,r:"Calcáneo (D)",i:"Calcáneo (I)",p:"Rickettsia (2)",t:"bacteria",s:"Fiebre manchada, Alzheimer (junto con muñeca)"},
+{n:117,r:"Muñeca (D)",i:"Muñeca (I)",p:"Rickettsia (3)",t:"bacteria",s:"Rickettsiosis, Alzheimer (junto con calcáneo)"},
+{n:118,r:"Costohepático (D)",i:"Costohepático (I)",p:"Borrelia",t:"bacteria",s:"Enfermedad de Lyme, artritis, neuroborreliosis"},
+{n:119,r:"Glúteo",i:"Píloro",p:"Veillonella",t:"bacteria",s:"Flora oral anormal, infecciones orales"},
+{n:120,r:"Bursa (D)",i:"Bursa (I)",p:"Actinomyces",t:"bacteria",s:"Actinomicosis, abscesos granulomatosos"},
+{n:121,r:"Cadera (D)",i:"Cadera (I)",p:"Chlamydia Pneumoniae",t:"bacteria",s:"Neumonía atípica, ateroesclerosis"},
+{n:122,r:"Duodeno",i:"Riñón",p:"Chlamydia Trachomatis",t:"bacteria",s:"Clamidia, ITS, tracoma, EPI"},
+// PARASITOS
+{n:123,r:"Píloro",i:"Riñón",p:"Amebiasis Intestinal",t:"parasito",s:"Disentería amebiana, absceso hepático"},
+{n:124,r:"Glúteo (D)",i:"Glúteo (I)",p:"Taenia Saginata",t:"parasito",s:"Teniasis intestinal, proglótidas en heces"},
+{n:125,r:"Lengua (D)",i:"Lengua (I)",p:"Sarcoptes Scabiei",t:"parasito",s:"Sarna, prurito intenso nocturno"},
+{n:126,r:"Pómulo",i:"Riñón",p:"Plasmodium Vivax (1)",t:"parasito",s:"Malaria, fiebre terciana, escalofríos"},
+{n:127,r:"Palma (D)",i:"Palma (I)",p:"Plasmodium Vivax (2)",t:"parasito",s:"Malaria, anemia hemolítica"},
+{n:128,r:"Mastoides (D)",i:"Mastoides (I)",p:"Filaria",t:"parasito",s:"Filariasis, linfedema, elefantiasis"},
+{n:129,r:"Píloro",i:"Hígado",p:"Enterobius Vermicularis",t:"parasito",s:"Oxiuros, prurito anal nocturno"},
+{n:130,r:"Esófago",i:"Esófago",p:"Fasciolopsis Buski",t:"parasito",s:"Fasciolopsis, diarrea, edema"},
+{n:131,r:"Isquión (D)",i:"Isquión (I)",p:"Onchocerca Volvulus",t:"parasito",s:"Oncocercosis, ceguera de los ríos"},
+{n:132,r:"Hígado",i:"Riñón",p:"Entamoeba Histolytica (1)",t:"parasito",s:"Amebiasis hepática, absceso amebiano"},
+{n:133,r:"Parietal",i:"Colon Transverso",p:"Entamoeba Histolytica (2)",t:"parasito",s:"Amebiasis intestinal crónica"},
+{n:134,r:"Oído (D)",i:"Oído (I)",p:"Toxoplasma Gondii",t:"parasito",s:"Toxoplasmosis, coriorretinitis, toxo congénita"},
+{n:135,r:"Tensor Fascia Lata (D)",i:"Tensor Fascia Lata (I)",p:"Gardnerella Vaginalis",t:"parasito",s:"Vaginosis bacteriana, flujo grisáceo"},
+{n:136,r:"Válvula Ileocecal",i:"Riñón",p:"Trichomonas (1)",t:"parasito",s:"Tricomoniasis, flujo espumoso amarillo"},
+{n:137,r:"Ciego",i:"Ciego",p:"Trichomonas (2)",t:"parasito",s:"Tricomoniasis intestinal"},
+{n:138,r:"Ciego",i:"Riñón",p:"Trichomonas (3)",t:"parasito",s:"Tricomoniasis"},
+{n:139,r:"Costodiafragmático (D)",i:"Costodiafragmático (I)",p:"Trypanosoma Cruzi",t:"parasito",s:"Enfermedad de Chagas, cardiomiopatía chagásica"},
+{n:140,r:"Deltoides",i:"Riñón",p:"Leishmania",t:"parasito",s:"Leishmaniasis cutánea, visceral, mucosa"},
+{n:141,r:"Cuello",i:"Cuello",p:"Blastocystis Hominis",t:"parasito",s:"Blastocistosis, diarrea crónica, síntomas GI"},
+// HONGOS
+{n:142,r:"Pospineal",i:"Vejiga",p:"Cryptococcus Neoformans (1)",t:"hongo",s:"Meningitis criptocócica en VIH"},
+{n:143,r:"Prepineal",i:"Pospineal",p:"Cryptococcus Neoformans (2)",t:"hongo",s:"Criptococosis diseminada"},
+{n:144,r:"Prepineal",i:"Vejiga",p:"Cryptococcus Neoformans (3)",t:"hongo",s:"Reservorio criptocócico"},
+{n:145,r:"Condral (D)",i:"Condral (I)",p:"Pneumocystis Carinii",t:"hongo",s:"Neumonía en VIH/SIDA, disnea progresiva"},
+{n:146,r:"Esófago",i:"Vejiga",p:"Histoplasma Capsulatum",t:"hongo",s:"Histoplasmosis, síntomas respiratorios"},
+{n:147,r:"Canto (D)",i:"Canto (I)",p:"Aspergillus",t:"hongo",s:"Aspergilosis, asma alérgica, invasión pulmonar"},
+{n:148,r:"Cava (D)",i:"Cava (I)",p:"Trichophyton (1)",t:"hongo",s:"Tiña, onicomicosis"},
+{n:149,r:"Primera Costilla (D)",i:"Primera Costilla (I)",p:"Trichophyton (2)",t:"hongo",s:"Tiña capitis, corporis"},
+{n:150,r:"Radio (D)",i:"Radio (I)",p:"Microsporum (1)",t:"hongo",s:"Tiña capitis en niños"},
+{n:151,r:"Diafragma (D)",i:"Diafragma (I)",p:"Candida Albicans (1)",t:"hongo",s:"Candidiasis oral, vaginal, esofágica, sistémica"},
+{n:152,r:"Píloro",i:"Uretero",p:"Candida Albicans (2)",t:"hongo",s:"Candidemia, candidiasis intestinal"},
+{n:153,r:"Tibia (D)",i:"Tibia (I)",p:"Malassezia Furfur",t:"hongo",s:"Pitiriasis versicolor, dermatitis seborreica"},
+// ESPECIALES - DISFUNCIONALES
+{n:154,r:"Parietal (D/I)",i:"Riñón (contralateral)",p:"Par Especial Goiz — DMP",t:"especial",s:"Dismetría de miembros pélvicos, disfunción parietofrontal"},
+{n:155,r:"Supraciliar",i:"Bulbo Raquídeo",p:"Crecimiento / Hormona de crecimiento",t:"especial",s:"Déficit de talla, disfunción hipofisiaria"},
+{n:156,r:"Sien (D)",i:"Sien (I)",p:"Irrigación Sanguínea Cerebral",t:"especial",s:"Insuficiencia vascular cerebral, mareo crónico"},
+{n:157,r:"Ilíaco (D)",i:"Ilíaco (I)",p:"Disfunción Gastrointestinal",t:"especial",s:"Colon irritable, dispepsia funcional"},
+{n:158,r:"Parótida (D)",i:"Parótida (I)",p:"Disfunción Secreción de Insulina",t:"especial",s:"Alteración glicémica, DM tipo 2"},
+{n:159,r:"Páncreas",i:"Páncreas",p:"Intoxicación por Metales Pesados",t:"especial",s:"Exposición a mercurio, plomo, arsénico"},
+{n:160,r:"Interciliar",i:"Bulbo Raquídeo",p:"Carácter (David)",t:"especial",s:"Alteraciones del carácter, impulsividad"},
+{n:161,r:"Atlas (D)",i:"Atlas (I)",p:"Sexualidad",t:"especial",s:"Disfunción sexual, libido"},
+{n:162,r:"Apéndice",i:"Timo",p:"Inmunocompetencia",t:"especial",s:"Inmunodeficiencia, infecciones recurrentes"},
+{n:163,r:"Polo (D)",i:"Polo (I)",p:"Equilibrio Vertical / Dislexia",t:"especial",s:"Dislexia, problemas de aprendizaje, equilibrio"},
+{n:164,r:"Riñón",i:"Uretero",p:"Cólico Nefrítico",t:"especial",s:"Litiasis renal, dolor intenso en flanco"},
+{n:165,r:"Oreja (D)",i:"Oreja (I)",p:"Pares Craneales",t:"especial",s:"Disfunción de pares craneales, neuralgia"},
+{n:166,r:"Quiasma (D)",i:"Quiasma (I)",p:"Drenaje Linfático",t:"especial",s:"Edema linfático, linfedema"},
+{n:167,r:"Útero",i:"Útero",p:"Falso Embarazo",t:"especial",s:"Pseudociesis, amenorrea psicogénica"},
+{n:168,r:"Cervical",i:"Dorsal",p:"Codo de Tenista (Epicondilitis)",t:"especial",s:"Dolor lateral de codo, epicondilitis"},
+{n:169,r:"Cuádriceps (D)",i:"Cuádriceps (I)",p:"Intoxicación por Bismuto",t:"especial",s:"Encefalopatía por bismuto, gingivitis"},
+{n:170,r:"Útero",i:"Ovario",p:"Embarazo",t:"especial",s:"Seguimiento de embarazo normal"},
+{n:171,r:"Hipófisis",i:"Ovario",p:"Disfunción Ovárica",t:"especial",s:"SOP, anovulación, infertilidad femenina"},
+{n:172,r:"Esternón",i:"Suprarrenales",p:"Poliglobulia",t:"especial",s:"Policitemia vera, eritrocitosis"},
+{n:173,r:"Colon Descendente",i:"Recto",p:"Obstrucción Intestinal",t:"especial",s:"Íleo, estreñimiento severo"},
+{n:174,r:"Temporal (D)",i:"Temporal (D)",p:"Agresividad / Hipertermia",t:"especial",s:"Agresividad excesiva, fiebre de origen desconocido"},
+{n:175,r:"Carótida (D)",i:"Carótida (I)",p:"Hipertensión Arterial",t:"especial",s:"HTA sistémica, riesgo cardiovascular"},
+{n:176,r:"Codo (D)",i:"Codo (I)",p:"Disfunción Ocular",t:"especial",s:"Miopía, astigmatismo, glaucoma"},
+{n:177,r:"Seno Auriculoventricular",i:"Riñón (I)",p:"Taquicardia / Arritmia",t:"especial",s:"Fibrilación auricular, taquicardia paroxística"},
+{n:178,r:"Timo",i:"Suprarrenales",p:"Disfunción Hormonal",t:"especial",s:"Desequilibrio hormonal general"},
+{n:179,r:"Trompa de Falopio",i:"Ovario",p:"Embarazo Extrauterino",t:"especial",s:"Ectópico tubárico, dolor agudo pélvico"},
+{n:180,r:"Cerebelo (D)",i:"Cerebelo (I)",p:"Crisis Convulsivas",t:"especial",s:"Epilepsia, convulsiones febriles"},
+{n:181,r:"Pineal",i:"Pineal",p:"Disfunción Pineal",t:"especial",s:"Alteraciones del sueño, jet lag, trastorno bipolar"},
+{n:182,r:"Hipófisis",i:"Hipófisis",p:"Disfunción Hipófisis",t:"especial",s:"Diabetes insípida, acromegalia, adenoma"},
+{n:183,r:"Tiroides",i:"Tiroides",p:"Disfunción Tiroides",t:"especial",s:"Hipotiroidismo, hipertiroidismo, bocio"},
+{n:184,r:"Paratiroides",i:"Paratiroides",p:"Disfunción Paratiroides",t:"especial",s:"Hipercalcemia, hipocalcemia, tetania"},
+{n:185,r:"Timo",i:"Timo",p:"Disfunción Timo",t:"especial",s:"Inmunodeficiencia, miastenia gravis"},
+{n:186,r:"Suprarrenal (D)",i:"Suprarrenal (I)",p:"Disfunción Suprarrenal",t:"especial",s:"Addison, Cushing, fatiga suprarrenal"},
+{n:187,r:"Ovario (D)",i:"Ovario (I)",p:"Disfunción Ovárica",t:"especial",s:"SOP, quistes ováricos, menopausia precoz"},
+{n:188,r:"Testículo (D)",i:"Testículo (I)",p:"Disfunción Testicular",t:"especial",s:"Hipogonadismo, infertilidad masculina"},
+{n:189,r:"Bazo (D)",i:"Bazo (I)",p:"Disfunción Bazo",t:"especial",s:"Esplenomegalia, trombocitopenia"},
+{n:190,r:"ECM (D)",i:"ECM (I)",p:"Disfunción Sistema Simpático",t:"especial",s:"Disautonomía, hiperhidrosis, taquicardia"},
+{n:191,r:"Cervical",i:"Sacro",p:"Disfunción Sistema Parasimpático",t:"especial",s:"Bradicardia, hipotensión ortostática"},
+{n:192,r:"Duodeno",i:"Duodeno",p:"Disfunción Duodeno",t:"especial",s:"Úlcera duodenal, dispepsia"},
+{n:193,r:"Píloro",i:"Píloro",p:"Disfunción Píloro",t:"especial",s:"Estenosis pilórica, gastroparesia"},
+{n:194,r:"Vejiga",i:"Vejiga",p:"Disfunción Vejiga",t:"especial",s:"Vejiga hiperactiva, incontinencia urinaria"},
+{n:195,r:"Vesícula",i:"Vesícula",p:"Disfunción Vesícula / Reservorio Virus",t:"especial",s:"Colelitiasis, colecistitis crónica"},
+// RESERVORIOS
+{n:196,r:"Cápsula Renal",i:"Riñón",p:"Reservorio VIH",t:"especial",s:"Reservorio de VIH en la cápsula renal"},
+{n:197,r:"Interilíaco",i:"Sacro",p:"Reservorio Parásitos (Congreso)",t:"especial",s:"Al impactar aparecen PBs de parásitos"},
+{n:198,r:"Pleura",i:"Peritoneo",p:"Reservorio Bacterias (Moisés)",t:"especial",s:"Al impactar aparecen PBs bacterianos"},
+{n:199,r:"Nervio Vago",i:"Riñón",p:"Reservorio Universal (Benavides)",t:"especial",s:"Reservorio universal de microorganismos"},
+{n:200,r:"Vagina",i:"Vagina",p:"Reservorio Virus (Yolanda)",t:"especial",s:"Reservorio viral genital femenino"},
+{n:201,r:"Uretra",i:"Uretra",p:"Reservorio Virus (Fox)",t:"especial",s:"Reservorio viral uretral"},
+{n:202,r:"Muñón",i:"Muñón",p:"Reservorio Universal",t:"especial",s:"Reservorio en muñón de amputación"},
+{n:203,r:"Bazo",i:"Pulmón (I)",p:"Reservorio Bacterias (Rubén)",t:"especial",s:"Reservorio bacteriano pulmonar-esplénico"},
+// COMPLEJOS
+{n:204,r:"Riñón (D)",i:"Duodeno",p:"Diabetes Mellitus",t:"especial",s:"DM tipo 1 y 2, hiperglicemia crónica"},
+{n:205,r:"Hipófisis",i:"Bulbo Raquídeo",p:"Diabetes Insípida",t:"especial",s:"Poliuria, polidipsia, déficit ADH"},
+{n:206,r:"Bazo",i:"Duodeno",p:"Leucemia",t:"especial",s:"Leucemia aguda/crónica, anemia, trombocitopenia"},
+{n:207,r:"Nervio Inguinal",i:"Articulación",p:"Reumatismo Monoarticular",t:"especial",s:"Artritis monoarticular, dolor articular"},
+{n:208,r:"Suprarrenales",i:"Todo el frente",p:"Asma Alérgico",t:"especial",s:"Asma bronquial alérgica, sibilancias"},
+{n:209,r:"Hígado",i:"Riñón",p:"Cirrosis Hepática",t:"especial",s:"Cirrosis, HTP, ascitis, encefalopatía"},
+{n:210,r:"Nariz (D)",i:"Nariz (I)",p:"Rinitis Alérgica",t:"especial",s:"Rinitis alérgica, estornudos, rinorrea"},
+];
+
+// ============================================================
+// DATA: NIVEL 2
+// ============================================================
+const N2 = [
+{n:211,r:"Lunar",i:"Riñón",p:"Hanta Virus",t:"virus"},
+{n:212,r:"Retrotensor Fascia Lata",i:"Retrotensor Fascia Lata",p:"Verruga Pequeña",t:"virus"},
+{n:213,r:"Vena Femoral (D)",i:"Vena Femoral (I)",p:"Herpes Virus 6",t:"virus"},
+{n:214,r:"Vejiga",i:"Recto",p:"Herpes Virus 7",t:"virus"},
+{n:215,r:"Ceja (D)",i:"Ceja (I)",p:"Sincicial Respiratorio Virus",t:"virus"},
+{n:216,r:"Dorsal 3",i:"Dorsal 7",p:"Aftosa Virus (2)",t:"virus"},
+{n:217,r:"Suprarrenal",i:"Bulbo Raquídeo",p:"Adenovirus 33",t:"virus"},
+{n:218,r:"Páncreas",i:"Páncreas",p:"Adenovirus 36",t:"virus"},
+{n:219,r:"Peripancreático",i:"Peripancreático",p:"Rabia Virus 2",t:"virus"},
+{n:220,r:"Esfínter Uretral",i:"Esfínter Uretral",p:"Rabia Virus 3",t:"virus"},
+{n:221,r:"Hombro",i:"Cardias",p:"Crytocides Primordialis",t:"virus"},
+{n:222,r:"Conducto Deferente",i:"Laringe",p:"VSH Virus",t:"virus"},
+{n:223,r:"Colon Descendente",i:"Ano",p:"Chikungunya Virus",t:"virus"},
+{n:224,r:"Costal Anterior",i:"Costal Anterior",p:"Ébola Virus",t:"virus"},
+{n:225,r:"Apéndice",i:"Riñón",p:"Virus BK 1",t:"virus"},
+{n:226,r:"Válvula Hepatopancreática",i:"Riñón",p:"Virus BK 2",t:"virus"},
+{n:227,r:"Ligamento Pancreático",i:"Colon Descendente",p:"Fiebre Amarilla",t:"virus"},
+{n:228,r:"Mesenterio",i:"Mesenterio",p:"Mycobacterium Leprae 2",t:"bacteria"},
+{n:229,r:"Retroplantar",i:"Retroplantar",p:"Mycobacterium Leprae 3",t:"bacteria"},
+{n:230,r:"Conducto Espermático",i:"Conducto Espermático",p:"Mycobacterium Tuberculosis 2",t:"bacteria"},
+{n:231,r:"Perirrenal",i:"Perirrenal",p:"Mycobacterium Bovis",t:"bacteria"},
+{n:232,r:"Pectoral (D)",i:"Pectoral (I)",p:"Mycoplasma 2",t:"bacteria"},
+{n:233,r:"Suprarrenal",i:"Pulmón",p:"Pseudomona Aeruginosa 3",t:"bacteria"},
+{n:234,r:"Latissimus Dorsi",i:"Latissimus Dorsi",p:"Yersinia Pneumoniae",t:"bacteria"},
+{n:235,r:"Preauricular (D)",i:"Preauricular (I)",p:"Neocardia Americana",t:"bacteria"},
+{n:236,r:"Bursa",i:"Codo",p:"Estreptococo Beta Hemolítico 2",t:"bacteria"},
+{n:237,r:"Retroaxilar (D)",i:"Retroaxilar (I)",p:"Streptococcus C 2",t:"bacteria"},
+{n:238,r:"Cardias",i:"Píloro",p:"Streptococcus C 3",t:"bacteria"},
+{n:239,r:"Botón Aórtico",i:"Dorsal 7",p:"Streptococcus C 4",t:"bacteria"},
+{n:240,r:"Peroné (D)",i:"Peroné (I)",p:"Proteus Mirabilis 5",t:"bacteria"},
+{n:241,r:"Maxilar Superior",i:"Maxilar Superior",p:"Klebsiella Pneumoniae 2",t:"bacteria"},
+{n:242,r:"Vena Porta",i:"Vena Porta",p:"Klebsiella Pneumoniae 3",t:"bacteria"},
+{n:243,r:"Antecuerno (D)",i:"Antecuerno (I)",p:"Enterobacter Aerogenes",t:"bacteria"},
+{n:244,r:"Escotadura Ciática",i:"Escotadura Ciática",p:"Moraxella Catarrhalis 2",t:"bacteria"},
+{n:245,r:"Estómago",i:"Timo",p:"Escherichia Coli Transgénica",t:"bacteria"},
+{n:246,r:"Cardias",i:"Apéndice",p:"Bartonella",t:"bacteria"},
+{n:247,r:"Sigmoides",i:"Testículo",p:"Campylobacter Jejuni",t:"bacteria"},
+{n:248,r:"Colon Ascendente",i:"Sacro",p:"Burkholderia Cepacia",t:"bacteria"},
+{n:249,r:"Trocánter Mayor",i:"Riñón",p:"Salmonella Paratyphi",t:"bacteria"},
+{n:250,r:"Plexo Lumbar",i:"Plexo Lumbar",p:"Enterococcus Faecalis 2",t:"bacteria"},
+{n:251,r:"Vejiga",i:"Ano",p:"Enterococcus Faecalis 3",t:"bacteria"},
+{n:252,r:"Cabeza de Páncreas",i:"Píloro",p:"Clostridium Difficile",t:"bacteria"},
+{n:253,r:"Colon Ascendente",i:"Colon Ascendente",p:"Listeria Monocytogenes (1)",t:"bacteria"},
+{n:254,r:"Hígado",i:"Píloro",p:"Listeria Monocytogenes (2)",t:"bacteria"},
+{n:255,r:"Glándula Salival",i:"Glándula Salival",p:"Proteus Vulgaris 1",t:"bacteria"},
+{n:256,r:"Rama Mandibular",i:"Rama Mandibular",p:"Proteus Vulgaris 2",t:"bacteria"},
+{n:257,r:"Lumbar 5 (D)",i:"Lumbar 5 (I)",p:"Staphylococcus Aureus Coag– 2",t:"bacteria"},
+{n:258,r:"Estómago",i:"Colon Transverso",p:"Chlamydia Tucans",t:"bacteria"},
+{n:259,r:"Estómago",i:"Sacro",p:"Chlamydia Intestinalis",t:"bacteria"},
+{n:260,r:"Píloro",i:"Lengua",p:"Triquina / Trichinella",t:"parasito"},
+{n:261,r:"Agujero (D)",i:"Agujero (I)",p:"Giardia Lamblia",t:"parasito"},
+{n:262,r:"Cervical",i:"Píloro",p:"Plasmodium Falciparum",t:"parasito"},
+{n:263,r:"Retrohepático",i:"Riñón",p:"Toxocara Canis",t:"parasito"},
+{n:264,r:"Colon Descendente",i:"Cuádriceps",p:"Schistosoma",t:"parasito"},
+{n:265,r:"Glúteo",i:"Vena Femoral",p:"Babesia",t:"parasito"},
+{n:266,r:"Arco Cigomático",i:"Arco Cigomático",p:"Cisticercosis",t:"parasito"},
+{n:267,r:"Cresta Ilíaca",i:"Cresta Ilíaca",p:"Trypanosoma Brucei Gambiense",t:"parasito"},
+{n:268,r:"Deltoides",i:"Deltoides",p:"Trypanosoma Brucei Brucei",t:"parasito"},
+{n:269,r:"Páncreas",i:"Bazo",p:"Equinococcus Granulosus",t:"parasito"},
+{n:270,r:"Duodeno",i:"Cola de Páncreas",p:"Anisakis",t:"parasito"},
+{n:271,r:"Ano",i:"Píloro",p:"Levadura",t:"hongo"},
+{n:272,r:"Lig. Int. Rodilla",i:"Maléolo Interno",p:"Microsporum 2",t:"hongo"},
+{n:273,r:"Trocánter Mayor",i:"Tensor Fascia Lata",p:"Blastomyces Dermatitidis",t:"hongo"},
+{n:274,r:"Páncreas",i:"Estómago",p:"Alergias Alimentarias",t:"especial"},
+{n:275,r:"Paravertebral (D)",i:"Paravertebral (I)",p:"Radiculopatías",t:"especial"},
+{n:276,r:"Amígdala Palatina",i:"Riñón",p:"Intoxicación Crónica",t:"especial"},
+{n:277,r:"Ojo",i:"Cerebelo",p:"Edema de Nervio Óptico",t:"especial"},
+{n:278,r:"Timo",i:"Bazo",p:"Factor Surfactante",t:"especial"},
+{n:279,r:"Estómago",i:"Hígado",p:"Polifagia",t:"especial"},
+{n:280,r:"Pospineal",i:"Bulbo Raquídeo",p:"Parkinson",t:"especial"},
+{n:281,r:"Nudo Braquial",i:"Nudo Braquial",p:"Bloqueo Energético",t:"especial"},
+{n:282,r:"Páncreas×4",i:"Páncreas×4",p:"Pancreatitis",t:"especial"},
+{n:283,r:"Bulbo Raquídeo",i:"Corazón",p:"Bradicardia",t:"especial"},
+{n:284,r:"Cuerpo Calloso (D)",i:"Cuerpo Calloso (I)",p:"Drogadicción",t:"especial"},
+{n:285,r:"Mácula",i:"Cerebelo",p:"Edema Macular",t:"especial"},
+{n:286,r:"Parietal",i:"Riñón",p:"Déficit de Atención (TDAH)",t:"especial"},
+{n:287,r:"Píloro",i:"Colon Transverso",p:"Polifagia / Anorexia",t:"especial"},
+{n:288,r:"Pineal",i:"Mama",p:"Lactancia",t:"especial"},
+{n:289,r:"Subdiafragma",i:"Subdiafragma",p:"Reservorio Cisticercosis",t:"especial"},
+{n:290,r:"Cardias",i:"Temporal",p:"Priones (Creutzfeldt-Jakob)",t:"especial"},
+{n:291,r:"Borde Calloso",i:"Borde Calloso",p:"Mycobacterium Tuberculosis 3",t:"especial"},
+{n:292,r:"Apéndice",i:"Vejiga",p:"Reservorio Fagos",t:"especial"},
+{n:293,r:"Mordida",i:"Axila",p:"Reservorio Rabia Virus",t:"especial"},
+{n:294,r:"Nutricia",i:"Nutricia",p:"Reservorio Bacterias",t:"especial"},
+{n:295,r:"Suelo Pélvico",i:"Suelo Pélvico",p:"Reservorio Universal",t:"especial"},
+{n:296,r:"Talón",i:"Talón",p:"Reservorio Epstein Barr",t:"especial"},
+{n:297,r:"Vacuna",i:"Supraespinoso",p:"Reservorio Tuberculosis",t:"especial"},
+{n:298,r:"Ombligo",i:"Útero",p:"Complejo de Edipo",t:"especial"},
+{n:299,r:"Ombligo",i:"Testículo",p:"Complejo de Electra",t:"especial"},
+{n:300,r:"Pospineal",i:"Pospineal",p:"Integridad Moral",t:"especial"},
+{n:301,r:"Cisura Media",i:"Cisura Media",p:"Altivez / Soberbia 2",t:"especial"},
+{n:302,r:"Pospineal",i:"Amígdala Cerebral",p:"Depresión",t:"especial"},
+{n:303,r:"Cisura de Silvio",i:"Cisura de Silvio",p:"Inspiración",t:"especial"},
+{n:304,r:"Suprarrenales",i:"Hígado",p:"Soberbia",t:"especial"},
+{n:305,r:"Timo",i:"Hipófisis",p:"Avaricia",t:"especial"},
+{n:306,r:"Pineal",i:"Próstata / Útero",p:"Lujuria",t:"especial"},
+{n:307,r:"Hígado",i:"Corazón",p:"Ira",t:"especial"},
+{n:308,r:"Estómago",i:"Corazón",p:"Gula",t:"especial"},
+{n:309,r:"Corazón",i:"Páncreas",p:"Envidia",t:"especial"},
+{n:310,r:"Bazo",i:"Hipotálamo",p:"Pereza",t:"especial"},
+{n:311,r:"Rótula (D)",i:"Rótula (I)",p:"Miedo",t:"especial"},
+{n:312,r:"Bulbo Raquídeo",i:"Corazón",p:"Crueldad",t:"especial"},
+{n:313,r:"Timo",i:"Ovario / Testículo",p:"Impaciencia",t:"especial"},
+{n:314,r:"Dorso de la Mano",i:"Dorso de la Mano",p:"Duda",t:"especial"},
+{n:315,r:"Empeine",i:"Empeine",p:"Duda (2)",t:"especial"},
+{n:316,r:"Pulmón (D)",i:"Pulmón (I)",p:"Culpa",t:"especial"},
+{n:317,r:"Tráquea",i:"Corazón",p:"Intolerancia",t:"especial"},
+{n:318,r:"Pulmón Derecho",i:"Bulbo Raquídeo",p:"Tristeza",t:"especial"},
+{n:319,r:"Colon Transverso",i:"Ovario / Testículo",p:"Materialismo",t:"especial"},
+{n:320,r:"Amígdala Cerebral",i:"Timo",p:"Odio",t:"especial"},
+{n:321,r:"Atlas",i:"Útero",p:"Celos",t:"especial"},
+{n:322,r:"Occipital",i:"Testículo",p:"Malignidad",t:"especial"},
+{n:323,r:"Costal Anterior",i:"Riñón",p:"Zika Virus (1)",t:"virus"},
+{n:324,r:"Costal Anterior",i:"Colon Descendente",p:"Zika Virus (2)",t:"virus"},
+{n:325,r:"Cresta Isquiática",i:"Píloro",p:"Vibrio Haemophilus",t:"bacteria"},
+];
+
+// ============================================================
+// DATA: EMOCIONES
+// ============================================================
+const EMOCIONES = [
+{e:"😡",nom:"Ira",r:"Hígado",i:"Corazón",nivel:1},
+{e:"😢",nom:"Tristeza",r:"Pulmón Derecho",i:"Bulbo Raquídeo",nivel:1},
+{e:"😨",nom:"Miedo",r:"Rótula (D)",i:"Rótula (I)",nivel:1},
+{e:"😤",nom:"Soberbia",r:"Suprarrenales",i:"Hígado",nivel:1},
+{e:"😔",nom:"Depresión",r:"Pospineal",i:"Amígdala Cerebral",nivel:1},
+{e:"😞",nom:"Tristeza 2",r:"Pulmón Derecho",i:"Bulbo Raquídeo",nivel:1},
+{e:"🤢",nom:"Culpa",r:"Pulmón (D)",i:"Pulmón (I)",nivel:1},
+{e:"😤",nom:"Agresividad",r:"Temporal Derecho",i:"Temporal Derecho",nivel:1},
+{e:"🤑",nom:"Materialismo",r:"Colon Transverso",i:"Testículos u Ovarios",nivel:1},
+{e:"😒",nom:"Impaciencia",r:"Timo",i:"Testículos u Ovarios",nivel:1},
+{e:"💔",nom:"Soledad",r:"Hipocampo",i:"Amígdala Cerebral",nivel:1},
+{e:"🤐",nom:"Intolerancia",r:"Tráquea",i:"Corazón",nivel:1},
+{e:"💰",nom:"Avaricia",r:"Timo",i:"Hipófisis",nivel:1},
+{e:"💚",nom:"Envidia",r:"Corazón",i:"Páncreas",nivel:1},
+{e:"😠",nom:"Resentimiento",r:"Corazón",i:"Vejiga",nivel:1},
+{e:"😈",nom:"Malignidad",r:"Occipital",i:"Testículos u Ovarios",nivel:1},
+{e:"😴",nom:"Pereza",r:"Bazo",i:"Hipotálamo",nivel:1},
+{e:"😤",nom:"Crueldad",r:"Bulbo Raquídeo",i:"Corazón",nivel:1},
+{e:"💡",nom:"Inspiración",r:"Cisura de Silvio",i:"Cisura de Silvio",nivel:1},
+{e:"😮",nom:"Exhibicionismo",r:"Cisura Media",i:"Cisura Media",nivel:1},
+{e:"🤔",nom:"Duda",r:"Dorso de la Mano",i:"Empeine",nivel:1},
+{e:"🍖",nom:"Gula",r:"Estómago",i:"Corazón",nivel:1},
+{e:"🔥",nom:"Lujuria",r:"Pineal",i:"Próstata / Útero",nivel:1},
+{e:"😡",nom:"Odio",r:"Amígdala Cerebral",i:"Timo",nivel:1},
+{e:"💚",nom:"Celos",r:"Atlas",i:"Útero",nivel:1},
+{e:"🎭",nom:"Carácter",r:"Interciliar",i:"Bulbo Raquídeo",nivel:1},
+{e:"🛐",nom:"Integridad Moral",r:"Pospineal",i:"Pospineal",nivel:2},
+{e:"🌟",nom:"Altivez",r:"Cisura Media",i:"Cisura Media",nivel:2},
+];
+
+// ============================================================
+// DATA: ENFERMEDADES
+// ============================================================
+const ENFERMEDADES = [
+"Acné","Adenoma hipofisiario","Aftas bucales","Alcoholismo","Alergia","Alopecia",
+"Alzheimer","Amenorrea","Anemia","Anorexia","Ansiedad","Antibioticoterapia prolongada",
+"Arritmia","Artritis Reumatoide","Artrosis","Ascitis","Asma","Ataxia","Ateroesclerosis",
+"Autismo","Balanitis","Bartolinitis","Bocio","Botulismo","Bronquitis","Bruxismo",
+"Bulimia","Cáncer de Colon","Cáncer de Estómago","Cáncer de Hígado","Cáncer de Mama",
+"Cáncer de Ovario","Cáncer de Páncreas","Cáncer de Piel","Cáncer de Próstata",
+"Cáncer de Pulmón","Cáncer de Riñón","Cáncer de Testículo","Cáncer de Tiroides",
+"Cáncer de Vejiga","Cáncer Óseo","Candidiasis Vaginal","Ciática","Cistitis",
+"Cólico Nefrítico","Colitis Ulcerativa","Conjuntivitis","Déficit de Crecimiento",
+"Degeneración Macular","Demencia","Depresión","Dermatitis Atópica","Diabetes Mellitus",
+"Disfunción Eréctil","Dislexia","Dismenorrea","Dispepsia","Diverticulitis",
+"Edema Pulmonar","Endocarditis","Endometriosis","Enfermedad Celiaca","Enfermedad de Crohn",
+"Enfermedad de Huntington","Epilepsia","Esclerosis Múltiple","Espondilitis",
+"Fibromialgia","Gastritis","Hepatitis A","Hepatitis B","Hepatitis C",
+"Herpes Zóster","Hipertensión Arterial","Hipotiroidismo","Hipertiroidismo",
+"Infertilidad","Insuficiencia Renal","Leucemia","Lupus Eritematoso",
+"Meningitis","Migraña","Obesidad","Osteoporosis","Parkinson","Prostatitis",
+"Psoriasis","Rinitis Alérgica","Síndrome de Colon Irritable","Toxoplasmosis",
+"VIH/SIDA","Várices"
+];
+
+// ============================================================
+// RENDER FUNCTIONS
+// ============================================================
+function tagHTML(t){
+  const m={virus:'tag-v',bacteria:'tag-b',hongo:'tag-h',parasito:'tag-p',especial:'tag-e'};
+  const l={virus:'Virus',bacteria:'Bacteria',hongo:'Hongo',parasito:'Parásito',especial:'Especial'};
+  return `<span class="tag ${m[t]||'tag-e'}">${l[t]||t}</span>`;
+}
+
+function pbImgPath(n){return `img/pbs/pb_${String(n).padStart(3,'0')}.jpg`;}
+
+function openPB(n){
+  const all=[...N1,...N2];
+  const d=all.find(x=>x.n===n);
+  if(!d)return;
+  const modal=document.getElementById('pb-modal');
+  document.getElementById('modal-title').textContent=`PB ${d.n} · ${d.r} – ${d.i}`;
+  document.getElementById('modal-img').src=pbImgPath(d.n);
+  document.getElementById('modal-neg').textContent=`– ${d.r} (polo negativo)`;
+  document.getElementById('modal-pos').textContent=`+ ${d.i} (polo positivo)`;
+  const typeLabel={virus:'Virus',bacteria:'Bacteria',hongo:'Hongo',parasito:'Parásito',especial:'Especial'};
+  document.getElementById('modal-info').innerHTML=`
+    <h3>Relación patológica</h3>
+    <p>${d.p} ${tagHTML(d.t)}</p>
+    ${d.s?`<h3>Sintomatología asociada</h3><p>${d.s}</p>`:''}
+    <h3>Nivel</h3>
+    <p>${d.n<=210?'Nivel 1 — Biomagnetismo (Guía BRI 2017)':'Nivel 2 — Bioenergética (Guía BRI 2017)'}</p>
+    <h3>Posicionamiento</h3>
+    <p>Imán <strong>negativo (–)</strong> en <em>${d.r}</em>.<br>Imán <strong>positivo (+)</strong> en <em>${d.i}</em>.</p>
+  `;
+  modal.classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function closeModal(e){if(e.target===document.getElementById('pb-modal'))closeModalBtn();}
+function closeModalBtn(){
+  document.getElementById('pb-modal').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModalBtn();});
+
+function renderTable(data, tbodyId){
+  const tb = document.getElementById(tbodyId);
+  tb.innerHTML = data.map(d=>`
+    <tr data-tipo="${d.t}" style="cursor:pointer" onclick="openPB(${d.n})">
+      <td class="td-img"><img class="pb-thumb" src="${pbImgPath(d.n)}" alt="PB ${d.n}" loading="lazy" onerror="this.style.display='none'"></td>
+      <td><span class="pb-num">${d.n}</span></td>
+      <td><strong>${d.r}</strong></td>
+      <td>${d.i}</td>
+      <td>${d.p}${d.s?`<br><small style="color:#64748b">${d.s}</small>`:''}</td>
+      <td>${tagHTML(d.t)}</td>
+    </tr>`).join('');
+}
+
+function filterN1(tipo, btn){
+  document.querySelectorAll('#nivel1 .filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const rows = document.querySelectorAll('#tbody-n1 tr');
+  rows.forEach(r=>{
+    r.style.display = (tipo==='todos'||r.dataset.tipo===tipo)?'':'none';
+  });
+}
+
+function filterN2(tipo, btn){
+  document.querySelectorAll('#nivel2 .filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const rows = document.querySelectorAll('#tbody-n2 tr');
+  rows.forEach(r=>{
+    r.style.display = (tipo==='todos'||r.dataset.tipo===tipo)?'':'none';
+  });
+}
+
+function renderEmotions(){
+  const g = document.getElementById('emotion-grid');
+  g.innerHTML = EMOCIONES.map(e=>`
+    <div class="emotion-card">
+      <div class="emotion-icon">${e.e}</div>
+      <div>
+        <h4>${e.nom} <small style="color:#94a3b8;font-weight:400">N${e.nivel}</small></h4>
+        <p>– ${e.r}<br>+ ${e.i}</p>
+      </div>
+    </div>`).join('');
+}
+
+function renderDiseases(){
+  const g = document.getElementById('disease-grid');
+  g.innerHTML = ENFERMEDADES.map(e=>`
+    <div class="disease-item" onclick="showEnfDetail('${e}')">${e}</div>`).join('');
+}
+
+function filterEnf(){
+  const q = norm(document.getElementById('enf-search').value);
+  document.querySelectorAll('.disease-item').forEach(d=>{
+    d.style.display = norm(d.textContent).includes(q)?'':'none';
+  });
+}
+
+function pbMiniCard(n){
+  const all=[...N1,...N2];
+  const pb=all.find(x=>x.n===n);
+  if(!pb)return'';
+  return`<div class="pb-mini-card" onclick="openPB(${n})" title="PB ${n}: ${pb.r} – ${pb.i}">
+    <img src="${pbImgPath(n)}" onerror="this.style.display='none'" loading="lazy">
+    <div><div class="pb-mini-num">PB ${n} ${tagHTML(pb.t)}</div><div class="pb-mini-name">${pb.r} – ${pb.i}</div><div style="font-size:.72rem;color:#64748b;margin-top:2px">${pb.p.split('(')[0].trim()}</div></div>
+  </div>`;
+}
+
+function renderTop10Block(catName, idx){
+  const pbs = (typeof TOP10!=='undefined' && TOP10[catName]) || [];
+  const items = pbs.map(n=>pbMiniCard(n)).filter(Boolean);
+  if(!items.length) return `<div class="top10-section">
+    <button class="top10-toggle" onclick="toggleTop(this)">
+      <span>${catName}</span><span>▼</span>
+    </button>
+    <div class="top10-content"><p style="font-size:.8rem;color:#64748b;padding:6px 4px;">Ver guía BRI 2017 para lista completa.</p></div>
+  </div>`;
+  return`<div class="top10-section">
+    <button class="top10-toggle" onclick="toggleTop(this)">
+      <span>${catName} <span style="font-size:.72rem;opacity:.7">(${items.length} PBs)</span></span><span>▼</span>
+    </button>
+    <div class="top10-content">
+      <div class="top10-pb-row">${items.join('')}</div>
+    </div>
+  </div>`;
+}
+
+function toggleTop(btn){
+  const c=btn.nextElementSibling;
+  c.classList.toggle('open');
+  btn.querySelector('span:last-child').textContent=c.classList.contains('open')?'▲':'▼';
+}
+
+function showEnfDetail(name){
+  const detail = document.getElementById('enf-detail');
+  document.getElementById('enf-title').textContent = name;
+
+  // Look up in DISEASE_DATA first
+  const proto = (typeof DISEASE_DATA!=='undefined') ? DISEASE_DATA[name] : null;
+  const all = [...N1,...N2];
+
+  // Fallback: text search
+  const related = all.filter(pb=>
+    norm(pb.p).includes(norm(name))||(pb.s&&norm(pb.s).includes(norm(name)))
+  );
+
+  let html = '';
+
+  if(proto){
+    // Specific PBs from protocol
+    const specificPBs = (proto.pbs||[]).map(n=>pbMiniCard(n)).filter(Boolean);
+    // Also add text-search matches not already in specific PBs
+    const specSet = new Set(proto.pbs||[]);
+    const extraPBs = related.filter(pb=>!specSet.has(pb.n)).map(pb=>pbMiniCard(pb.n)).filter(Boolean);
+
+    html = `<div class="enf-detail-box">
+      <div class="enf-detail-header">
+        <h3>${name}</h3>
+        <p>Protocolo de Par Biomagnético · Fuente: Guía BRI 2017 (LINDE 3 + Kronos)</p>
+      </div>
+      <div class="enf-body">
+        <div class="enf-col">
+          <h4>Pares Específicos del Protocolo</h4>
+          ${specificPBs.length
+            ? `<div class="pb-card-grid">${specificPBs.join('')}</div>`
+            : '<p style="font-size:.83rem;color:#64748b;">Aplicar Protocolo Básico + categorías listadas.</p>'
+          }
+          ${extraPBs.length ? `<h4 style="margin-top:14px;">PBs relacionados por patología</h4><div class="pb-card-grid">${extraPBs.join('')}</div>` : ''}
+          ${proto.notes ? `<div class="enf-note">ℹ️ ${proto.notes}</div>` : ''}
+        </div>
+        <div class="enf-col">
+          <h4>Protocolos de Rastreo</h4>
+          ${renderTop10Block('Protocolo Básico', 0)}
+          ${(proto.tops||[]).map((t,i)=>renderTop10Block(t,i+1)).join('')}
+        </div>
+      </div>
+    </div>`;
+  } else if(related.length>0){
+    html = `<div class="enf-detail-box">
+      <div class="enf-detail-header">
+        <h3>${name}</h3>
+        <p>PBs relacionados por búsqueda de patología</p>
+      </div>
+      <div class="enf-col" style="padding:18px 20px;">
+        <div class="pb-card-grid">${related.map(pb=>pbMiniCard(pb.n)).filter(Boolean).join('')}</div>
+      </div>
+    </div>`;
+  } else {
+    html = `<div class="enf-detail-box"><div class="enf-col" style="padding:18px 20px;"><p style="color:#64748b;">Ver protocolos específicos en la guía BRI 2017 Nivel 2.</p></div></div>`;
+  }
+
+  document.getElementById('enf-content').innerHTML = html;
+  detail.classList.remove('hidden');
+  detail.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function norm(s){return s.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();}
+
+function globalSearch(){
+  const q = norm(document.getElementById('global-search').value.trim());
+  const res = document.getElementById('search-results');
+  if(!q){res.innerHTML='';return;}
+  const all = [...N1,...N2];
+  const found = all.filter(pb=>
+    String(pb.n).includes(q)||
+    norm(pb.r).includes(q)||
+    norm(pb.i).includes(q)||
+    norm(pb.p).includes(q)||
+    (pb.s&&norm(pb.s).includes(q))
+  );
+  if(found.length===0){
+    res.innerHTML='<p style="color:#64748b;padding:16px;">No se encontraron resultados.</p>';
+    return;
+  }
+  res.innerHTML=`
+    <p style="color:#64748b;margin-bottom:12px;">${found.length} resultado(s) — haz clic en cualquier fila para ver el diagrama</p>
+    <div class="table-wrap"><table>
+    <thead><tr><th></th><th>#</th><th>Rastreo (–)</th><th>Impacto (+)</th><th>Relación</th><th>Tipo</th></tr></thead>
+    <tbody>${found.map(d=>`<tr style="cursor:pointer" onclick="openPB(${d.n})">
+      <td class="td-img"><img class="pb-thumb" src="${pbImgPath(d.n)}" alt="PB ${d.n}" loading="lazy" onerror="this.style.display='none'"></td>
+      <td><span class="pb-num">${d.n}</span></td>
+      <td><strong>${d.r}</strong></td>
+      <td>${d.i}</td>
+      <td>${d.p}${d.s?`<br><small style="color:#64748b">${d.s}</small>`:''}</td>
+      <td>${tagHTML(d.t)}</td>
+    </tr>`).join('')}
+    </tbody></table></div>`;
+}
+
+function showTab(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// INIT
+renderTable(N1,'tbody-n1');
+renderTable(N2,'tbody-n2');
+renderEmotions();
+renderDiseases();
+</script>
+</body>
+</html>

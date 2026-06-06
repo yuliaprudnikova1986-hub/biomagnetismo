@@ -1027,18 +1027,19 @@ function pbMiniCard(n){
   </div>`;
 }
 
-function renderTop10Block(catName, idx){
-  const pbs = (typeof TOP10!=='undefined' && TOP10[catName]) || [];
+function renderTop10Block(displayName, idx, lookupKey){
+  const key = (lookupKey !== undefined) ? lookupKey : displayName;
+  const pbs = (typeof TOP10!=='undefined' && TOP10[key]) || [];
   const items = pbs.map(n=>pbMiniCard(n)).filter(Boolean);
   if(!items.length) return `<div class="top10-section">
     <button class="top10-toggle" onclick="toggleTop(this)">
-      <span>${catName}</span><span>▼</span>
+      <span>${displayName}</span><span>▼</span>
     </button>
     <div class="top10-content"><p style="font-size:.8rem;color:#64748b;padding:6px 4px;">${translate('seeGuideText')}</p></div>
   </div>`;
   return`<div class="top10-section">
     <button class="top10-toggle" onclick="toggleTop(this)">
-      <span>${catName} <span style="font-size:.72rem;opacity:.7">(${items.length} PBs)</span></span><span>▼</span>
+      <span>${displayName} <span style="font-size:.72rem;opacity:.7">(${items.length} PBs)</span></span><span>▼</span>
     </button>
     <div class="top10-content">
       <div class="top10-pb-row">${items.join('')}</div>
@@ -1094,8 +1095,8 @@ function showEnfDetail(name){
         </div>
         <div class="enf-col">
           <h4>${translate('enfTrackingProtocols')}</h4>
-          ${renderTop10Block(translate('basicProtocol'), 0)}
-          ${(proto.tops||[]).map((t,i)=>renderTop10Block(t,i+1)).join('')}
+          ${renderTop10Block(translate('basicProtocol'), 0, 'Protocolo Básico')}
+          ${(proto.tops||[]).map((t,i)=>renderTop10Block(translateTop(t),i+1,t)).join('')}
         </div>
       </div>
     </div>`;
@@ -1993,6 +1994,36 @@ const TRANSLATED_TERMS = {
       "Asma bronquial alérgica, sibilancias":"Аллергическая бронхиальная астма, свистящее дыхание",
       "Cirrosis, HTP, ascitis, encefalopatía":"Цирроз, ПГ, асцит, энцефалопатия",
       "Rinitis alérgica, estornudos, rinorrea":"Аллергический ринит, чихание, ринорея"
+    },
+    tops: {
+      "Top 10 Cardiológico":"Топ 10 Кардиологический",
+      "Top 10 Columna":"Топ 10 Позвоночник",
+      "Top 10 Dermatológico":"Топ 10 Дерматологический",
+      "Top 10 Disfuncional":"Топ 10 Дисфункциональный",
+      "Top 10 Disnea":"Топ 10 Одышка",
+      "Top 10 Endocrinológico":"Топ 10 Эндокринологический",
+      "Top 10 Gastrointestinal":"Топ 10 Желудочно-кишечный",
+      "Top 10 Gastritis":"Топ 10 Гастрит",
+      "Top 10 Ginecológico":"Топ 10 Гинекологический",
+      "Top 10 Hematológico":"Топ 10 Гематологический",
+      "Top 10 Hepatobiliar":"Топ 10 Гепатобилиарный",
+      "Top 10 Inmunológico (Enf. Autoinmunes)":"Топ 10 Иммунологический (аутоиммунные заб.)",
+      "Top 10 Inmunológico (Inmunodeficiencia)":"Топ 10 Иммунологический (иммунодефицит)",
+      "Top 10 Intrahospitalario":"Топ 10 Внутрибольничный",
+      "Top 10 Lesiones Deportivas":"Топ 10 Спортивные травмы",
+      "Top 10 Neurológico":"Топ 10 Неврологический",
+      "Top 10 Nutricional":"Топ 10 Нутриционный",
+      "Top 10 Oftalmológico":"Топ 10 Офтальмологический",
+      "Top 10 Oncológico":"Топ 10 Онкологический",
+      "Top 10 Osteomuscular":"Топ 10 Костно-мышечный",
+      "Top 10 Patogénico":"Топ 10 Патогенный",
+      "Top 10 Psicoemocional":"Топ 10 Психоэмоциональный",
+      "Top 10 Psiquiátrico":"Топ 10 Психиатрический",
+      "Top 10 Regularización intestinal":"Топ 10 Регуляция кишечника",
+      "Top 10 Reservorios":"Топ 10 Резервуары",
+      "Top 10 Respiratorio":"Топ 10 Респираторный",
+      "Top 10 Tropical":"Топ 10 Тропический",
+      "Top 10 Urológico":"Топ 10 Урологический"
     }
   }
 };
@@ -2022,6 +2053,11 @@ function translatePathology(name){
 function translateSymptom(s){
   if(currentLang !== 'ru' || !s) return '';
   return TRANSLATED_TERMS.ru.symptoms[s] || '';
+}
+
+function translateTop(name){
+  if(currentLang !== 'ru' || !name) return name;
+  return (TRANSLATED_TERMS.ru.tops && TRANSLATED_TERMS.ru.tops[name]) || name;
 }
 
 function formatDualLabel(value, translated){

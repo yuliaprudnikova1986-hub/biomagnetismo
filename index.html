@@ -3,6 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1a3a5c">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="192x192" href="img/icon-192.png">
+<link rel="apple-touch-icon" href="img/icon-192.png">
 <title data-i18n="title">Par Biomagnético — Guía de Referencia</title>
 <script src="disease_data.js"></script>
 <style>
@@ -158,6 +162,20 @@ td.td-img{width:60px;padding:6px 8px;}
 .top10-content.open{display:block;}
 .top10-pb-row{display:flex;flex-wrap:wrap;gap:5px;padding:4px 4px 8px;}
 .enf-note{background:#fef9c3;border:1px solid #fde68a;border-radius:8px;padding:10px 14px;font-size:.83rem;color:#78350f;margin:10px 0;}
+/* SCROLL-TOP */
+.scroll-top{position:fixed;bottom:24px;right:24px;z-index:200;background:var(--azul2);color:#fff;border:none;border-radius:50%;width:44px;height:44px;font-size:1.3rem;cursor:pointer;box-shadow:0 4px 12px rgba(37,99,235,.4);display:none;align-items:center;justify-content:center;transition:opacity .2s;}
+.scroll-top.visible{display:flex;}
+/* MODAL FAV BUTTON */
+.modal-fav{background:rgba(255,255,255,.15);border:none;color:#fff;width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:1.25rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .2s;}
+.modal-fav:hover{background:rgba(255,255,255,.3);}
+/* FAVORITOS */
+.fav-empty{color:#94a3b8;padding:40px 20px;text-align:center;font-size:.95rem;}
+/* DISCLAIMER */
+.disclaimer-box{background:#fef9c3;border:1px solid #fde68a;border-radius:10px;padding:14px 18px;margin:16px 0;font-size:.85rem;color:#78350f;}
+.disclaimer-box strong{display:block;margin-bottom:4px;}
+/* FOOTER */
+footer{background:#1e293b;color:#94a3b8;padding:20px 24px;text-align:center;font-size:.82rem;margin-top:40px;}
+footer a{color:#94a3b8;}
 </style>
 </head>
 <body>
@@ -167,6 +185,7 @@ td.td-img{width:60px;padding:6px 8px;}
   <div class="modal-box">
     <div class="modal-head">
       <h2 id="modal-title">Par Biomagnético</h2>
+      <button class="modal-fav" id="modal-fav" onclick="toggleFav(event)">☆</button>
       <button class="modal-close" onclick="closeModalBtn()">✕</button>
     </div>
     <div class="modal-body">
@@ -205,6 +224,7 @@ td.td-img{width:60px;padding:6px 8px;}
   <button class="tab" onclick="showTab('rastreo')" data-i18n="navRastreo">Protocolo de Rastreo</button>
   <button class="tab" onclick="showTab('emociones')" data-i18n="navEmociones">Pares Emocionales</button>
   <button class="tab" onclick="showTab('enfermedades')" data-i18n="navEnfermedades">Índice de Enfermedades</button>
+  <button class="tab" onclick="showTab('favoritos')" data-i18n="navFavoritos">⭐ Favoritos</button>
   <button class="tab" onclick="showTab('buscar')" data-i18n="navBuscar">🔍 Buscar</button>
 </div>
 </nav>
@@ -215,6 +235,8 @@ td.td-img{width:60px;padding:6px 8px;}
 <div id="intro" class="section active">
   <div class="sec-title" data-i18n="introTitle">¿Qué es el Par Biomagnético?</div>
   <div class="sec-sub" data-i18n="introSubtitle">Técnica terapéutica desarrollada por el Dr. Isaac Goiz Durán — más de 28 años de desarrollo</div>
+
+  <div class="disclaimer-box"><strong data-i18n="disclaimerTitle">⚠️ Aviso médico</strong><span data-i18n="disclaimerText">Esta guía es solo para referencia de la técnica del Par Biomagnético. No reemplaza diagnóstico ni tratamiento médico profesional. Consulta siempre a un médico certificado.</span></div>
 
   <div class="info-box">
     <h3 data-i18n="definicionTitle">Definición</h3>
@@ -501,6 +523,13 @@ td.td-img{width:60px;padding:6px 8px;}
   </div>
 </div>
 
+<!-- ======== FAVORITOS ======== -->
+<div id="favoritos" class="section">
+  <div class="sec-title" data-i18n="favTitle">⭐ Favoritos</div>
+  <div class="sec-sub" data-i18n="favSubtitle">Pares guardados para acceso rápido</div>
+  <div id="fav-content"></div>
+</div>
+
 <!-- ======== BUSCAR ======== -->
 <div id="buscar" class="section">
   <div class="sec-title" data-i18n="buscarTitle">Búsqueda Global</div>
@@ -515,6 +544,12 @@ td.td-img{width:60px;padding:6px 8px;}
 </div>
 
 </main>
+
+<footer>
+  <div data-i18n="footerDisclaimer">Esta guía es un recurso de referencia para la técnica del Par Biomagnético. No constituye consejo médico.</div>
+  <div style="margin-top:6px;" data-i18n="footerSource">Fuente: Guía BRI 2017 · Dr. Isaac Goiz Durán · David Goiz Martínez</div>
+</footer>
+<button class="scroll-top" id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
 <script>
 // ============================================================
@@ -935,6 +970,7 @@ function openPB(n){
   const all=[...N1,...N2];
   const d=all.find(x=>x.n===n);
   if(!d)return;
+  currentPB=n; updateFavBtn();
   const modal=document.getElementById('pb-modal');
   document.getElementById('modal-title').innerHTML=`PB ${d.n} · ${formatDualLabelSm(d.r, translatePoint(d.r))} – ${formatDualLabelSm(d.i, translatePoint(d.i))}`;
   document.getElementById('modal-img').src=pbImgPath(d.n);
@@ -960,6 +996,37 @@ function closeModalBtn(){
   document.body.style.overflow='';
 }
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModalBtn();});
+
+// ============================================================
+// FAVORITOS
+// ============================================================
+let FAVS = JSON.parse(localStorage.getItem('biomag_favs')||'[]');
+let currentPB = null;
+
+function isFav(n){return FAVS.includes(n);}
+function updateFavBtn(){
+  const btn=document.getElementById('modal-fav');
+  if(!btn)return;
+  btn.textContent=isFav(currentPB)?'★':'☆';
+  btn.title=translate(isFav(currentPB)?'favRemove':'favAdd');
+}
+function toggleFav(e){
+  e.stopPropagation();
+  if(currentPB===null)return;
+  if(isFav(currentPB)){FAVS=FAVS.filter(x=>x!==currentPB);}
+  else{FAVS.push(currentPB);}
+  localStorage.setItem('biomag_favs',JSON.stringify(FAVS));
+  updateFavBtn();
+  renderFavs();
+}
+function renderFavs(){
+  const el=document.getElementById('fav-content');
+  if(!el)return;
+  if(FAVS.length===0){el.innerHTML=`<p class="fav-empty">${translate('favEmpty')}</p>`;return;}
+  const all=[...N1,...N2];
+  const data=FAVS.map(n=>all.find(x=>x.n===n)).filter(Boolean);
+  el.innerHTML=`<div class="table-wrap"><table><thead><tr><th></th><th>${translate('tableHash')}</th><th>${translate('tableRastreo')}</th><th>${translate('tableImpacto')}</th><th>${translate('tableRelacion')}</th><th>${translate('tableTipo')}</th></tr></thead><tbody>${data.map(d=>`<tr style="cursor:pointer" onclick="openPB(${d.n})"><td class="td-img"><img class="pb-thumb" src="${pbImgPath(d.n)}" alt="PB ${d.n}" loading="lazy" onerror="this.style.display='none'"></td><td><span class="pb-num">${d.n}</span></td><td><strong>${d.r}</strong></td><td>${d.i}</td><td>${d.p}</td><td>${tagHTML(d.t)}</td></tr>`).join('')}</tbody></table></div>`;
+}
 
 function renderTable(data, tbodyId){
   const tb = document.getElementById(tbodyId);
@@ -1283,7 +1350,22 @@ const TRANSLATIONS = {
     basicProtocol:'Protocolo Básico',
     enfRelatedBySearch:'PBs relacionados por búsqueda de patología',
     enfNoProtocolGuide:'Ver protocolos específicos en la guía BRI 2017 Nivel 2.',
-    seeGuideText:'Ver guía BRI 2017 para lista completa.'
+    seeGuideText:'Ver guía BRI 2017 para lista completa.',
+    navFavoritos:'⭐ Favoritos',
+    favTitle:'⭐ Favoritos',
+    favSubtitle:'Pares guardados para acceso rápido',
+    favEmpty:'No tienes favoritos aún. Abre cualquier par y pulsa ☆ para guardarlo.',
+    favAdd:'Añadir a favoritos',
+    favRemove:'Quitar de favoritos',
+    disclaimerTitle:'⚠️ Aviso médico',
+    disclaimerText:'Esta guía es solo para referencia de la técnica del Par Biomagnético. No reemplaza diagnóstico ni tratamiento médico profesional. Consulta siempre a un médico certificado.',
+    footerDisclaimer:'Esta guía es un recurso de referencia para la técnica del Par Biomagnético. No constituye consejo médico.',
+    footerSource:'Fuente: Guía BRI 2017 · Dr. Isaac Goiz Durán · David Goiz Martínez',
+    virusLabel:'Virus',
+    bacteriaLabel:'Bacteria',
+    hongoLabel:'Hongo',
+    parasitoLabel:'Parásito',
+    especialLabel:'Especial'
   },
   ru: {
     title:'Биомагнитная пара — Справочное руководство',
@@ -1446,7 +1528,22 @@ const TRANSLATIONS = {
     basicProtocol:'Базовый протокол',
     enfRelatedBySearch:'PB, связанные поиском по патологии',
     enfNoProtocolGuide:'См. специальные протоколы в руководстве BRI 2017 Уровень 2.',
-    seeGuideText:'См. руководство BRI 2017 для полного списка.'
+    seeGuideText:'См. руководство BRI 2017 для полного списка.',
+    navFavoritos:'⭐ Избранное',
+    favTitle:'⭐ Избранное',
+    favSubtitle:'Сохранённые пары для быстрого доступа',
+    favEmpty:'Нет сохранённых пар. Откройте любую пару и нажмите ☆ для сохранения.',
+    favAdd:'Добавить в избранное',
+    favRemove:'Убрать из избранного',
+    disclaimerTitle:'⚠️ Медицинское предупреждение',
+    disclaimerText:'Данное руководство предназначено только для ознакомления с техникой биомагнитной пары. Не заменяет профессиональный медицинский диагноз или лечение. Всегда консультируйтесь с сертифицированным врачом.',
+    footerDisclaimer:'Это справочное руководство по технике биомагнитной пары. Не является медицинской консультацией.',
+    footerSource:'Источник: Руководство BRI 2017 · Д-р Исаак Гойс Дуран · Дэвид Гойс Мартинес',
+    virusLabel:'Вирус',
+    bacteriaLabel:'Бактерия',
+    hongoLabel:'Гриб',
+    parasitoLabel:'Паразит',
+    especialLabel:'Специальный'
   }
 };
 
@@ -2102,6 +2199,7 @@ function setLanguage(lang){
   renderTable(N2,'tbody-n2');
   renderEmotions();
   renderDiseases();
+  renderFavs();
   filterEnf();
   globalSearch();
 }
@@ -2146,6 +2244,19 @@ function showTab(id){
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   event.target.classList.add('active');
+}
+
+// SCROLL-TO-TOP
+window.addEventListener('scroll',()=>{
+  const btn=document.getElementById('scroll-top');
+  if(btn) btn.classList.toggle('visible',window.scrollY>400);
+});
+
+// SERVICE WORKER
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>{
+    navigator.serviceWorker.register('./sw.js').catch(()=>{});
+  });
 }
 
 // INIT

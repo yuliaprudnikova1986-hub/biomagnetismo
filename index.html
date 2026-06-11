@@ -137,6 +137,19 @@ td.td-img{width:60px;padding:6px 8px;}
   .header-inner h1{font-size:1.5rem;}
   .tab{padding:12px 12px;font-size:.8rem;}
 }
+/* RASTREO POINT CARDS */
+.rcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;padding:20px;}
+.rcard{border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;background:#fff;display:flex;flex-direction:column;transition:box-shadow .2s,transform .15s;}
+.rcard.has-img{cursor:pointer;}
+.rcard.has-img:hover{box-shadow:0 6px 18px rgba(37,99,235,.18);transform:translateY(-2px);}
+.rcard-img{width:100%;aspect-ratio:1/1;object-fit:cover;background:#f1f5f9;border-bottom:1px solid #e2e8f0;}
+.rcard-noimg{width:100%;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;background:#f8fafc;border-bottom:1px solid #e2e8f0;color:#94a3b8;font-size:.78rem;text-align:center;padding:10px;}
+.rcard-body{padding:10px 12px;}
+.rcard-title{font-size:.85rem;font-weight:700;color:var(--azul);line-height:1.3;}
+.rcard-pat{font-size:.74rem;color:#64748b;margin-top:3px;}
+.rcard-badge{display:inline-block;font-size:.66rem;background:#dbeafe;color:#1d4ed8;border-radius:5px;padding:1px 6px;margin-top:6px;}
+.rastreo-point{color:var(--azul2);cursor:pointer;border-bottom:1px dashed var(--azul2);}
+.rastreo-point:hover{color:#1d4ed8;}
 /* DISEASE PROTOCOL */
 .enf-detail-box{background:#fff;border-radius:14px;box-shadow:0 2px 12px rgba(0,0,0,.08);margin-top:20px;overflow:hidden;}
 .enf-detail-header{background:linear-gradient(135deg,var(--azul),#2563eb);color:#fff;padding:18px 22px;}
@@ -199,6 +212,17 @@ footer a{color:#94a3b8;}
       </div>
       <div class="modal-info-col" id="modal-info"></div>
     </div>
+  </div>
+</div>
+
+<!-- ======== MODAL: PUNTO DE RASTREO → PARES ======== -->
+<div class="modal-overlay" id="rastreo-modal" onclick="closeRastreoModal(event)">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h2 id="rastreo-modal-title">Punto de Rastreo</h2>
+      <button class="modal-close" onclick="closeRastreoModalBtn()">✕</button>
+    </div>
+    <div id="rastreo-modal-cards" class="rcards"></div>
   </div>
 </div>
 
@@ -1006,7 +1030,7 @@ function closeModalBtn(){
   document.getElementById('pb-modal').classList.remove('open');
   document.body.style.overflow='';
 }
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModalBtn();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModalBtn();closeRastreoModalBtn();}});
 
 // ============================================================
 // FAVORITOS
@@ -1058,11 +1082,66 @@ function renderRastreo(){
     ${rows.map(d=>`<tr>
       <td><span class="pb-num">${d.n}</span></td>
       <td><span class="tag ${d.niv==='I'?'tag-v':'tag-e'}" style="font-size:.68rem;padding:1px 7px;">${d.niv}</span></td>
-      <td><strong>${d.p}</strong></td>
+      <td><strong class="rastreo-point" onclick="openRastreoPoint(${d.n})">${d.p}</strong></td>
       <td>${d.r}</td>
       <td><small style="color:#475569">${d.pat||'—'}</small></td>
     </tr>`).join('')}
     </tbody></table></div>`;
+}
+
+// ── Сопоставление точек сканирования с базой 325 пар (для картинок) ──
+function rNorm(s){return (s||'').toLowerCase()
+  .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+  .replace(/\([^)]*\)/g,'').replace(/[^a-z0-9 ]/g,' ')
+  .replace(/\s+/g,' ').trim();}
+let PAIR_IDX=null;
+function buildPairIdx(){
+  if(PAIR_IDX) return PAIR_IDX;
+  PAIR_IDX={};
+  [...N1,...N2].forEach(p=>{
+    const a=rNorm(p.r), b=rNorm(p.i);
+    [a+'|'+b, b+'|'+a].forEach(k=>{ if(!PAIR_IDX[k]) PAIR_IDX[k]=p.n; });
+  });
+  return PAIR_IDX;
+}
+function findPairNum(point,res){
+  const idx=buildPairIdx();
+  return idx[rNorm(point)+'|'+rNorm(res)] || null;
+}
+
+function openRastreoPoint(n){
+  const d=RASTREO_MAIN.find(x=>x.n===n);
+  if(!d) return;
+  document.getElementById('rastreo-modal-title').textContent=`${d.n} · ${d.p}`;
+  const resos=d.r.split('·').map(x=>x.trim()).filter(Boolean);
+  const pats=d.pat? d.pat.split('·').map(x=>x.trim()):[];
+  const html=resos.map((res,i)=>{
+    const num=findPairNum(d.p,res);
+    const pat=pats[i]||'';
+    if(num){
+      return `<div class="rcard has-img" onclick="closeRastreoModalBtn();openPB(${num});">
+        <img class="rcard-img" src="${pbImgPath(num)}" alt="PB ${num}" loading="lazy" onerror="this.outerHTML='<div class=\\'rcard-noimg\\'>${translate('rcardNoImg')}</div>'">
+        <div class="rcard-body">
+          <div class="rcard-title">${d.p} – ${res}</div>
+          ${pat?`<div class="rcard-pat">${pat}</div>`:''}
+          <span class="rcard-badge">PB ${num}</span>
+        </div></div>`;
+    }
+    return `<div class="rcard">
+      <div class="rcard-noimg">${translate('rcardNoImg')}</div>
+      <div class="rcard-body">
+        <div class="rcard-title">${d.p} – ${res}</div>
+        ${pat?`<div class="rcard-pat">${pat}</div>`:''}
+      </div></div>`;
+  }).join('');
+  document.getElementById('rastreo-modal-cards').innerHTML=html;
+  document.getElementById('rastreo-modal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeRastreoModal(e){if(e.target===document.getElementById('rastreo-modal'))closeRastreoModalBtn();}
+function closeRastreoModalBtn(){
+  document.getElementById('rastreo-modal').classList.remove('open');
+  document.body.style.overflow='';
 }
 
 function renderFavs(){
@@ -1410,6 +1489,7 @@ const TRANSLATIONS = {
     colPatogeno:'Patógeno / Reservorio',
     rastreoPuntosLabel:'puntos',
     rastreoNoResults:'Sin resultados para esa búsqueda.',
+    rcardNoImg:'Sin imagen disponible',
     favAdd:'Añadir a favoritos',
     favRemove:'Quitar de favoritos',
     disclaimerTitle:'⚠️ Aviso médico',
@@ -1597,6 +1677,7 @@ const TRANSLATIONS = {
     colPatogeno:'Патоген / Резервуар',
     rastreoPuntosLabel:'точек',
     rastreoNoResults:'Ничего не найдено по этому запросу.',
+    rcardNoImg:'Нет изображения',
     favAdd:'Добавить в избранное',
     favRemove:'Убрать из избранного',
     disclaimerTitle:'⚠️ Медицинское предупреждение',

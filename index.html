@@ -9,6 +9,7 @@
 <link rel="apple-touch-icon" href="img/icon-192.png">
 <title data-i18n="title">Par Biomagnético — Guía de Referencia</title>
 <script src="disease_data.js"></script>
+<script src="rastreo_data.js"></script>
 <style>
 :root{--azul:#1a3a5c;--azul2:#2563eb;--verde:#059669;--morado:#7c3aed;--naranja:#d97706;--rojo:#dc2626;--gris:#f1f5f9;--texto:#1e293b;}
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -495,6 +496,16 @@ footer a{color:#94a3b8;}
       </tbody>
     </table>
   </div>
+
+  <div class="sec-title" style="font-size:1.2rem;margin-top:32px;" data-i18n="rastreoCompletoTitle">Rastreo Completo — 191 Puntos</div>
+  <div class="sec-sub" data-i18n="rastreoCompletoSub">Secuencia completa de la Guía de Segundo Nivel: punto a rastrear (–), punto de resonancia (+) y patógeno o reservorio asociado. Usa el buscador para filtrar por punto, patógeno o número.</div>
+
+  <div class="search-bar" style="margin:14px 0;">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" id="rastreo-search" placeholder="Ej: hígado, diabetes, herpes, 73..." data-i18n-placeholder="placeholderRastreoSearch" oninput="renderRastreo()">
+  </div>
+  <div id="rastreo-count" style="font-size:.82rem;color:#64748b;margin-bottom:8px;"></div>
+  <div id="rastreo-table"></div>
 </div>
 
 <!-- ======== EMOCIONES ======== -->
@@ -1018,7 +1029,42 @@ function toggleFav(e){
   localStorage.setItem('biomag_favs',JSON.stringify(FAVS));
   updateFavBtn();
   renderFavs();
+  renderRastreo();
 }
+
+function renderRastreo(){
+  const box=document.getElementById('rastreo-table');
+  if(!box || typeof RASTREO_MAIN==='undefined') return;
+  const q=(document.getElementById('rastreo-search').value||'').trim().toLowerCase();
+  let rows=RASTREO_MAIN;
+  if(q){
+    rows=RASTREO_MAIN.filter(d=>
+      String(d.n)===q ||
+      d.p.toLowerCase().includes(q) ||
+      d.r.toLowerCase().includes(q) ||
+      d.pat.toLowerCase().includes(q)
+    );
+  }
+  const cnt=document.getElementById('rastreo-count');
+  if(cnt) cnt.textContent = q ? `${rows.length} / ${RASTREO_MAIN.length}` : `${RASTREO_MAIN.length} ${translate('rastreoPuntosLabel')}`;
+  if(rows.length===0){ box.innerHTML=`<div class="fav-empty">${translate('rastreoNoResults')}</div>`; return; }
+  box.innerHTML=`<div class="table-wrap"><table>
+    <thead><tr>
+      <th>#</th><th>${translate('colNivel')}</th>
+      <th>${translate('colRastrear')}</th>
+      <th>${translate('colResonancia2')}</th>
+      <th>${translate('colPatogeno')}</th>
+    </tr></thead><tbody>
+    ${rows.map(d=>`<tr>
+      <td><span class="pb-num">${d.n}</span></td>
+      <td><span class="tag ${d.niv==='I'?'tag-v':'tag-e'}" style="font-size:.68rem;padding:1px 7px;">${d.niv}</span></td>
+      <td><strong>${d.p}</strong></td>
+      <td>${d.r}</td>
+      <td><small style="color:#475569">${d.pat||'—'}</small></td>
+    </tr>`).join('')}
+    </tbody></table></div>`;
+}
+
 function renderFavs(){
   const el=document.getElementById('fav-content');
   if(!el)return;
@@ -1355,6 +1401,15 @@ const TRANSLATIONS = {
     favTitle:'⭐ Favoritos',
     favSubtitle:'Pares guardados para acceso rápido',
     favEmpty:'No tienes favoritos aún. Abre cualquier par y pulsa ☆ para guardarlo.',
+    rastreoCompletoTitle:'Rastreo Completo — 191 Puntos',
+    rastreoCompletoSub:'Secuencia completa de la Guía de Segundo Nivel: punto a rastrear (–), punto de resonancia (+) y patógeno o reservorio asociado. Usa el buscador para filtrar por punto, patógeno o número.',
+    placeholderRastreoSearch:'Ej: hígado, diabetes, herpes, 73...',
+    colNivel:'Niv',
+    colRastrear:'Punto a Rastrear (–)',
+    colResonancia2:'Resonancia (+)',
+    colPatogeno:'Patógeno / Reservorio',
+    rastreoPuntosLabel:'puntos',
+    rastreoNoResults:'Sin resultados para esa búsqueda.',
     favAdd:'Añadir a favoritos',
     favRemove:'Quitar de favoritos',
     disclaimerTitle:'⚠️ Aviso médico',
@@ -1533,6 +1588,15 @@ const TRANSLATIONS = {
     favTitle:'⭐ Избранное',
     favSubtitle:'Сохранённые пары для быстрого доступа',
     favEmpty:'Нет сохранённых пар. Откройте любую пару и нажмите ☆ для сохранения.',
+    rastreoCompletoTitle:'Полное сканирование — 191 точка',
+    rastreoCompletoSub:'Полная последовательность из Руководства второго уровня: точка сканирования (–), точка резонанса (+) и связанный патоген или резервуар. Используйте поиск по точке, патогену или номеру.',
+    placeholderRastreoSearch:'Напр.: hígado, diabetes, herpes, 73...',
+    colNivel:'Ур',
+    colRastrear:'Точка сканирования (–)',
+    colResonancia2:'Резонанс (+)',
+    colPatogeno:'Патоген / Резервуар',
+    rastreoPuntosLabel:'точек',
+    rastreoNoResults:'Ничего не найдено по этому запросу.',
     favAdd:'Добавить в избранное',
     favRemove:'Убрать из избранного',
     disclaimerTitle:'⚠️ Медицинское предупреждение',
@@ -2200,6 +2264,7 @@ function setLanguage(lang){
   renderEmotions();
   renderDiseases();
   renderFavs();
+  renderRastreo();
   filterEnf();
   globalSearch();
 }

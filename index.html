@@ -1087,29 +1087,49 @@ function openRastreoPoint(n){
   document.getElementById('rastreo-modal-title').textContent=`${d.n} · ${d.p}`;
   const resos=d.r.split('·').map(x=>x.trim()).filter(Boolean);
   const pats=d.pat? d.pat.split('·').map(x=>x.trim()):[];
-  const html=resos.map((res,i)=>{
+  const shown=new Set();      // номера PB уже показанных пар
+  const cards=[];
+
+  // 1) Резонансы из протокола (как было)
+  resos.forEach((res,i)=>{
     const num=findPairNum(d.p,res);
     const pat=pats[i]||'';
-    if(num){
-      return `<div class="rcard has-img" onclick="closeRastreoModalBtn();openPB(${num});">
-        <img class="rcard-img" src="${pbImgPath(num)}" alt="PB ${num}" loading="lazy" onerror="this.outerHTML='<div class=\\'rcard-noimg\\'>${translate('rcardNoImg')}</div>'">
-        <div class="rcard-body">
-          <div class="rcard-title">${d.p} – ${res}</div>
-          ${pat?`<div class="rcard-pat">${pat}</div>`:''}
-          <span class="rcard-badge">PB ${num}</span>
-        </div></div>`;
-    }
-    return `<div class="rcard">
-      <div class="rcard-noimg">${translate('rcardNoImg')}</div>
-      <div class="rcard-body">
-        <div class="rcard-title">${d.p} – ${res}</div>
-        ${pat?`<div class="rcard-pat">${pat}</div>`:''}
-      </div></div>`;
-  }).join('');
-  document.getElementById('rastreo-modal-cards').innerHTML=html;
+    if(num) shown.add(num);
+    cards.push(cardHTML(num, `${d.p} – ${res}`, pat));
+  });
+
+  // 2) Все пары из базы N1/N2, где точка сканирования (–) совпадает с этой точкой
+  const all=[...N1,...N2];
+  all.filter(p=>rNorm(p.r)===rNorm(d.p) && !shown.has(p.n))
+     .sort((a,b)=>a.n-b.n)
+     .forEach(p=>{
+       shown.add(p.n);
+       cards.push(cardHTML(p.n, `${p.r} – ${p.i}`, p.p||''));
+     });
+
+  document.getElementById('rastreo-modal-cards').innerHTML=cards.join('');
   document.getElementById('rastreo-modal').classList.add('open');
   document.body.style.overflow='hidden';
 }
+
+function cardHTML(num, title, pat){
+  if(num){
+    return `<div class="rcard has-img" onclick="closeRastreoModalBtn();openPB(${num});">
+      <img class="rcard-img" src="${pbImgPath(num)}" alt="PB ${num}" loading="lazy" onerror="this.outerHTML='<div class=\\'rcard-noimg\\'>${translate('rcardNoImg')}</div>'">
+      <div class="rcard-body">
+        <div class="rcard-title">${title}</div>
+        ${pat?`<div class="rcard-pat">${pat}</div>`:''}
+        <span class="rcard-badge">PB ${num}</span>
+      </div></div>`;
+  }
+  return `<div class="rcard">
+    <div class="rcard-noimg">${translate('rcardNoImg')}</div>
+    <div class="rcard-body">
+      <div class="rcard-title">${title}</div>
+      ${pat?`<div class="rcard-pat">${pat}</div>`:''}
+    </div></div>`;
+}
+
 function closeRastreoModal(e){if(e.target===document.getElementById('rastreo-modal'))closeRastreoModalBtn();}
 function closeRastreoModalBtn(){
   document.getElementById('rastreo-modal').classList.remove('open');

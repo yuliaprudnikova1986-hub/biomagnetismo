@@ -433,6 +433,15 @@ footer a{color:#94a3b8;}
   </div>
   <div id="rastreo-count" style="font-size:.82rem;color:#64748b;margin-bottom:8px;"></div>
   <div id="rastreo-table"></div>
+
+  <div class="sec-title" style="font-size:1.2rem;margin-top:36px;" data-i18n="extraTitle">Pares Adicionales — Niveles 1 y 2</div>
+  <div class="sec-sub" data-i18n="extraSub">Pares de los Niveles 1 y 2 que no forman parte del protocolo de 191 puntos. Agrupados por tipo. Toca cualquier fila para ver la ficha completa con su imagen.</div>
+  <div class="search-bar" style="margin:14px 0;">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" id="extra-search" placeholder="Ej: hígado, herpes, 42..." data-i18n-placeholder="placeholderExtraSearch" oninput="renderExtra()">
+  </div>
+  <div id="extra-count" style="font-size:.82rem;color:#64748b;margin-bottom:8px;"></div>
+  <div id="extra-table"></div>
 </div>
 
 <!-- ======== EMOCIONES ======== -->
@@ -992,7 +1001,67 @@ function renderRastreo(){
     </tbody></table></div>`;
 }
 
-// ── Сопоставление точек сканирования с базой 325 пар (для картинок) ──
+// ── Дополнительные пары N1/N2, которых нет в протоколе 191 ──
+let EXTRA_PAIRS=null;
+function buildExtraPairs(){
+  if(EXTRA_PAIRS) return EXTRA_PAIRS;
+  const proto=new Set();
+  RASTREO_MAIN.forEach(d=>{
+    d.r.split('·').map(x=>x.trim()).forEach(res=>{
+      proto.add(rNorm(d.p)+'|'+rNorm(res));
+      proto.add(rNorm(res)+'|'+rNorm(d.p));
+    });
+  });
+  const order={virus:0,bacteria:1,hongo:2,parasito:3,especial:4};
+  EXTRA_PAIRS=[...N1,...N2]
+    .filter(p=>!proto.has(rNorm(p.r)+'|'+rNorm(p.i)))
+    .sort((a,b)=>(order[a.t]-order[b.t])||(a.n-b.n));
+  return EXTRA_PAIRS;
+}
+
+function renderExtra(){
+  const box=document.getElementById('extra-table');
+  if(!box || typeof N1==='undefined') return;
+  const all=buildExtraPairs();
+  const q=(document.getElementById('extra-search').value||'').trim().toLowerCase();
+  let rows=all;
+  if(q){
+    rows=all.filter(d=>
+      String(d.n)===q ||
+      (d.r||'').toLowerCase().includes(q) ||
+      (d.i||'').toLowerCase().includes(q) ||
+      (d.p||'').toLowerCase().includes(q) ||
+      (d.s||'').toLowerCase().includes(q)
+    );
+  }
+  const cnt=document.getElementById('extra-count');
+  if(cnt) cnt.textContent = q ? `${rows.length} / ${all.length}` : `${all.length} ${translate('extraPairsLabel')}`;
+  if(rows.length===0){ box.innerHTML=`<div class="fav-empty">${translate('rastreoNoResults')}</div>`; return; }
+  // группировка по типу
+  const groups={};
+  rows.forEach(d=>{(groups[d.t]=groups[d.t]||[]).push(d);});
+  const typeOrder=['virus','bacteria','hongo','parasito','especial'];
+  let html='';
+  typeOrder.forEach(t=>{
+    if(!groups[t]) return;
+    html+=`<div style="margin-top:18px;margin-bottom:6px;">${tagHTML(t)} <span style="font-size:.8rem;color:#64748b;">(${groups[t].length})</span></div>`;
+    html+=`<div class="table-wrap"><table>
+      <thead><tr>
+        <th>#</th>
+        <th>${translate('colRastrear')}</th>
+        <th>${translate('colImpacto2')}</th>
+        <th>${translate('colPatologia2')}</th>
+      </tr></thead><tbody>
+      ${groups[t].map(d=>`<tr class="extra-row" onclick="openPB(${d.n})" style="cursor:pointer;">
+        <td><span class="pb-num">${d.n}</span></td>
+        <td><strong class="rastreo-point">${d.r}</strong></td>
+        <td>${d.i}</td>
+        <td><small style="color:#475569">${d.p||'—'}${d.s?`<br><span style="color:#94a3b8">${d.s}</span>`:''}</small></td>
+      </tr>`).join('')}
+      </tbody></table></div>`;
+  });
+  box.innerHTML=html;
+}
 function rNorm(s){return (s||'').toLowerCase()
   .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
   .replace(/\([^)]*\)/g,'').replace(/[^a-z0-9 ]/g,' ')
@@ -1404,6 +1473,12 @@ const TRANSLATIONS = {
     favSubtitle:'Pares guardados para acceso rápido',
     favEmpty:'No tienes favoritos aún. Abre cualquier par y pulsa ☆ para guardarlo.',
     rastreoCompletoTitle:'Rastreo Completo — 191 Puntos',
+    extraTitle:'Pares Adicionales — Niveles 1 y 2',
+    extraSub:'Pares de los Niveles 1 y 2 que no forman parte del protocolo de 191 puntos. Agrupados por tipo. Toca cualquier fila para ver la ficha completa con su imagen.',
+    placeholderExtraSearch:'Ej: hígado, herpes, 42...',
+    extraPairsLabel:'pares adicionales',
+    colImpacto2:'Punto de Impacto (+)',
+    colPatologia2:'Patología / Relación',
     rastreoCompletoSub:'Secuencia completa de la Guía de Segundo Nivel: punto a rastrear (–), punto de resonancia (+) y patógeno o reservorio asociado. Usa el buscador para filtrar por punto, patógeno o número.',
     placeholderRastreoSearch:'Ej: hígado, diabetes, herpes, 73...',
     colNivel:'Niv',
@@ -1612,6 +1687,12 @@ const TRANSLATIONS = {
     favSubtitle:'Сохранённые пары для быстрого доступа',
     favEmpty:'Нет сохранённых пар. Откройте любую пару и нажмите ☆ для сохранения.',
     rastreoCompletoTitle:'Полное сканирование — 191 точка',
+    extraTitle:'Дополнительные пары — Уровни 1 и 2',
+    extraSub:'Пары Уровней 1 и 2, которых нет в протоколе из 191 точки. Сгруппированы по типу. Нажмите на любую строку, чтобы открыть полную карточку с изображением.',
+    placeholderExtraSearch:'Напр.: hígado, herpes, 42...',
+    extraPairsLabel:'дополнительных пар',
+    colImpacto2:'Точка воздействия (+)',
+    colPatologia2:'Патология / Связь',
     rastreoCompletoSub:'Полная последовательность из Руководства второго уровня: точка сканирования (–), точка резонанса (+) и связанный патоген или резервуар. Используйте поиск по точке, патогену или номеру.',
     placeholderRastreoSearch:'Напр.: hígado, diabetes, herpes, 73...',
     colNivel:'Ур',
@@ -2289,6 +2370,7 @@ function setLanguage(lang){
   renderDiseases();
   renderFavs();
   renderRastreo();
+  renderExtra();
   filterEnf();
   globalSearch();
 }

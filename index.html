@@ -424,8 +424,8 @@ footer a{color:#94a3b8;}
 <div id="rastreo" class="section">
   <div class="sec-title" data-i18n="rastreoTitle">Protocolo de Rastreo Completo Bioenergética</div>
   <div class="sec-sub" data-i18n="rastreoSubtitle">Guía de Rastreo Segundo Nivel · Dr. Isaac Goiz Martínez</div>
-  <div class="sec-title" style="font-size:1.2rem;margin-top:20px;" data-i18n="rastreoCompletoTitle">Rastreo Completo — 191 Puntos</div>
-  <div class="sec-sub" data-i18n="rastreoCompletoSub">Secuencia completa de la Guía de Segundo Nivel: punto a rastrear (–), punto de resonancia (+) y patógeno o reservorio asociado. Usa el buscador para filtrar por punto, patógeno o número.</div>
+  <div class="sec-title" style="font-size:1.2rem;margin-top:20px;" data-i18n="rastreoCompletoTitle">Rastreo Completo</div>
+  <div class="sec-sub" data-i18n="rastreoCompletoSub">Secuencia completa de la Guía de Segundo Nivel más los pares adicionales de Niveles 1 y 2. La columna de resonancia (+) refleja todos los pares que existen con cada punto. Usa el buscador para filtrar por punto, patógeno o número.</div>
 
   <div class="search-bar" style="margin:14px 0;">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
@@ -433,15 +433,6 @@ footer a{color:#94a3b8;}
   </div>
   <div id="rastreo-count" style="font-size:.82rem;color:#64748b;margin-bottom:8px;"></div>
   <div id="rastreo-table"></div>
-
-  <div class="sec-title" style="font-size:1.2rem;margin-top:36px;" data-i18n="extraTitle">Pares Adicionales — Niveles 1 y 2</div>
-  <div class="sec-sub" data-i18n="extraSub">Pares de los Niveles 1 y 2 que no forman parte del protocolo de 191 puntos. Agrupados por tipo. Toca cualquier fila para ver la ficha completa con su imagen.</div>
-  <div class="search-bar" style="margin:14px 0;">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-    <input type="text" id="extra-search" placeholder="Ej: hígado, herpes, 42..." data-i18n-placeholder="placeholderExtraSearch" oninput="renderExtra()">
-  </div>
-  <div id="extra-count" style="font-size:.82rem;color:#64748b;margin-bottom:8px;"></div>
-  <div id="extra-table"></div>
 </div>
 
 <!-- ======== EMOCIONES ======== -->
@@ -971,18 +962,18 @@ function toggleFav(e){
 function renderRastreo(){
   const box=document.getElementById('rastreo-table');
   if(!box || typeof RASTREO_MAIN==='undefined') return;
+  const full=buildRastreoFull();
   const q=(document.getElementById('rastreo-search').value||'').trim().toLowerCase();
-  let rows=RASTREO_MAIN;
+  let rows=full;
   if(q){
-    rows=RASTREO_MAIN.filter(d=>
+    rows=full.filter(d=>
       String(d.n)===q ||
       d.p.toLowerCase().includes(q) ||
-      d.r.toLowerCase().includes(q) ||
-      d.pat.toLowerCase().includes(q)
+      d.items.some(it=>(it.name||'').toLowerCase().includes(q) || (it.pat||'').toLowerCase().includes(q))
     );
   }
   const cnt=document.getElementById('rastreo-count');
-  if(cnt) cnt.textContent = q ? `${rows.length} / ${RASTREO_MAIN.length}` : `${RASTREO_MAIN.length} ${translate('rastreoPuntosLabel')}`;
+  if(cnt) cnt.textContent = q ? `${rows.length} / ${full.length}` : `${full.length} ${translate('rastreoPuntosLabel')}`;
   if(rows.length===0){ box.innerHTML=`<div class="fav-empty">${translate('rastreoNoResults')}</div>`; return; }
   box.innerHTML=`<div class="table-wrap"><table>
     <thead><tr>
@@ -991,77 +982,56 @@ function renderRastreo(){
       <th>${translate('colResonancia2')}</th>
       <th>${translate('colPatogeno')}</th>
     </tr></thead><tbody>
-    ${rows.map(d=>`<tr>
-      <td><span class="pb-num">${d.n}</span></td>
+    ${rows.map(d=>{
+      const resHtml=d.items.map(it=>it.extra?`<span style="color:#0891b2">${it.name}</span>`:it.name).join(' · ');
+      const patHtml=d.items.map(it=>it.pat||'—').filter((v,i,a)=>v!=='—'||a.length===1).join(' · ')||'—';
+      const numCell=d.official?`<span class="pb-num">${d.n}</span>`:`<span class="pb-num" style="background:#cffafe;color:#0e7490" title="Adicional N1/N2">+${d.n}</span>`;
+      return `<tr>
+      <td>${numCell}</td>
       <td><span class="tag ${d.niv==='I'?'tag-v':'tag-e'}" style="font-size:.68rem;padding:1px 7px;">${d.niv}</span></td>
-      <td><strong class="rastreo-point" onclick="openRastreoPoint(${d.n})">${d.p}</strong></td>
-      <td>${d.r}</td>
-      <td><small style="color:#475569">${d.pat||'—'}</small></td>
-    </tr>`).join('')}
+      <td><strong class="rastreo-point" onclick="openRastreoPoint('${encodeURIComponent(d.p)}')">${d.p}</strong></td>
+      <td>${resHtml}</td>
+      <td><small style="color:#475569">${patHtml}</small></td>
+    </tr>`;}).join('')}
     </tbody></table></div>`;
 }
 
-// ── Дополнительные пары N1/N2, которых нет в протоколе 191 ──
-let EXTRA_PAIRS=null;
-function buildExtraPairs(){
-  if(EXTRA_PAIRS) return EXTRA_PAIRS;
-  const proto=new Set();
+// ── Объединённые данные: протокол + все пары N1/N2 (резонансы и недостающие точки) ──
+let RASTREO_FULL=null;
+function buildRastreoFull(){
+  if(RASTREO_FULL) return RASTREO_FULL;
+  const all=[...N1,...N2];
+  const lvlOf=p => N1.indexOf(p)>=0 ? 'I' : 'II';
+  const byPoint={};
+  all.forEach(p=>{(byPoint[rNorm(p.r)]=byPoint[rNorm(p.r)]||[]).push(p);});
+  const rows=[];
+  const used=new Set();
+  // 1) строки протокола + доп. резонансы
   RASTREO_MAIN.forEach(d=>{
-    d.r.split('·').map(x=>x.trim()).forEach(res=>{
-      proto.add(rNorm(d.p)+'|'+rNorm(res));
-      proto.add(rNorm(res)+'|'+rNorm(d.p));
+    used.add(rNorm(d.p));
+    const protoRes=d.r.split('·').map(x=>x.trim()).filter(Boolean);
+    const pats=d.pat? d.pat.split('·').map(x=>x.trim()):[];
+    const seen=new Set(protoRes.map(rNorm));
+    const items=protoRes.map((res,i)=>({name:res, pat:pats[i]||'', extra:false}));
+    (byPoint[rNorm(d.p)]||[]).forEach(p=>{
+      if(!seen.has(rNorm(p.i))){ seen.add(rNorm(p.i)); items.push({name:p.i, pat:p.p||'', extra:true, n:p.n}); }
     });
+    rows.push({n:d.n, niv:d.niv, p:d.p, items, official:true});
   });
-  const order={virus:0,bacteria:1,hongo:2,parasito:3,especial:4};
-  EXTRA_PAIRS=[...N1,...N2]
-    .filter(p=>!proto.has(rNorm(p.r)+'|'+rNorm(p.i)))
-    .sort((a,b)=>(order[a.t]-order[b.t])||(a.n-b.n));
-  return EXTRA_PAIRS;
+  // 2) новые строки для точек, которых нет в протоколе
+  let nn=192;
+  Object.keys(byPoint).forEach(k=>{
+    if(used.has(k)) return;
+    const ps=byPoint[k];
+    const seen=new Set();
+    const items=[];
+    ps.forEach(p=>{ if(!seen.has(rNorm(p.i))){ seen.add(rNorm(p.i)); items.push({name:p.i, pat:p.p||'', extra:true, n:p.n}); }});
+    rows.push({n:nn++, niv:lvlOf(ps[0]), p:ps[0].r, items, official:false});
+  });
+  RASTREO_FULL=rows;
+  return RASTREO_FULL;
 }
 
-function renderExtra(){
-  const box=document.getElementById('extra-table');
-  if(!box || typeof N1==='undefined') return;
-  const all=buildExtraPairs();
-  const q=(document.getElementById('extra-search').value||'').trim().toLowerCase();
-  let rows=all;
-  if(q){
-    rows=all.filter(d=>
-      String(d.n)===q ||
-      (d.r||'').toLowerCase().includes(q) ||
-      (d.i||'').toLowerCase().includes(q) ||
-      (d.p||'').toLowerCase().includes(q) ||
-      (d.s||'').toLowerCase().includes(q)
-    );
-  }
-  const cnt=document.getElementById('extra-count');
-  if(cnt) cnt.textContent = q ? `${rows.length} / ${all.length}` : `${all.length} ${translate('extraPairsLabel')}`;
-  if(rows.length===0){ box.innerHTML=`<div class="fav-empty">${translate('rastreoNoResults')}</div>`; return; }
-  // группировка по типу
-  const groups={};
-  rows.forEach(d=>{(groups[d.t]=groups[d.t]||[]).push(d);});
-  const typeOrder=['virus','bacteria','hongo','parasito','especial'];
-  let html='';
-  typeOrder.forEach(t=>{
-    if(!groups[t]) return;
-    html+=`<div style="margin-top:18px;margin-bottom:6px;">${tagHTML(t)} <span style="font-size:.8rem;color:#64748b;">(${groups[t].length})</span></div>`;
-    html+=`<div class="table-wrap"><table>
-      <thead><tr>
-        <th>#</th>
-        <th>${translate('colRastrear')}</th>
-        <th>${translate('colImpacto2')}</th>
-        <th>${translate('colPatologia2')}</th>
-      </tr></thead><tbody>
-      ${groups[t].map(d=>`<tr class="extra-row" onclick="openPB(${d.n})" style="cursor:pointer;">
-        <td><span class="pb-num">${d.n}</span></td>
-        <td><strong class="rastreo-point">${d.r}</strong></td>
-        <td>${d.i}</td>
-        <td><small style="color:#475569">${d.p||'—'}${d.s?`<br><span style="color:#94a3b8">${d.s}</span>`:''}</small></td>
-      </tr>`).join('')}
-      </tbody></table></div>`;
-  });
-  box.innerHTML=html;
-}
 function rNorm(s){return (s||'').toLowerCase()
   .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
   .replace(/\([^)]*\)/g,'').replace(/[^a-z0-9 ]/g,' ')
@@ -1081,32 +1051,16 @@ function findPairNum(point,res){
   return idx[rNorm(point)+'|'+rNorm(res)] || null;
 }
 
-function openRastreoPoint(n){
-  const d=RASTREO_MAIN.find(x=>x.n===n);
-  if(!d) return;
-  document.getElementById('rastreo-modal-title').textContent=`${d.n} · ${d.p}`;
-  const resos=d.r.split('·').map(x=>x.trim()).filter(Boolean);
-  const pats=d.pat? d.pat.split('·').map(x=>x.trim()):[];
-  const shown=new Set();      // номера PB уже показанных пар
-  const cards=[];
-
-  // 1) Резонансы из протокола (как было)
-  resos.forEach((res,i)=>{
-    const num=findPairNum(d.p,res);
-    const pat=pats[i]||'';
-    if(num) shown.add(num);
-    cards.push(cardHTML(num, `${d.p} – ${res}`, pat));
+function openRastreoPoint(enc){
+  const pointName=decodeURIComponent(enc);
+  const full=buildRastreoFull();
+  const row=full.find(d=>d.p===pointName);
+  if(!row) return;
+  document.getElementById('rastreo-modal-title').textContent=`${row.n} · ${row.p}`;
+  const cards=row.items.map(it=>{
+    const num=it.n || findPairNum(row.p, it.name);
+    return cardHTML(num, `${row.p} – ${it.name}`, it.pat||'');
   });
-
-  // 2) Все пары из базы N1/N2, где точка сканирования (–) совпадает с этой точкой
-  const all=[...N1,...N2];
-  all.filter(p=>rNorm(p.r)===rNorm(d.p) && !shown.has(p.n))
-     .sort((a,b)=>a.n-b.n)
-     .forEach(p=>{
-       shown.add(p.n);
-       cards.push(cardHTML(p.n, `${p.r} – ${p.i}`, p.p||''));
-     });
-
   document.getElementById('rastreo-modal-cards').innerHTML=cards.join('');
   document.getElementById('rastreo-modal').classList.add('open');
   document.body.style.overflow='hidden';
@@ -1492,20 +1446,21 @@ const TRANSLATIONS = {
     favTitle:'⭐ Favoritos',
     favSubtitle:'Pares guardados para acceso rápido',
     favEmpty:'No tienes favoritos aún. Abre cualquier par y pulsa ☆ para guardarlo.',
-    rastreoCompletoTitle:'Rastreo Completo — 191 Puntos',
+    rastreoCompletoTitle:'Rastreo Completo',
     extraTitle:'Pares Adicionales — Niveles 1 y 2',
     extraSub:'Pares de los Niveles 1 y 2 que no forman parte del protocolo de 191 puntos. Agrupados por tipo. Toca cualquier fila para ver la ficha completa con su imagen.',
     placeholderExtraSearch:'Ej: hígado, herpes, 42...',
     extraPairsLabel:'pares adicionales',
     colImpacto2:'Punto de Impacto (+)',
     colPatologia2:'Patología / Relación',
-    rastreoCompletoSub:'Secuencia completa de la Guía de Segundo Nivel: punto a rastrear (–), punto de resonancia (+) y patógeno o reservorio asociado. Usa el buscador para filtrar por punto, patógeno o número.',
+    rastreoCompletoSub:'Secuencia completa de la Guía de Segundo Nivel más los pares adicionales de Niveles 1 y 2. La columna de resonancia (+) refleja todos los pares que existen con cada punto. Los puntos adicionales se marcan con + y en cian. Usa el buscador para filtrar por punto, patógeno o número.',
     placeholderRastreoSearch:'Ej: hígado, diabetes, herpes, 73...',
     colNivel:'Niv',
     colRastrear:'Punto a Rastrear (–)',
     colResonancia2:'Resonancia (+)',
     colPatogeno:'Patógeno / Reservorio',
     rastreoPuntosLabel:'puntos',
+    rastreoExtraNota:'+ punto adicional de Niveles 1 y 2',
     rastreoNoResults:'Sin resultados para esa búsqueda.',
     rcardNoImg:'Sin imagen disponible',
     favAdd:'Añadir a favoritos',
@@ -1706,20 +1661,21 @@ const TRANSLATIONS = {
     favTitle:'⭐ Избранное',
     favSubtitle:'Сохранённые пары для быстрого доступа',
     favEmpty:'Нет сохранённых пар. Откройте любую пару и нажмите ☆ для сохранения.',
-    rastreoCompletoTitle:'Полное сканирование — 191 точка',
+    rastreoCompletoTitle:'Полное сканирование',
     extraTitle:'Дополнительные пары — Уровни 1 и 2',
     extraSub:'Пары Уровней 1 и 2, которых нет в протоколе из 191 точки. Сгруппированы по типу. Нажмите на любую строку, чтобы открыть полную карточку с изображением.',
     placeholderExtraSearch:'Напр.: hígado, herpes, 42...',
     extraPairsLabel:'дополнительных пар',
     colImpacto2:'Точка воздействия (+)',
     colPatologia2:'Патология / Связь',
-    rastreoCompletoSub:'Полная последовательность из Руководства второго уровня: точка сканирования (–), точка резонанса (+) и связанный патоген или резервуар. Используйте поиск по точке, патогену или номеру.',
+    rastreoCompletoSub:'Полная последовательность из Руководства второго уровня плюс дополнительные пары Уровней 1 и 2. Колонка резонанса (+) отражает все пары, существующие с каждой точкой. Дополнительные точки отмечены + и голубым цветом. Поиск по точке, патогену или номеру.',
     placeholderRastreoSearch:'Напр.: hígado, diabetes, herpes, 73...',
     colNivel:'Ур',
     colRastrear:'Точка сканирования (–)',
     colResonancia2:'Резонанс (+)',
     colPatogeno:'Патоген / Резервуар',
     rastreoPuntosLabel:'точек',
+    rastreoExtraNota:'+ дополнительная точка Уровней 1 и 2',
     rastreoNoResults:'Ничего не найдено по этому запросу.',
     rcardNoImg:'Нет изображения',
     favAdd:'Добавить в избранное',
@@ -2390,7 +2346,6 @@ function setLanguage(lang){
   renderDiseases();
   renderFavs();
   renderRastreo();
-  renderExtra();
   filterEnf();
   globalSearch();
 }

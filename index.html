@@ -1002,8 +1002,21 @@ function buildRastreoFull(){
   if(RASTREO_FULL) return RASTREO_FULL;
   const all=[...N1,...N2];
   const lvlOf=p => N1.indexOf(p)>=0 ? 'I' : 'II';
+  // Sinónimos/variantes de escritura que designan el mismo punto del protocolo
+  const MERGE_MAP={
+    'pospineal':'pos pineal',
+    'prepineal':'pre pineal',
+    'cervical':'cervicales',
+    'dorso':'dorsales',
+    'lig ext rodilla':'ligamento externo rodilla',
+    'lig int rodilla':'ligamento interno rodilla'
+  };
   const byPoint={};
-  all.forEach(p=>{(byPoint[rNorm(p.r)]=byPoint[rNorm(p.r)]||[]).push(p);});
+  all.forEach(p=>{
+    let k=rNorm(p.r);
+    if(MERGE_MAP[k]) k=MERGE_MAP[k];
+    (byPoint[k]=byPoint[k]||[]).push(p);
+  });
   const rows=[];
   const used=new Set();
   // 1) строки протокола + доп. резонансы

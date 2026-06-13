@@ -1,7 +1,7 @@
 // Service Worker — Par Biomagnético
 // Кэширует приложение для офлайн-работы.
 // При обновлении сайта увеличь номер версии (v1 → v2), чтобы кэш обновился.
-const CACHE = 'biomag-v9';
+const CACHE = 'biomag-v10';
 
 const SHELL = [
   './',
